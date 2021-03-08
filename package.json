@@ -55,8 +55,10 @@
     }
   },
   "lint-staged": {
-    "**/*.(js|ts|tsx|json)": [
+    "**/*.+(js|ts|tsx|json)": [
       "eslint --fix",
+      "prettier --write",
+      "jest --findRelatedTests",
       "git add"
     ]
   }
