@@ -1,22 +1,14 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
+import { GlobalStyle, defaultTheme } from './styles';
 import Navbar from './components/Navbar/Navbar';
 
-const GlobalStyle = createGlobalStyle`
-  * {
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-`;
-
 const App: React.FC = () => (
-  <div>
+  <ThemeProvider theme={defaultTheme}>
     <GlobalStyle />
     <Navbar />
-  </div>
+  </ThemeProvider>
 );
 
 export default App;

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Toolbar from '@material-ui/core/Toolbar';
+import { logoFont, typeScale, transparency } from '../../styles';
 
 export const StyledNavbar = styled(Toolbar)`
-  background-color: #026aa7;
+  background-color: ${({ theme }) => theme.navbarBackgroundColor};
   display: flex;
   justify-content: space-between;
   max-height: 40px;
@@ -11,19 +12,19 @@ export const StyledNavbar = styled(Toolbar)`
     display: flex;
   }
   .nav-btn {
-    color: white;
+    color: ${({ theme }) => theme.textColorInverted};
     min-width: auto;
-    background-color: hsla(0, 0%, 100%, 0.3);
+    background-color: ${transparency[300]};
     margin-right: 4px;
     text-transform: none;
     box-shadow: none;
     &:hover {
-      background-color: hsla(0, 0%, 100%, 0.2);
+      background-color: ${transparency[200]};
       box-shadow: none;
     }
   }
   .user-logo {
-    background-color: #ff4500;
+    background-color: ${({ theme }) => theme.userLogoColor};
     font-size: large;
     &:hover {
       cursor: pointer;
@@ -37,26 +38,27 @@ interface SearchFieldProps {
 
 export const SearchField = styled.div<SearchFieldProps>`
   display: flex;
-  background-color: ${({ searchFocus }) =>
-    searchFocus ? 'white' : 'hsla(0, 0%, 100%, 0.3)'};
+  background-color: ${({ theme, searchFocus }) =>
+    searchFocus ? theme.inputFieldBackground : transparency[300]};
   border-radius: 4px;
   padding: 2px 2px 2px 6px;
 
   &:hover {
-    background-color: ${({ searchFocus }) =>
-      searchFocus ? 'white' : 'hsla(0, 0%, 100%, 0.5)'};
+    background-color: ${({ theme, searchFocus }) =>
+      searchFocus ? theme.inputFieldBackground : transparency[500]};
   }
   .search-input input {
     color: inherit;
     width: ${({ searchFocus }) => (searchFocus ? '280px' : '184px')};
     transition: width 150ms ease-in;
     &::-webkit-input-placeholder {
-      color: ${({ searchFocus }) => (searchFocus ? 'black' : 'white')};
+      color: ${({ theme, searchFocus }) =>
+        searchFocus ? theme.textColor : theme.textColorInverted};
     }
   }
   .search-icon {
-    color: ${({ searchFocus }) => (searchFocus ? 'black' : 'white')};
-    height: ${({ searchFocus }) => (searchFocus ? '0.8em' : '1em')};
+    color: ${({ theme, searchFocus }) =>
+      searchFocus ? theme.textColor : theme.textColorInverted};
     margin: auto 0;
   }
 `;
@@ -65,20 +67,17 @@ export const AppLogo = styled.div`
   position: absolute;
   margin: 0 50%;
   .logo-btn {
-    color: hsla(0, 0%, 100%, 0.4);
+    color: ${transparency[400]};
     &:hover {
       background: none;
-      color: white;
+      color: ${({ theme }) => theme.textColorInverted};
     }
   }
-  .logo-icon {
-    font-size: 30px;
-  }
   .logo-name {
-    font-size: 1.4rem;
+    font-size: ${typeScale.header3};
     font-weight: bold;
     padding-bottom: 3px;
-    text-transform: capitalize;
-    font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+    text-transform: none;
+    font-family: ${logoFont};
   }
 `;

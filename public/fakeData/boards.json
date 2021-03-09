@@ -1,0 +1,22 @@
+{
+    "boards": [
+        {
+            "title": "Project nesseps",
+            "id": "fb1",
+            "owners": ["test-user-1", "test-user-2"],
+            "members": ["test-user-3", "test-user-4", "test-user-5"]
+        },
+        {
+            "title": "Project herokil",
+            "id": "fb2",
+            "owners": ["test-user-2"],
+            "members": ["test-user-1", "test-user-4", "test-user-5"]
+        },
+        {
+            "title": "Project indiana",
+            "id": "fb3",
+            "owners": ["test-user-2"],
+            "members": ["test-user-1"]
+        }
+    ]
+}

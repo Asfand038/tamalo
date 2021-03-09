@@ -49,16 +49,16 @@ const Navbar: React.FC = () => {
             inputProps={{ 'aria-label': 'search' }}
           />
           {!searchFocus && <SearchIcon className="search-icon" />}
-          {searchFocus && <CloseIcon className="search-icon" />}
+          {searchFocus && (
+            <CloseIcon className="search-icon" fontSize="small" />
+          )}
         </SearchField>
       </div>
       <AppLogo>
         <Button
           className="logo-btn"
           variant="text"
-          startIcon={
-            <DeveloperBoardIcon fontSize="large" className="logo-icon" />
-          }
+          startIcon={<DeveloperBoardIcon fontSize="large" />}
         >
           <span className="logo-name">Tamalo</span>
         </Button>
