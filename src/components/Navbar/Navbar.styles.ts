@@ -36,7 +36,7 @@ interface SearchFieldProps {
   searchFocus: boolean;
 }
 
-export const SearchField = styled.div<SearchFieldProps>`
+export const StyledSearchField = styled.div<SearchFieldProps>`
   display: flex;
   background-color: ${({ theme, searchFocus }) =>
     searchFocus ? theme.inputFieldBackground : transparency[300]};

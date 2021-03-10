@@ -13,6 +13,7 @@ export const AuthTheme = {
   loginBtnHoverColor: '#61bd4f',
   signupBtnColor: '#0052cc',
   signupBtnHoverColor: '#0066ff',
+  helperTextColor: '#5e6c84',
 };
 
 export const typeScale = {

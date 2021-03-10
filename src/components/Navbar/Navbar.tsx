@@ -15,7 +15,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { StyledNavbar, SearchField, AppLogo } from './Navbar.styles';
+import { StyledNavbar, StyledSearchField, AppLogo } from './Navbar.styles';
 
 const Navbar: React.FC = () => {
   /**
@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
         >
           Boards
         </Button>
-        <SearchField searchFocus={searchFocus}>
+        <StyledSearchField searchFocus={searchFocus}>
           <InputBase
             onFocus={() => setSearchFocus(true)}
             onBlur={() => setSearchFocus(false)}
@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
           {searchFocus && (
             <CloseIcon className="search-icon" fontSize="small" />
           )}
-        </SearchField>
+        </StyledSearchField>
       </div>
       <AppLogo>
         <Button

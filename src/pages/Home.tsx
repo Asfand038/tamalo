@@ -1,10 +1,12 @@
+// Not completed yet
+
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
 
-import Sidebar from '../../components/Sidebar/Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 
 const getData = () => {
   fetch('./fakeData/boards.json', {
