@@ -1,79 +1,71 @@
 import React, { useState } from 'react';
 
-// Components imported from material-ui
-import InputBase from '@material-ui/core/InputBase';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
+import { InputBase } from '@material-ui/core';
+import {
+  Home as HomeIcon,
+  Menu as MenuIcon,
+  DeveloperBoard as DeveloperBoardIcon,
+  Search as SearchIcon,
+  Add as AddIcon,
+  InfoOutlined as InfoOutlinedIcon,
+  NotificationsNoneOutlined as NotificationsNoneOutlinedIcon,
+  Close as CloseIcon,
+} from '@material-ui/icons';
 
-// Icons imported from material-ui
-import HomeIcon from '@material-ui/icons/Home';
-import MenuIcon from '@material-ui/icons/Menu';
-import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard';
-import SearchIcon from '@material-ui/icons/Search';
-import AddIcon from '@material-ui/icons/Add';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import CloseIcon from '@material-ui/icons/Close';
-
-import { StyledNavbar, StyledSearchField, AppLogo } from './Navbar.styles';
+import {
+  StyledNavbar,
+  StyledSearchField,
+  AppLogo,
+  StyledNavBtn,
+  StyledAvatar,
+} from './Navbar.styles';
 
 const Navbar: React.FC = () => {
-  /**
-   * State for focus on SeachField so that it can be passed
-   * to other components to change their styles.
-   */
+  // State for focus on SeachField so that it can be passed
+  // to other components to change their styles.
+
   const [searchFocus, setSearchFocus] = useState(false);
 
   return (
     <StyledNavbar disableGutters={true}>
       <div className="d-flex">
-        <Button className="nav-btn" size="small" aria-label="open drawer">
+        <StyledNavBtn size="small" aria-label="open drawer">
           <MenuIcon />
-        </Button>
-        <Button className="nav-btn" aria-label="open drawer">
+        </StyledNavBtn>
+        <StyledNavBtn aria-label="open drawer">
           <HomeIcon />
-        </Button>
-        <Button
-          className="nav-btn"
-          variant="contained"
-          startIcon={<DeveloperBoardIcon />}
-        >
+        </StyledNavBtn>
+        <StyledNavBtn variant="contained" startIcon={<DeveloperBoardIcon />}>
           Boards
-        </Button>
+        </StyledNavBtn>
         <StyledSearchField searchFocus={searchFocus}>
           <InputBase
             onFocus={() => setSearchFocus(true)}
             onBlur={() => setSearchFocus(false)}
-            className="search-input"
             placeholder={searchFocus ? 'Search...' : 'Jump to…'}
             inputProps={{ 'aria-label': 'search' }}
           />
-          {!searchFocus && <SearchIcon className="search-icon" />}
-          {searchFocus && (
-            <CloseIcon className="search-icon" fontSize="small" />
-          )}
+          {!searchFocus && <SearchIcon />}
+          {searchFocus && <CloseIcon fontSize="small" />}
         </StyledSearchField>
       </div>
-      <AppLogo>
-        <Button
-          className="logo-btn"
-          variant="text"
-          startIcon={<DeveloperBoardIcon fontSize="large" />}
-        >
-          <span className="logo-name">Tamalo</span>
-        </Button>
+      <AppLogo
+        variant="text"
+        startIcon={<DeveloperBoardIcon fontSize="large" />}
+      >
+        Tamalo
       </AppLogo>
       <div className="d-flex">
-        <Button className="nav-btn" color="inherit" aria-label="create">
+        <StyledNavBtn color="inherit" aria-label="create">
           <AddIcon />
-        </Button>
-        <Button className="nav-btn" color="inherit" aria-label="information">
+        </StyledNavBtn>
+        <StyledNavBtn color="inherit" aria-label="information">
           <InfoOutlinedIcon />
-        </Button>
-        <Button className="nav-btn" color="inherit" aria-label="notifications">
+        </StyledNavBtn>
+        <StyledNavBtn color="inherit" aria-label="notifications">
           <NotificationsNoneOutlinedIcon />
-        </Button>
-        <Avatar className="user-logo">AJ</Avatar>
+        </StyledNavBtn>
+        <StyledAvatar>AJ</StyledAvatar>
       </div>
     </StyledNavbar>
   );

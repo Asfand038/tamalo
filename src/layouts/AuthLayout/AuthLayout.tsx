@@ -1,22 +1,22 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import { Assignment as AssignmentIcon } from '@material-ui/icons';
+import { AuthTheme } from './AuthTheme';
 
-import {
-  StyledAuthForm,
-  StyledLogo,
-  StyledAuthCard,
-} from './AuthLayout.styles';
+import { StyledWrapper, StyledLogo, StyledAuthCard } from './AuthLayout.styles';
 
 const AuthLayout: React.FC = ({ children }) => {
   return (
-    <StyledAuthForm>
-      <StyledLogo>
-        <AssignmentIcon className="logo-icon" />
-        <div className="logo-name">Tamalo</div>
-      </StyledLogo>
-      <StyledAuthCard elevation={10}>{children}</StyledAuthCard>
-    </StyledAuthForm>
+    <ThemeProvider theme={AuthTheme}>
+      <StyledWrapper>
+        <StyledLogo>
+          <AssignmentIcon />
+          <div>Tamalo</div>
+        </StyledLogo>
+        <StyledAuthCard elevation={10}>{children}</StyledAuthCard>
+      </StyledWrapper>
+    </ThemeProvider>
   );
 };
 

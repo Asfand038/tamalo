@@ -2,9 +2,7 @@ import { blue, neutral, userLogoColor } from './colors';
 import { primaryFont } from './typography';
 
 export const defaultTheme = {
-  /**
-   * primaryFont and userLogoColor will not change when changing themes
-   */
+  //primaryFont and userLogoColor will not change when changing themes
   primaryFont,
   userLogoColor,
   backgroundColor: neutral[100],

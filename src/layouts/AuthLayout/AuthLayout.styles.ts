@@ -1,10 +1,9 @@
 import { Button, Paper, TextField, Link } from '@material-ui/core';
+import { TextFieldProps } from 'material-ui';
 
 import styled from 'styled-components';
-import { logoFont } from '../../styles';
-import { typeScale, AuthTheme } from './AuthTheme';
 
-export const StyledAuthForm = styled.div`
+export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,38 +14,37 @@ export const StyledAuthForm = styled.div`
     margin: 25px 0 20px;
   }
   .login-method-separator {
-    font-size: ${typeScale.helperText};
+    font-size: ${({ theme }) => theme.typeScale.helperText};
     margin: 16px 0;
-    color: ${AuthTheme.helperTextColor};
+    color: ${({ theme }) => theme.colors.neutral[400]};
     font-weight: 300;
   }
 `;
 
-/**
- * && makes specificity of our styles
- * greater than material-ui styles
- */
+/* '&&' makes specificity of our styles
+    greater than material-ui styles */
+
 export const StyledLink = styled(Link)`
   && {
-    color: ${AuthTheme.linkColor};
+    color: ${({ theme }) => theme.colors.blue[400]};
   }
 `;
-export const StyledInputField = styled(TextField)`
+export const StyledInputField = styled(TextField)<TextFieldProps>`
   & fieldset {
     border: none;
   }
   & input {
-    background-color: ${AuthTheme.inputFieldBackgroundColor};
+    background-color: ${({ theme }) => theme.colors.neutral[200]};
     height: 44px;
     padding: 0 8px 0;
     margin: 0 0 1.2em;
-    border: 2px solid ${AuthTheme.inputFieldBorderColor};
+    border: 2px solid ${({ theme }) => theme.colors.neutral[300]};
     border-radius: 3px;
     transition: background-color 200ms ease-in-out,
       border-color 200ms ease-in-out;
     :focus {
-      background-color: ${AuthTheme.inputFieldBackgroundFocusColor};
-      border: 2px solid ${AuthTheme.inputFieldBorderFocusColor};
+      background-color: ${({ theme }) => theme.colors.neutral[100]};
+      border: 2px solid ${({ theme }) => theme.colors.blue[100]};
     }
   }
 `;
@@ -57,10 +55,9 @@ export const StyledAuthCard = styled(Paper)`
   margin: 20px auto;
   & > div:first-child {
     text-align: center;
-    color: ${AuthTheme.authCardHeadingColor};
+    color: ${({ theme }) => theme.colors.neutral[400]};
     font-weight: 900;
-    font-size: ${typeScale.heading};
-    line-height: 28px;
+    font-size: ${({ theme }) => theme.typeScale.heading};
     margin-top: 10px;
     margin-bottom: 25px;
     word-spacing: 2px;
@@ -73,22 +70,22 @@ export const StyledLogo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  .logo-name {
-    font-size: ${typeScale.logo};
-    font-family: ${logoFont};
+  div {
+    font-size: ${({ theme }) => theme.typeScale.logo};
+    font-family: ${({ theme }) => theme.fonts.logo};
     font-weight: bolder;
-    color: ${AuthTheme.appLogoTextColor};
+    color: ${({ theme }) => theme.colors.blue[500]};
   }
-  .logo-icon {
+  svg {
     margin: 9px 10px 0 0;
-    font-size: ${typeScale.logo};
-    color: ${AuthTheme.appLogoIconColor};
+    font-size: ${({ theme }) => theme.typeScale.logo};
+    color: ${({ theme }) => theme.colors.blue[200]};
   }
 `;
 
-export const ButtonDesign = styled(Button)`
+export const ButtonStyle = styled(Button)`
   && {
-    color: ${AuthTheme.textColorInverted};
+    color: ${({ theme }) => theme.colors.neutral[100]};
     font-weight: bold;
     box-shadow: none;
     transition: none;

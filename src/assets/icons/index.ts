@@ -1,3 +1,3 @@
-export * from './AppleIcon';
-export * from './MicrosoftIcon';
-export * from './GoogleIcon';
+export { default as AppleIcon } from './AppleIcon';
+export { default as MicrosoftIcon } from './MicrosoftIcon';
+export { default as GoogleIcon } from './GoogleIcon';

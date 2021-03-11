@@ -3,32 +3,27 @@ import styled from 'styled-components';
 
 import { Divider } from '@material-ui/core';
 
-import AuthLayout from '../layouts/AuthLayout/AuthLayout';
-import { AuthTheme, typeScale } from '../layouts/AuthLayout/AuthTheme';
-import AuthProviders from '../components/AuthProviders';
+import { AuthProviders } from '../components';
 import {
-  ButtonDesign,
+  AuthLayout,
+  ButtonStyle,
   StyledInputField,
   StyledLink,
-} from '../layouts/AuthLayout/AuthLayout.styles';
+} from '../layouts/AuthLayout';
 
 const StyledConfirmationText = styled.div`
   margin: 10px 0 20px;
-  font-size: ${typeScale.helperText};
-  color: ${AuthTheme.helperTextColor};
+  font-size: ${({ theme }) => theme.typeScale.helperText};
+  color: ${({ theme }) => theme.colors.neutral[400]};
   line-height: 16px;
   text-align: left;
 `;
 
-/**
- * "&&" makes specificity of our styles
- * greater than material-ui styles
- */
-const SignupButton = styled(ButtonDesign)`
+const SignupButton = styled(ButtonStyle)`
   && {
-    background-color: ${AuthTheme.signupBtnColor};
+    background-color: ${({ theme }) => theme.colors.blue[400]};
     :hover {
-      background-color: ${AuthTheme.signupBtnHoverColor};
+      background-color: ${({ theme }) => theme.colors.blue[300]};
     }
   }
 `;
@@ -67,7 +62,7 @@ const SignupForm: React.FC = () => {
       <div className="login-method-separator">OR</div>
       <AuthProviders />
       <Divider className="authcard-divider" />
-      <StyledLink href="#">Already have an account? Log In</StyledLink>
+      <StyledLink href="/login">Already have an account? Log In</StyledLink>
     </AuthLayout>
   );
 };

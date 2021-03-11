@@ -2,26 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Divider } from '@material-ui/core';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { FiberManualRecord as FiberManualRecordIcon } from '@material-ui/icons';
 
-import AuthLayout from '../layouts/AuthLayout/AuthLayout';
-import AuthProviders from '../components/AuthProviders';
-import { AuthTheme } from '../layouts/AuthLayout/AuthTheme';
+import { AuthProviders } from '../components';
 import {
-  ButtonDesign,
+  AuthLayout,
+  ButtonStyle,
   StyledInputField,
   StyledLink,
-} from '../layouts/AuthLayout/AuthLayout.styles';
+} from '../layouts/AuthLayout';
 
-/**
- * && makes specificity of our styles
- * greater than material-ui styles
- */
-const LoginButton = styled(ButtonDesign)`
+const LoginButton = styled(ButtonStyle)`
   && {
-    background-color: ${AuthTheme.loginBtnColor};
+    background-color: ${({ theme }) => theme.colors.green[100]};
     :hover {
-      background-color: ${AuthTheme.loginBtnHoverColor};
+      background-color: ${({ theme }) => theme.colors.green[200]};
     }
   }
 `;
@@ -64,7 +59,7 @@ const LoginForm: React.FC = () => {
       <Divider className="authcard-divider" />
       <StyledLink href="#">Can&apos;t log in?</StyledLink>
       <StyledIcon />
-      <StyledLink href="#">Sign up for an account</StyledLink>
+      <StyledLink href="/signup">Sign up for an account</StyledLink>
     </AuthLayout>
   );
 };

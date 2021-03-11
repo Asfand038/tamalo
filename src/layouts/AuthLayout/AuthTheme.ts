@@ -1,23 +1,31 @@
 export const AuthTheme = {
-  textColor: '#000',
-  textColorInverted: '#fff',
-  appLogoTextColor: '#002053',
-  appLogoIconColor: '#0079bf',
-  authCardHeadingColor: '#5e6c84',
-  inputFieldBackgroundColor: '#fafbfc',
-  inputFieldBackgroundFocusColor: '#fff',
-  inputFieldBorderColor: '#dfe1e6',
-  inputFieldBorderFocusColor: '#4c9aff',
-  linkColor: '#0052cc',
-  loginBtnColor: '#5aac44',
-  loginBtnHoverColor: '#61bd4f',
-  signupBtnColor: '#0052cc',
-  signupBtnHoverColor: '#0066ff',
-  helperTextColor: '#5e6c84',
-};
-
-export const typeScale = {
-  logo: '3rem',
-  heading: '1rem',
-  helperText: '0.9rem',
+  fonts: {
+    body: "'Roboto', sans-serif",
+    logo: "'Noto Sans JP', 'Roboto', sans-serif",
+  },
+  typeScale: {
+    logo: '3rem',
+    heading: '1rem',
+    helperText: '0.9rem',
+  },
+  colors: {
+    neutral: {
+      100: '#fff',
+      200: '#fafbfc',
+      300: '#dfe1e6',
+      400: '#5e6c84',
+      500: '#000',
+    },
+    blue: {
+      100: '#4c9aff',
+      200: '#0079bf',
+      300: '#0066ff',
+      400: '#0052cc',
+      500: '#002053',
+    },
+    green: {
+      100: '#5aac44',
+      200: '#61bd4f',
+    },
+  },
 };

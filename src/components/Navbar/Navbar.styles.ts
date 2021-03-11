@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Toolbar from '@material-ui/core/Toolbar';
+import { Toolbar, Button, Avatar } from '@material-ui/core';
 import { logoFont, typeScale, transparency } from '../../styles';
 
 export const StyledNavbar = styled(Toolbar)`
@@ -10,25 +10,6 @@ export const StyledNavbar = styled(Toolbar)`
   padding: 0 4px;
   .d-flex {
     display: flex;
-  }
-  .nav-btn {
-    color: ${({ theme }) => theme.textColorInverted};
-    min-width: auto;
-    background-color: ${transparency[300]};
-    margin-right: 4px;
-    text-transform: none;
-    box-shadow: none;
-    &:hover {
-      background-color: ${transparency[200]};
-      box-shadow: none;
-    }
-  }
-  .user-logo {
-    background-color: ${({ theme }) => theme.userLogoColor};
-    font-size: large;
-    &:hover {
-      cursor: pointer;
-    }
   }
 `;
 
@@ -47,7 +28,7 @@ export const StyledSearchField = styled.div<SearchFieldProps>`
     background-color: ${({ theme, searchFocus }) =>
       searchFocus ? theme.inputFieldBackground : transparency[500]};
   }
-  .search-input input {
+  input {
     color: inherit;
     width: ${({ searchFocus }) => (searchFocus ? '280px' : '184px')};
     transition: width 150ms ease-in;
@@ -56,28 +37,51 @@ export const StyledSearchField = styled.div<SearchFieldProps>`
         searchFocus ? theme.textColor : theme.textColorInverted};
     }
   }
-  .search-icon {
+  svg {
     color: ${({ theme, searchFocus }) =>
       searchFocus ? theme.textColor : theme.textColorInverted};
     margin: auto 0;
   }
 `;
 
-export const AppLogo = styled.div`
-  position: absolute;
-  margin: 0 50%;
-  .logo-btn {
-    color: ${transparency[400]};
+export const StyledNavBtn = styled(Button)`
+  && {
+    color: ${({ theme }) => theme.textColorInverted};
+    min-width: auto;
+    background-color: ${transparency[300]};
+    margin-right: 4px;
+    text-transform: none;
+    box-shadow: none;
     &:hover {
-      background: none;
-      color: ${({ theme }) => theme.textColorInverted};
+      background-color: ${transparency[200]};
+      box-shadow: none;
     }
   }
-  .logo-name {
+`;
+
+export const AppLogo = styled(Button)`
+  && {
+    position: absolute;
+    margin: 0 50%;
+    color: ${transparency[400]};
     font-size: ${typeScale.header3};
     font-weight: bold;
     padding-bottom: 3px;
     text-transform: none;
     font-family: ${logoFont};
+    &:hover {
+      background: none;
+      color: ${({ theme }) => theme.textColorInverted};
+    }
+  }
+`;
+
+export const StyledAvatar = styled(Avatar)`
+  && {
+    background-color: ${({ theme }) => theme.userLogoColor};
+    font-size: large;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
