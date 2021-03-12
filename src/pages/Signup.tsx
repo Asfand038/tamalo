@@ -28,7 +28,7 @@ const SignupButton = styled(ButtonStyle)`
   }
 `;
 
-const SignupForm: React.FC = () => {
+const SignupPage: React.FC = () => {
   return (
     <AuthLayout>
       <div>Sign up for your account</div>
@@ -53,8 +53,8 @@ const SignupForm: React.FC = () => {
       />
       <StyledConfirmationText>
         By signing up, I accept the{' '}
-        <StyledLink href="#">Terms of Service</StyledLink> and acknowledge the{' '}
-        <StyledLink href="#">Privacy Policy.</StyledLink>
+        <StyledLink to="#">Terms of Service</StyledLink> and acknowledge the{' '}
+        <StyledLink to="#">Privacy Policy.</StyledLink>
       </StyledConfirmationText>
       <SignupButton type="submit" variant="contained" fullWidth>
         Sign up
@@ -62,9 +62,9 @@ const SignupForm: React.FC = () => {
       <div className="login-method-separator">OR</div>
       <AuthProviders />
       <Divider className="authcard-divider" />
-      <StyledLink href="/login">Already have an account? Log In</StyledLink>
+      <StyledLink to="/login">Already have an account? Log In</StyledLink>
     </AuthLayout>
   );
 };
 
-export default SignupForm;
+export default SignupPage;

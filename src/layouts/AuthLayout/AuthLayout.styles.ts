@@ -1,5 +1,6 @@
-import { Button, Paper, TextField, Link } from '@material-ui/core';
+import { Button, Paper, TextField } from '@material-ui/core';
 import { TextFieldProps } from 'material-ui';
+import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -27,6 +28,10 @@ export const StyledWrapper = styled.div`
 export const StyledLink = styled(Link)`
   && {
     color: ${({ theme }) => theme.colors.blue[400]};
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 export const StyledInputField = styled(TextField)<TextFieldProps>`

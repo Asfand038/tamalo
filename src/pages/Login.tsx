@@ -33,7 +33,7 @@ const StyledIcon = styled(FiberManualRecordIcon)`
   }
 `;
 
-const LoginForm: React.FC = () => {
+const LoginPage: React.FC = () => {
   return (
     <AuthLayout>
       <div>Log in to Tamalo</div>
@@ -55,13 +55,13 @@ const LoginForm: React.FC = () => {
       </LoginButton>
       <div className="login-method-separator">OR</div>
       <AuthProviders />
-      <StyledSSOLink href="#">Login with SSO</StyledSSOLink>
+      <StyledSSOLink to="#">Login with SSO</StyledSSOLink>
       <Divider className="authcard-divider" />
-      <StyledLink href="#">Can&apos;t log in?</StyledLink>
+      <StyledLink to="#">Can&apos;t log in?</StyledLink>
       <StyledIcon />
-      <StyledLink href="/signup">Sign up for an account</StyledLink>
+      <StyledLink to="/signup">Sign up for an account</StyledLink>
     </AuthLayout>
   );
 };
 
-export default LoginForm;
+export default LoginPage;

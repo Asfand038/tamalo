@@ -1,8 +1,4 @@
 export const AuthTheme = {
-  fonts: {
-    body: "'Roboto', sans-serif",
-    logo: "'Noto Sans JP', 'Roboto', sans-serif",
-  },
   typeScale: {
     logo: '3rem',
     heading: '1rem',
@@ -14,7 +10,8 @@ export const AuthTheme = {
       200: '#fafbfc',
       300: '#dfe1e6',
       400: '#5e6c84',
-      500: '#000',
+      500: '#505f79',
+      600: '#000',
     },
     blue: {
       100: '#4c9aff',

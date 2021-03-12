@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
-import { AppleIcon, MicrosoftIcon, GoogleIcon } from '../assets/icons';
+import { AppleIcon, MicrosoftIcon, GoogleIcon } from '../assets';
 
 const StyledButton = styled(Button)`
   && {
     text-transform: none;
     font-size: 14px;
-    color: #505f79;
+    color: ${({ theme }) => theme.colors.neutral[500]};
     font-weight: bold;
     border-color: transparent;
     border-radius: 0;
