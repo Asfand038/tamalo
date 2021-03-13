@@ -1,26 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
-function App() {
+import { GlobalStyle, defaultTheme } from './theme';
+import { LoginPage, SignupPage, DashboardPage, BoardPage } from './pages';
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyle />
+      <Switch>
+        <Route path="/login" exact component={LoginPage} />
+        <Route path="/signup" exact component={SignupPage} />
+        <Route path="/boards" exact component={DashboardPage} />
+        <Route path="/boards/:id" component={BoardPage} />
+        <Redirect from="/" to="/login" />
+      </Switch>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
