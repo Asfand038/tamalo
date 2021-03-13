@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react-hooks"],
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "airbnb",
     "plugin:prettier/recommended",
@@ -47,8 +47,6 @@
     "react/display-name": 2,
     "react/prefer-stateless-function": 2,
     "react/react-in-jsx-scope": 2,
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "import/extensions": [
       "error",
       "ignorePackages",

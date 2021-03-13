@@ -1,18 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { BoardLayout } from '../layouts';
 
 const BoardPage: React.FC = () => {
-  const [user, setUser] = useState(false);
-
-  useEffect(() => {
-    setUser(true);
-    setUser(false);
-  }, []);
-
-  // eslint-disable-next-line no-console
-  console.log(user);
-
   return <BoardLayout />;
 };
 
