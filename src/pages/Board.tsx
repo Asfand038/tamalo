@@ -7,6 +7,7 @@ const BoardPage: React.FC = () => {
 
   useEffect(() => {
     setUser(true);
+    setUser(false);
   }, []);
 
   // eslint-disable-next-line no-console
