@@ -1,7 +1,12 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "extends": ["airbnb", "plugin:prettier/recommended", "plugin:react/recommended"],
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "env": {
     "browser": true,
     "es6": true
@@ -39,6 +44,9 @@
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/prop-types": 0,
+    "react/display-name": 2,
+    "react/prefer-stateless-function": 2,
+    "react/react-in-jsx-scope": 2,
     "import/extensions": [
       "error",
       "ignorePackages",
