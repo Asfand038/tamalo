@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
         variant="text"
         startIcon={<DeveloperBoardIcon fontSize="large" />}
       >
-        Tamalo
+        <span>Tamalo</span>
       </AppLogo>
       <div className="d-flex">
         <StyledNavBtn color="inherit" aria-label="create">

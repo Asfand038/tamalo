@@ -1,17 +1,17 @@
 import React from 'react';
 
 import { Navbar, Sidebar } from '../../components';
-import { StyledWrapper } from './DashboardLayout.styles';
+import { StyledPage } from './DashboardLayout.styles';
 
 const DashboardLayout: React.FC = ({ children }) => {
   return (
-    <StyledWrapper>
+    <>
       <Navbar />
-      <div className="main-page">
+      <StyledPage>
         <Sidebar />
         <div>{children}</div>
-      </div>
-    </StyledWrapper>
+      </StyledPage>
+    </>
   );
 };
 

@@ -4,73 +4,109 @@
             "title": "Project nesseps",
             "id": "fb1",
             "owners": ["test-user-1", "test-user-2"],
-            "members": ["test-user-3", "test-user-4", "test-user-5"]
+            "members": ["test-user-3", "test-user-4", "test-user-5"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project herokil",
             "id": "fb2",
             "owners": ["test-user-2"],
-            "members": ["test-user-1", "test-user-4", "test-user-5"]
+            "members": ["test-user-1", "test-user-4", "test-user-5"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb3",
             "owners": ["test-user-2"],
-            "members": ["test-user-1"]
+            "members": ["test-user-1"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb4",
             "owners": ["test-user-3"],
-            "members": ["test-user-1, test-user-5"]
+            "members": ["test-user-1, test-user-5"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb5",
             "owners": ["test-user-4"],
-            "members": ["test-user-3"]
+            "members": ["test-user-3"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb6",
             "owners": ["test-user-1"],
-            "members": ["test-user-2, test-user-3"]
+            "members": ["test-user-2, test-user-3"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb7",
             "owners": ["test-user-5"],
-            "members": ["test-user-4"]
+            "members": ["test-user-4"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb8",
             "owners": ["test-user-3"],
-            "members": ["test-user-5, test-user-2, test-user-4"]
+            "members": ["test-user-5, test-user-2, test-user-4"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb9",
             "owners": ["test-user-3"],
-            "members": ["test-user-1, test-user-4"]
+            "members": ["test-user-1, test-user-4"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb10",
             "owners": ["test-user-2, test-user-1, test-user-5"],
-            "members": ["test-user-3, test-user-4"]
+            "members": ["test-user-3, test-user-4"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb11",
             "owners": ["test-user-5"],
-            "members": ["test-user-1, test-user-4"]
+            "members": ["test-user-1, test-user-4"],
+            "background": {
+                "color": "#0079bf"
+            }
         },
         {
             "title": "Project indiana",
             "id": "fb12",
             "owners": ["test-user-2"],
-            "members": ["test-user-4"]
+            "members": ["test-user-4"],
+            "background": {
+                "color": "#0079bf"
+            }
         }
     ]
 }
