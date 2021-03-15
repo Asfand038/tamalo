@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 export const StyledTitle = styled.div`
   display: flex;
   align-items: center;
-  height: 50px;
+  height: 46px;
   & svg {
     width: 25px;
     height: 42px;
@@ -46,4 +46,8 @@ export const StyledGridItem = styled(Grid)<GridItemProps>`
       }
     }
   }
+`;
+
+export const StyledBoardsCategory = styled.div`
+  margin-bottom: 20px;
 `;

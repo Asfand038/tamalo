@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // importing components from material-ui
 import {
@@ -38,9 +39,9 @@ import {
 } from './Sidebar.styles';
 
 const sidebarList = [
-  { icon: <DeveloperBoardIcon />, text: 'Boards' },
-  { icon: <AssignmentOutlinedIcon />, text: 'Templates' },
-  { icon: <ShowChartOutlinedIcon />, text: 'Home' },
+  { icon: <DeveloperBoardIcon />, text: 'Boards', route: '/boards' },
+  { icon: <AssignmentOutlinedIcon />, text: 'Templates', route: '#1' },
+  { icon: <ShowChartOutlinedIcon />, text: 'Home', route: '#2' },
 ];
 
 const accordionList = [
@@ -48,33 +49,58 @@ const accordionList = [
     icon: <AssignmentTurnedInOutlinedIcon />,
     text: 'Getting Started',
     additionalIcon: <ArrowForwardIosSharpIcon />,
+    route: '#3',
   },
-  { icon: <DeveloperBoardIcon />, text: 'Boards' },
-  { icon: <FavoriteBorderOutlinedIcon />, text: 'Highlights' },
+  { icon: <DeveloperBoardIcon />, text: 'Boards', route: '#4' },
+  { icon: <FavoriteBorderOutlinedIcon />, text: 'Highlights', route: '#5' },
   {
     icon: <TableChartOutlinedIcon />,
     text: 'Team table',
     additionalIcon: <ArrowForwardIosSharpIcon />,
+    route: '#6',
   },
   {
     icon: <PeopleAltOutlinedIcon />,
     text: 'Members',
     additionalIcon: <ArrowForwardIosSharpIcon />,
+    route: '#7',
   },
   {
     icon: <SettingsOutlinedIcon />,
     text: 'Settings',
     additionalIcon: <ArrowForwardIosSharpIcon />,
+    route: '#8',
   },
 ];
 
 const Sidebar: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    document
+      .getElementById(history.location.pathname)
+      ?.classList.add('active-link');
+  }, []);
+
+  const handleRoute = (route: string) => {
+    const prevActiveLink = document.getElementsByClassName('active-link');
+    prevActiveLink[0].classList.remove('active-link');
+    const currActiveLink = document.getElementById(route);
+    currActiveLink?.classList.add('active-link');
+    history.push(route);
+  };
+
   return (
     <StyledSidebar variant="permanent">
       <List>
-        {sidebarList.map(({ icon, text }) => (
-          <StyledSidebarItem button key={text}>
+        {sidebarList.map(({ icon, text, route }) => (
+          <StyledSidebarItem
+            button
+            id={route}
+            key={text}
+            onClick={() => handleRoute(route)}
+          >
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText primary={text} />
           </StyledSidebarItem>
@@ -99,8 +125,13 @@ const Sidebar: React.FC = () => {
         </AccordionSummary>
         <AccordionDetails>
           <StyledAccordionList>
-            {accordionList.map(({ icon, text, additionalIcon }) => (
-              <ListItem button key={text}>
+            {accordionList.map(({ icon, text, additionalIcon, route }) => (
+              <ListItem
+                button
+                id={route}
+                key={text}
+                onClick={() => handleRoute(route)}
+              >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
                 {additionalIcon && (

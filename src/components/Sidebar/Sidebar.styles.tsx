@@ -13,6 +13,13 @@ export const StyledSidebar = styled(Drawer)`
   & svg {
     color: ${({ theme }) => theme.colors.blue[300]};
   }
+  & .active-link {
+    background-color: ${({ theme }) => theme.colors.blue[50]};
+    & span,
+    svg {
+      color: ${({ theme }) => theme.colors.blue[100]} !important;
+    }
+  }
 `;
 
 export const StyledSidebarItem = styled(ListItem)`
@@ -21,6 +28,7 @@ export const StyledSidebarItem = styled(ListItem)`
     height: 30px;
     margin-bottom: 5px;
     padding: 6px 8px 6px 0;
+    transition: none;
     &:hover {
       background-color: ${({ theme }) => theme.colors.neutral[200]};
     }

@@ -7,7 +7,11 @@ import {
 } from '@material-ui/icons';
 
 import { DashboardLayout } from '../../layouts';
-import { StyledTitle, StyledGridItem } from './Dashboard.styles';
+import {
+  StyledTitle,
+  StyledGridItem,
+  StyledBoardsCategory,
+} from './Dashboard.styles';
 
 interface BoardSchema {
   title: string;
@@ -62,7 +66,7 @@ const DashboardPage: React.FC = () => {
   return (
     <DashboardLayout>
       {boardCategories.map(({ title, boardCategory, icon }) => (
-        <>
+        <StyledBoardsCategory key={title}>
           <StyledTitle>
             {icon}
             <span>{title}</span>
@@ -84,7 +88,7 @@ const DashboardPage: React.FC = () => {
               );
             })}
           </Grid>
-        </>
+        </StyledBoardsCategory>
       ))}
     </DashboardLayout>
   );
