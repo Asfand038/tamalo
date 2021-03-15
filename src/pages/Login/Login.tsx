@@ -1,37 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { Divider } from '@material-ui/core';
-import { FiberManualRecord as FiberManualRecordIcon } from '@material-ui/icons';
 
-import { AuthProviders } from '../components';
-import {
-  AuthLayout,
-  ButtonStyle,
-  StyledInputField,
-  StyledLink,
-} from '../layouts/AuthLayout';
-
-const LoginButton = styled(ButtonStyle)`
-  && {
-    background-color: ${({ theme }) => theme.colors.green[100]};
-    :hover {
-      background-color: ${({ theme }) => theme.colors.green[200]};
-    }
-  }
-`;
-const StyledSSOLink = styled(StyledLink)`
-  && {
-    margin-top: 10px;
-    display: block;
-  }
-`;
-const StyledIcon = styled(FiberManualRecordIcon)`
-  && {
-    font-size: 8px;
-    margin: 0 8px 0;
-  }
-`;
+import { AuthProviders } from '../../components';
+import { AuthLayout, StyledInputField, StyledLink } from '../../layouts';
+import { LoginButton, StyledIcon, StyledSSOLink } from './Login.styles';
 
 const LoginPage: React.FC = () => {
   return (

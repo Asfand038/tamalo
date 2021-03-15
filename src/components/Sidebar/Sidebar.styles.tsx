@@ -3,11 +3,15 @@ import styled from 'styled-components';
 
 export const StyledSidebar = styled(Drawer)`
   height: 100%;
+  padding: 0 16px;
   & > div {
     position: relative;
     width: 240px;
     overflow-y: unset;
     border: none;
+  }
+  & svg {
+    color: ${({ theme }) => theme.colors.blue[300]};
   }
 `;
 
@@ -20,14 +24,17 @@ export const StyledSidebarItem = styled(ListItem)`
     &:hover {
       background-color: ${({ theme }) => theme.colors.neutral[200]};
     }
+    & > div:first-child {
+      min-width: 0;
+      svg {
+        font-size: ${({ theme }) => theme.typeScale.header4};
+        min-width: 40px;
+      }
+    }
     & div,
     span {
       font-weight: 700;
       color: ${({ theme }) => theme.colors.blue[300]};
-    }
-    svg {
-      min-width: 32px;
-      margin: 0 10px;
     }
   }
 `;
@@ -39,7 +46,7 @@ export const StyledTeamList = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 30px;
-  margin-left: 10px;
+  padding-left: 12px;
   & button {
     border-radius: 4px;
     padding: 2px;
@@ -51,18 +58,19 @@ export const StyledAccordionList = styled(List)`
     width: 100%;
     padding: 0;
     & > div {
-      font-size: ${({ theme }) => theme.typeScale.helperText};
       height: 30px;
       margin-bottom: 5px;
       border-radius: 4px;
       padding-right: 0;
       & > div:first-child {
-        opacity: 0.8;
-        min-width: 32px;
-        margin: 0 10px;
+        min-width: 28px;
+        margin-left: 28px;
       }
       & > div:nth-of-type(2) {
-        opacity: 0.8;
+        color: ${({ theme }) => theme.colors.neutral[500]};
+        & span {
+          font-size: ${({ theme }) => theme.typeScale.subtitle};
+        }
       }
       & > div:nth-of-type(3) {
         min-width: 0;
@@ -98,6 +106,9 @@ export const StyledAccordion = styled(Accordion)`
     }
     & svg {
       color: ${({ theme }) => theme.colors.blue[300]};
+      font-size: ${({ theme }) => theme.typeScale.paragraph};
+      height: 16px;
+      width: 16px;
     }
     & > div:first-child {
       padding: 0 2px 0 0;
@@ -106,9 +117,10 @@ export const StyledAccordion = styled(Accordion)`
       transition: none;
       & > div:first-child {
         margin: 0;
+        display: flex;
+        align-items: center;
         & > svg {
-          min-width: 32px;
-          margin: 0 10px 0 5px;
+          min-width: 40px;
         }
         & > p {
           font-weight: 700;
@@ -121,7 +133,7 @@ export const StyledAccordion = styled(Accordion)`
     }
     #panel1bh-content {
       & > div {
-        padding: 25px 0 0;
+        padding: 15px 0 0 0;
       }
     }
   }

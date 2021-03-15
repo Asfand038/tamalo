@@ -40,12 +40,12 @@ export const StyledSearchField = styled.div<SearchFieldProps>`
     transition: width 150ms ease-in;
     &::-webkit-input-placeholder {
       color: ${({ theme, searchFocus }) =>
-        searchFocus ? theme.colors.neutral[600] : theme.colors.neutral[100]};
+        searchFocus ? theme.colors.neutral[700] : theme.colors.neutral[100]};
     }
   }
   svg {
     color: ${({ theme, searchFocus }) =>
-      searchFocus ? theme.colors.neutral[600] : theme.colors.neutral[100]};
+      searchFocus ? theme.colors.neutral[700] : theme.colors.neutral[100]};
     margin: auto 0;
   }
 `;
@@ -95,7 +95,7 @@ export const StyledAvatar = styled(Avatar)`
     height: 32px;
     width: 32px;
     background-color: ${({ theme }) => theme.colors.red[100]};
-    font-size: 1rem;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
     &:hover {
       cursor: pointer;
     }

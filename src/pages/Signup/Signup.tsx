@@ -1,32 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { Divider } from '@material-ui/core';
 
-import { AuthProviders } from '../components';
-import {
-  AuthLayout,
-  ButtonStyle,
-  StyledInputField,
-  StyledLink,
-} from '../layouts/AuthLayout';
-
-const StyledConfirmationText = styled.div`
-  margin: 10px 0 20px;
-  font-size: ${({ theme }) => theme.typeScale.helperText};
-  color: ${({ theme }) => theme.colors.neutral[400]};
-  line-height: 16px;
-  text-align: left;
-`;
-
-const SignupButton = styled(ButtonStyle)`
-  && {
-    background-color: ${({ theme }) => theme.colors.blue[400]};
-    :hover {
-      background-color: ${({ theme }) => theme.colors.blue[300]};
-    }
-  }
-`;
+import { AuthProviders } from '../../components';
+import { AuthLayout, StyledInputField, StyledLink } from '../../layouts';
+import { SignupButton, StyledConfirmationText } from './Signup.styles';
 
 const SignupPage: React.FC = () => {
   return (
