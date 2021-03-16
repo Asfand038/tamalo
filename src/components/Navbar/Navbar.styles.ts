@@ -30,23 +30,29 @@ export const StyledSearchField = styled.div<SearchFieldProps>`
     searchFocus ? theme.colors.neutral[100] : theme.colors.transparency[300]};
   border-radius: 4px;
   padding: 2px 2px 2px 6px;
-
+  width: ${({ searchFocus }) => (searchFocus ? '280px' : '184px')};
+  transition: width 150ms ease-in;
   &:hover {
     background-color: ${({ theme, searchFocus }) =>
       searchFocus ? theme.colors.neutral[100] : theme.colors.transparency[500]};
   }
-  input {
-    width: ${({ searchFocus }) => (searchFocus ? '280px' : '184px')};
-    transition: width 150ms ease-in;
-    &::-webkit-input-placeholder {
-      color: ${({ theme, searchFocus }) =>
-        searchFocus ? theme.colors.neutral[700] : theme.colors.neutral[100]};
+  & > div:first-child {
+    width: 100%;
+    input {
+      &::-webkit-input-placeholder {
+        color: ${({ theme, searchFocus }) =>
+          searchFocus ? theme.colors.neutral[700] : theme.colors.neutral[100]};
+      }
     }
   }
   svg {
     color: ${({ theme, searchFocus }) =>
       searchFocus ? theme.colors.neutral[700] : theme.colors.neutral[100]};
     margin: auto 0;
+    &:hover {
+      cursor: ${({ searchFocus }) =>
+        searchFocus ? 'pointer' : 'context-menu'};
+    }
   }
 `;
 

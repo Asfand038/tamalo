@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
             placeholder={searchFocus ? 'Search...' : 'Jump to…'}
             inputProps={{ 'aria-label': 'search' }}
           />
-          {!searchFocus && <SearchIcon />}
+          {!searchFocus && <SearchIcon onClick={() => setSearchFocus(true)} />}
           {searchFocus && <CloseIcon fontSize="small" />}
         </StyledSearchField>
       </div>
