@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 
 import { InputBase } from '@material-ui/core';
 import {
-  Home as HomeIcon,
-  Menu as MenuIcon,
+  HomeOutlined as HomeOutlinedIcon,
+  AppsSharp as AppsSharpIcon,
   DeveloperBoard as DeveloperBoardIcon,
   Search as SearchIcon,
   Add as AddIcon,
   InfoOutlined as InfoOutlinedIcon,
   NotificationsNoneOutlined as NotificationsNoneOutlinedIcon,
   Close as CloseIcon,
+  TableChartOutlined as TableChartOutlinedIcon,
 } from '@material-ui/icons';
 
 import {
@@ -17,27 +18,30 @@ import {
   StyledSearchField,
   AppLogo,
   StyledNavBtn,
+  StyledBoardBtn,
   StyledAvatar,
 } from './Navbar.styles';
 
 const Navbar: React.FC = () => {
   // State for focus on SeachField so that it can be passed
   // to other components to change their styles.
-
   const [searchFocus, setSearchFocus] = useState(false);
 
   return (
     <StyledNavbar disableGutters={true}>
       <div className="d-flex">
         <StyledNavBtn size="small" aria-label="open drawer">
-          <MenuIcon />
+          <AppsSharpIcon />
         </StyledNavBtn>
         <StyledNavBtn aria-label="open drawer">
-          <HomeIcon />
+          <HomeOutlinedIcon />
         </StyledNavBtn>
-        <StyledNavBtn variant="contained" startIcon={<DeveloperBoardIcon />}>
-          Boards
-        </StyledNavBtn>
+        <StyledBoardBtn
+          variant="contained"
+          startIcon={<TableChartOutlinedIcon />}
+        >
+          <span>Boards</span>
+        </StyledBoardBtn>
         <StyledSearchField searchFocus={searchFocus}>
           <InputBase
             onFocus={() => setSearchFocus(true)}

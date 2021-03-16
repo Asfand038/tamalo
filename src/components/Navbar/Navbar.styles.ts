@@ -39,9 +39,11 @@ export const StyledSearchField = styled.div<SearchFieldProps>`
   & > div:first-child {
     width: 100%;
     input {
-      &::-webkit-input-placeholder {
+      padding: 0;
+      &::placeholder {
         color: ${({ theme, searchFocus }) =>
           searchFocus ? theme.colors.neutral[700] : theme.colors.neutral[100]};
+        opacity: 1 !important;
       }
     }
   }
@@ -59,8 +61,10 @@ export const StyledSearchField = styled.div<SearchFieldProps>`
 export const StyledNavBtn = styled(Button)`
   && {
     color: ${({ theme }) => theme.colors.neutral[100]};
-    min-width: auto;
+    min-width: 0;
+    width: 32px;
     height: 32px;
+    padding: none;
     background-color: ${({ theme }) => theme.colors.transparency[300]};
     margin-right: 4px;
     text-transform: none;
@@ -69,6 +73,25 @@ export const StyledNavBtn = styled(Button)`
     &:hover {
       background-color: ${({ theme }) => theme.colors.transparency[200]};
       box-shadow: none;
+    }
+    svg {
+      height: 20px;
+      width: 20px;
+      font-size: ${({ theme }) => theme.typeScale.paragraph};
+    }
+  }
+`;
+
+export const StyledBoardBtn = styled(StyledNavBtn)`
+  && {
+    width: auto;
+    padding: 0 8px;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    font-weight: bold;
+    & > span {
+      & > span:last-child {
+        padding-top: 2px;
+      }
     }
   }
 `;
@@ -84,7 +107,7 @@ export const AppLogo = styled(Button)`
     font-family: ${({ theme }) => theme.fonts.logo};
     &:hover {
       background: none;
-      color: ${({ theme }) => theme.colors.neutral[100]};
+      color: ${({ theme }) => theme.colors.transparency[800]};
     }
     & span:last-child {
       padding-bottom: 3px;

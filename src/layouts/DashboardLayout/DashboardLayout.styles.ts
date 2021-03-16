@@ -11,7 +11,7 @@ export const StyledPage = styled.div`
     }
   }
   & > div:last-child {
-    flex-grow: 5.3;
+    flex-grow: 5.8;
     margin: 0 16px;
   }
   @media (max-width: 1250px) {
