@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import {
   PersonOutline as PersonOutlineIcon,
   PeopleOutlineOutlined as PeopleOutlineOutlinedIcon,
+  StarOutline as StarOutlineIcon,
 } from '@material-ui/icons';
 
 import { DashboardLayout } from '../../layouts';
@@ -24,6 +25,7 @@ interface BoardSchema {
 const DashboardPage: React.FC = () => {
   const [ownedBoards, setOwnedBoards] = useState<BoardSchema[]>([]);
   const [memberOfBoards, setMemberOfBoards] = useState<BoardSchema[]>([]);
+  const [hoverBoard, setHoverBoard] = useState('');
 
   useEffect(() => {
     getUserData();
@@ -80,9 +82,13 @@ const DashboardPage: React.FC = () => {
                   md={3}
                   key={id}
                   color={background.color}
+                  hovered={hoverBoard === id}
+                  onMouseEnter={() => setHoverBoard(id)}
+                  onMouseLeave={() => setHoverBoard('')}
                 >
                   <div>
                     <div>{title}</div>
+                    <StarOutlineIcon />
                   </div>
                 </StyledGridItem>
               );

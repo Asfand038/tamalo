@@ -82,10 +82,10 @@ export const AppLogo = styled(Button)`
     }
     & span:last-child {
       padding-bottom: 3px;
-      font-size: ${({ theme }) => theme.typeScale.header2};
+      font-size: ${({ theme }) => theme.typeScale.header3};
     }
     svg {
-      font-size: 28px;
+      font-size: 24px;
     }
   }
 `;

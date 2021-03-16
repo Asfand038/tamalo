@@ -74,7 +74,7 @@ const accordionList = [
 ];
 
 const Sidebar: React.FC = () => {
-  const [expanded, setExpanded] = useState(false);
+  const [expandAccordion, setExpandAccordion] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -85,7 +85,9 @@ const Sidebar: React.FC = () => {
 
   const handleRoute = (route: string) => {
     const prevActiveLink = document.getElementsByClassName('active-link');
-    prevActiveLink[0].classList.remove('active-link');
+    if (prevActiveLink.length) {
+      prevActiveLink[0].classList.remove('active-link');
+    }
     const currActiveLink = document.getElementById(route);
     currActiveLink?.classList.add('active-link');
     history.push(route);
@@ -113,8 +115,8 @@ const Sidebar: React.FC = () => {
         </IconButton>
       </StyledTeamList>
       <StyledAccordion
-        expanded={expanded}
-        onChange={() => setExpanded(!expanded)}
+        expanded={expandAccordion}
+        onChange={() => setExpandAccordion(!expandAccordion)}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

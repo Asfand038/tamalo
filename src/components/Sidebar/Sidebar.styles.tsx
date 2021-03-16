@@ -15,6 +15,9 @@ export const StyledSidebar = styled(Drawer)`
   }
   & .active-link {
     background-color: ${({ theme }) => theme.colors.blue[50]};
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.blue[50]} !important;
+    }
     & span,
     svg {
       color: ${({ theme }) => theme.colors.blue[100]} !important;
@@ -123,6 +126,10 @@ export const StyledAccordion = styled(Accordion)`
       min-height: 0px;
       height: 30px;
       transition: none;
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.neutral[200]};
+        border-radius: 4px;
+      }
       & > div:first-child {
         margin: 0;
         display: flex;
@@ -134,10 +141,6 @@ export const StyledAccordion = styled(Accordion)`
           font-weight: 700;
         }
       }
-    }
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.neutral[200]};
-      border-radius: 4px;
     }
     #panel1bh-content {
       & > div {

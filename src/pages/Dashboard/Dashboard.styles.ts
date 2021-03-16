@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Grid } from '@material-ui/core';
 
 export const StyledTitle = styled.div`
@@ -20,6 +20,7 @@ export const StyledTitle = styled.div`
 
 interface GridItemProps {
   color: string;
+  hovered: boolean;
 }
 
 export const StyledGridItem = styled(Grid)<GridItemProps>`
@@ -28,7 +29,7 @@ export const StyledGridItem = styled(Grid)<GridItemProps>`
     background-clip: content-box;
     border-radius: 9px;
     max-width: 200px;
-
+    min-width: 150px;
     & > div {
       border-radius: inherit;
       height: 110px;
@@ -44,6 +45,20 @@ export const StyledGridItem = styled(Grid)<GridItemProps>`
         color: ${({ theme }) => theme.colors.neutral[100]};
         font-weight: 700;
       }
+    }
+    & svg {
+      color: ${({ theme }) => theme.colors.neutral[100]};
+      font-size: ${({ theme }) => theme.typeScale.header4};
+      opacity: 0;
+      margin: auto 4px 6px auto;
+      transform: translateX(45%);
+      transition: transform 200ms ease-out, opacity 200ms ease-out;
+      ${({ hovered }) =>
+        hovered &&
+        css`
+          transform: translateX(0);
+          opacity: 1;
+        `};
     }
   }
 `;
