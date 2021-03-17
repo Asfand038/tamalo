@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Navbar, Sidebar } from '../../components';
-import { StyledPage, StyledDashboard } from './DashboardLayout.styles';
+import { StyledDashboard, StyledPage } from './DashboardLayout.styles';
 
 const DashboardLayout: React.FC = ({ children }) => {
   return (

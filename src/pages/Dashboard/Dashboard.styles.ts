@@ -4,7 +4,8 @@ import { Grid } from '@material-ui/core';
 export const StyledTitle = styled.div`
   display: flex;
   align-items: center;
-  height: 46px;
+  height: 32px;
+  margin-bottom: 8px;
   & svg {
     width: 26px;
     height: 26px;
@@ -34,7 +35,6 @@ export const StyledGridItem = styled(Grid)<GridItemProps>`
     & > div {
       padding: 13px;
       position: relative;
-      border-radius: inherit;
       height: 68px;
       display: flex;
       flex-direction: column;

@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;   
     overflow: hidden;
   }
-  html {
+  html, * {
     box-sizing: border-box;
     font-size: 14px;
   }

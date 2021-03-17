@@ -30,7 +30,7 @@ interface SearchFieldProps {
 
 export const StyledSearchField = styled.div<SearchFieldProps>`
   display: flex;
-  height: 28px;
+  height: 32px;
   background-color: ${({ theme, searchFocus }) =>
     searchFocus ? theme.colors.neutral[100] : theme.colors.transparency[300]};
   border-radius: 4px;

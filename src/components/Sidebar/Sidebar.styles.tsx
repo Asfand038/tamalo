@@ -3,12 +3,19 @@ import styled from 'styled-components';
 
 export const StyledSidebar = styled(Drawer)`
   height: 100%;
+  width: 272px;
   padding: 0 16px;
+  position: sticky;
+  top: 0;
   & > div {
-    position: relative;
-    width: 240px;
     overflow-y: unset;
     border: none;
+    width: 272px;
+    padding: 0 16px;
+    & > ul {
+      margin-top: 80px;
+      padding: 0;
+    }
   }
   & svg {
     color: ${({ theme }) => theme.colors.blue[300]};
