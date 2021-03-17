@@ -3,6 +3,11 @@ import { Toolbar, Button, Avatar } from '@material-ui/core';
 
 export const StyledNavbar = styled(Toolbar)`
   && {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
     z-index: 5000;
     background-color: ${({ theme }) => theme.colors.blue[200]};
     display: flex;

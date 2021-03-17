@@ -27,10 +27,6 @@ const DashboardPage: React.FC = () => {
   const [memberOfBoards, setMemberOfBoards] = useState<BoardSchema[]>([]);
   const [hoverBoard, setHoverBoard] = useState('');
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
   const getUserData = async () => {
     const userId = 'test-user-1';
     const data = await (
@@ -49,9 +45,11 @@ const DashboardPage: React.FC = () => {
     );
     setOwnedBoards(ownedBoards);
     setMemberOfBoards(memberOfBoards);
-    console.log(ownedBoards);
-    console.log(memberOfBoards);
   };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const boardCategories = [
     {
@@ -73,7 +71,7 @@ const DashboardPage: React.FC = () => {
             {icon}
             <span>{title}</span>
           </StyledTitle>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             {boardCategory.map(({ id, title, background }: BoardSchema) => {
               return (
                 <StyledGridItem

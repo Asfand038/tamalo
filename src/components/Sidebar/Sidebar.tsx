@@ -13,7 +13,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 
-//importing icons from material-ui
+// importing icons from material-ui
 import {
   Add as AddIcon,
   DeveloperBoard as DeveloperBoardIcon,
@@ -81,7 +81,7 @@ const Sidebar: React.FC = () => {
     document
       .getElementById(history.location.pathname)
       ?.classList.add('active-link');
-  }, []);
+  }, [history]);
 
   const handleRoute = (route: string) => {
     const prevActiveLink = document.getElementsByClassName('active-link');

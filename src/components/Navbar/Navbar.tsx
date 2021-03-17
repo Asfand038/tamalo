@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { InputBase } from '@material-ui/core';
 import {
@@ -26,9 +26,10 @@ const Navbar: React.FC = () => {
   // State for focus on SeachField so that it can be passed
   // to other components to change their styles.
   const [searchFocus, setSearchFocus] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <StyledNavbar disableGutters={true}>
+    <StyledNavbar disableGutters>
       <div className="d-flex">
         <StyledNavBtn size="small" aria-label="open drawer">
           <AppsSharpIcon />
@@ -48,8 +49,16 @@ const Navbar: React.FC = () => {
             onBlur={() => setSearchFocus(false)}
             placeholder={searchFocus ? 'Search...' : 'Jump to…'}
             inputProps={{ 'aria-label': 'search' }}
+            inputRef={inputRef}
           />
-          {!searchFocus && <SearchIcon onClick={() => setSearchFocus(true)} />}
+          {!searchFocus && (
+            <SearchIcon
+              onClick={() => {
+                setSearchFocus(true);
+                inputRef?.current?.focus();
+              }}
+            />
+          )}
           {searchFocus && <CloseIcon fontSize="small" />}
         </StyledSearchField>
       </div>

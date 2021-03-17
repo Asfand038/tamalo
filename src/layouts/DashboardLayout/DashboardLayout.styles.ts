@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 
+export const StyledDashboard = styled.div`
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+`;
+
 export const StyledPage = styled.div`
-  margin-top: 40px;
+  position: relative;
+  height: 100%;
+  margin-top: 80px;
   display: flex;
-  height: 87.8vh;
   & > div:first-child {
     flex-grow: 1;
     & > div:first-child {
