@@ -4,28 +4,15 @@ import { Grid } from '@material-ui/core';
 import {
   PersonOutline as PersonOutlineIcon,
   PeopleOutlineOutlined as PeopleOutlineOutlinedIcon,
-  StarOutline as StarOutlineIcon,
 } from '@material-ui/icons';
 
 import { DashboardLayout } from '../../layouts';
-import {
-  StyledTitle,
-  StyledGridItem,
-  StyledBoardsCategory,
-} from './Dashboard.styles';
-
-interface BoardSchema {
-  title: string;
-  id: string;
-  owners: string[];
-  members: string[];
-  background: { [prop: string]: string };
-}
+import { StyledTitle, StyledBoardsCategory } from './Dashboard.styles';
+import { BoardSchema, DashboardCard } from './components';
 
 const DashboardPage: React.FC = () => {
   const [ownedBoards, setOwnedBoards] = useState<BoardSchema[]>([]);
   const [memberOfBoards, setMemberOfBoards] = useState<BoardSchema[]>([]);
-  const [hoverBoard, setHoverBoard] = useState('');
 
   const getUserData = async () => {
     const userId = 'test-user-1';
@@ -72,25 +59,9 @@ const DashboardPage: React.FC = () => {
             <span>{title}</span>
           </StyledTitle>
           <Grid container spacing={2}>
-            {boardCategory.map(({ id, title, background }: BoardSchema) => {
-              return (
-                <StyledGridItem
-                  item
-                  sm={6}
-                  md={3}
-                  key={id}
-                  color={background.color}
-                  hovered={hoverBoard === id}
-                  onMouseEnter={() => setHoverBoard(id)}
-                  onMouseLeave={() => setHoverBoard('')}
-                >
-                  <div>
-                    <div>{title}</div>
-                    <StarOutlineIcon />
-                  </div>
-                </StyledGridItem>
-              );
-            })}
+            {boardCategory.map((boardDetails: BoardSchema) => (
+              <DashboardCard key={boardDetails.id} details={boardDetails} />
+            ))}
           </Grid>
         </StyledBoardsCategory>
       ))}

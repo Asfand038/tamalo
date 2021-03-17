@@ -4,11 +4,9 @@ import { useHistory } from 'react-router-dom';
 // importing components from material-ui
 import {
   List,
-  ListItem,
   ListItemIcon,
   ListItemText,
   AccordionDetails,
-  AccordionSummary,
   Typography,
   IconButton,
 } from '@material-ui/core';
@@ -33,9 +31,14 @@ import {
 import {
   StyledSidebar,
   StyledSidebarItem,
+  StyledSidebarIcon,
   StyledTeamList,
   StyledAccordion,
+  StyledAccordionSummary,
   StyledAccordionList,
+  StyledAccordionListItem,
+  StyledAccordionListIcon,
+  StyledAccordionListText,
 } from './Sidebar.styles';
 
 const sidebarList = [
@@ -103,7 +106,7 @@ const Sidebar: React.FC = () => {
             key={text}
             onClick={() => handleRoute(route)}
           >
-            <ListItemIcon>{icon}</ListItemIcon>
+            <StyledSidebarIcon>{icon}</StyledSidebarIcon>
             <ListItemText primary={text} />
           </StyledSidebarItem>
         ))}
@@ -118,28 +121,30 @@ const Sidebar: React.FC = () => {
         expanded={expandAccordion}
         onChange={() => setExpandAccordion(!expandAccordion)}
       >
-        <AccordionSummary
+        <StyledAccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
         >
           <PeopleOutlineSharpIcon />
           <Typography>Individual</Typography>
-        </AccordionSummary>
+        </StyledAccordionSummary>
         <AccordionDetails>
           <StyledAccordionList>
             {accordionList.map(({ icon, text, additionalIcon, route }) => (
-              <ListItem
+              <StyledAccordionListItem
                 button
                 id={route}
                 key={text}
                 onClick={() => handleRoute(route)}
               >
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={text} />
+                <StyledAccordionListIcon>{icon}</StyledAccordionListIcon>
+                <StyledAccordionListText primary={text} />
                 {additionalIcon && (
-                  <ListItemIcon>{additionalIcon}</ListItemIcon>
+                  <ListItemIcon className="forward-icon">
+                    {additionalIcon}
+                  </ListItemIcon>
                 )}
-              </ListItem>
+              </StyledAccordionListItem>
             ))}
           </StyledAccordionList>
         </AccordionDetails>

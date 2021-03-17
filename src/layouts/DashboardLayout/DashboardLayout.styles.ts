@@ -25,6 +25,7 @@ export const StyledPage = styled.div`
     min-width: 288px;
     flex-grow: 5.8;
   }
+
   @media (max-width: 1250px) {
     & > div:first-child {
       flex-grow: 0.56;
