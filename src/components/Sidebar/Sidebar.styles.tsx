@@ -3,17 +3,17 @@ import styled from 'styled-components';
 
 export const StyledSidebar = styled(Drawer)`
   height: 100%;
-  width: 272px;
+  width: 240px;
   padding: 0 16px;
   position: sticky;
   top: 0;
   & > div {
     overflow-y: unset;
     border: none;
-    width: 272px;
+    width: 240px;
     padding: 0 16px;
     & > ul {
-      margin-top: 80px;
+      margin-top: 42px;
       padding: 0;
     }
   }

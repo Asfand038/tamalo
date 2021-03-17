@@ -110,6 +110,7 @@ export const AppLogo = styled(Button)`
     margin: 0 50%;
     color: ${({ theme }) => theme.colors.transparency[400]};
     font-size: ${({ theme }) => theme.typeScale.header3};
+    letter-spacing: 0;
     font-weight: bold;
     text-transform: none;
     font-family: ${({ theme }) => theme.fonts.logo};
@@ -123,6 +124,9 @@ export const AppLogo = styled(Button)`
     }
     svg {
       font-size: 24px;
+    }
+    & .MuiButton-startIcon {
+      margin-right: 5px;
     }
   }
 `;
