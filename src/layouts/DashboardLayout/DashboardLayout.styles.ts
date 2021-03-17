@@ -4,13 +4,13 @@ export const StyledDashboard = styled.div`
   position: relative;
   overflow: hidden;
   height: 100%;
-  margin-top: 40px;
 `;
 
 export const StyledPage = styled.div`
   display: flex;
-  height: 100%;
+  height: calc(100vh - 40px);
   overflow-y: auto;
+  margin-top: 40px;
   & > div:first-child {
   }
   & > div:last-child {

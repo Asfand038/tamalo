@@ -21,6 +21,9 @@ export const StyledNavbar = styled(Toolbar)`
       display: flex;
       align-items: center;
     }
+    & * {
+      box-sizing: border-box;
+    }
   }
 `;
 

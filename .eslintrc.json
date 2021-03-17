@@ -49,6 +49,12 @@
     "react/display-name": 2,
     "react/prefer-stateless-function": 2,
     "react/react-in-jsx-scope": 2,
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
