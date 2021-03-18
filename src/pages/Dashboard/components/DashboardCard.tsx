@@ -8,7 +8,7 @@ import { BoardSchema } from './boardSchema';
 // Styles
 interface GridItemProps {
   color: string;
-  hovered: boolean;
+  hovered: number;
 }
 
 export const StyledGridItem = styled(Grid)<GridItemProps>`
@@ -80,7 +80,7 @@ const DashboardCard: React.FC<CardProps> = ({ details }) => {
       md={3}
       key={id}
       color={background.color}
-      hovered={hoverBoard === id}
+      hovered={+(hoverBoard === id)}
       onMouseEnter={() => setHoverBoard(id)}
       onMouseLeave={() => setHoverBoard('')}
     >
