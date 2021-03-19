@@ -23,6 +23,7 @@
     }
   },
   "rules": {
+    "import/prefer-default-export": ["off"],
     "jsx-a11y/href-no-hash": ["off"],
     "react/jsx-props-no-spreading": ["off"],
     "react/jsx-filename-extension": [
@@ -30,11 +31,12 @@
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
     "no-console": [
-      "error",
+      "warn",
       {
         "allow": ["warn", "error"]
       }
     ],
+    "react/no-unused-prop-types": ["off"],
     "multiline-ternary": 0,
     "no-unused-vars": "off",
     "no-shadow": 0,
@@ -47,6 +49,12 @@
     "react/display-name": 2,
     "react/prefer-stateless-function": 2,
     "react/react-in-jsx-scope": 2,
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",

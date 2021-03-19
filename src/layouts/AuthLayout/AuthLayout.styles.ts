@@ -1,5 +1,4 @@
-import { Button, Paper, TextField } from '@material-ui/core';
-import { TextFieldProps } from 'material-ui';
+import { Button, Paper, TextField, TextFieldProps } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';

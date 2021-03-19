@@ -7,7 +7,6 @@ import { AppleIcon, MicrosoftIcon, GoogleIcon } from '../assets';
 const StyledButton = styled(Button)`
   && {
     text-transform: none;
-    font-size: 14px;
     color: ${({ theme }) => theme.colors.neutral[500]};
     font-weight: bold;
     border-color: transparent;

@@ -4,7 +4,8 @@ import { defaultTheme } from './themes';
 
 export const GlobalStyle = createGlobalStyle`
   ${normalize()}
-  html {
+  html, body {
+    height: 100%;   
     box-sizing: border-box;
     font-size: 14px;
   }
