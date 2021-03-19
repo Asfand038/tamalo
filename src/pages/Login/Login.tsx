@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 
 import { AuthProviders } from '../../components';
@@ -21,8 +21,7 @@ const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const history = useHistory();
-  const { login, isLoggedIn, isLoading, error } = useAuth();
+  const { login, isLoading, error, isLoggedIn } = useAuth();
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,12 +30,9 @@ const LoginPage: React.FC = () => {
     login(email, password);
   };
 
-  if (isLoggedIn) {
-    history.push('/boards');
-  }
-
   return (
     <AuthLayout>
+      {isLoggedIn && <Redirect to="/boards" />}
       {error && (
         <ErrorMessage>
           <p>{error}</p>
