@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { Grid } from '@material-ui/core';
 import { StarOutline as StarOutlineIcon } from '@material-ui/icons';
 
+import { defaultTheme } from '../../../theme';
 import { BoardSchema } from './boardSchema';
 
 // Styles
@@ -70,7 +71,11 @@ interface CardProps {
 }
 
 const DashboardCard: React.FC<CardProps> = ({ details }) => {
-  const { id, background, title } = details;
+  const {
+    id,
+    background = { color: defaultTheme.colors.blue[100] },
+    title,
+  } = details;
   const [hoverBoard, setHoverBoard] = useState('');
 
   return (

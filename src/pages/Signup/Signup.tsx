@@ -3,13 +3,18 @@ import React from 'react';
 import { Divider } from '@material-ui/core';
 
 import { AuthProviders } from '../../components';
-import { AuthLayout, StyledInputField, StyledLink } from '../../layouts';
+import {
+  AuthLayout,
+  StyledInputField,
+  StyledLink,
+  StyledAuthCardTitle,
+} from '../../layouts';
 import { SignupButton, StyledConfirmationText } from './Signup.styles';
 
 const SignupPage: React.FC = () => {
   return (
     <AuthLayout>
-      <div>Sign up for your account</div>
+      <StyledAuthCardTitle>Sign up for your account</StyledAuthCardTitle>
       <StyledInputField
         variant="outlined"
         placeholder="Enter email address"

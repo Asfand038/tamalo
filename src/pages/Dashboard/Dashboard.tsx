@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 
 import { Grid } from '@material-ui/core';
 import {
@@ -8,35 +9,35 @@ import {
 
 import { DashboardLayout } from '../../layouts';
 import { StyledTitle, StyledBoardsCategory } from './Dashboard.styles';
+import { Loader } from '../../components';
 import { BoardSchema, DashboardCard } from './components';
+import { useAuth } from '../../context';
+
+const getBoards = async () => {
+  const data = await (
+    await fetch('https://tamalo.herokuapp.com/boards', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+  ).json();
+  return data;
+};
 
 const DashboardPage: React.FC = () => {
-  const [ownedBoards, setOwnedBoards] = useState<BoardSchema[]>([]);
-  const [memberOfBoards, setMemberOfBoards] = useState<BoardSchema[]>([]);
+  const { userId } = useAuth();
+  const { data, isLoading, error } = useQuery('boards', getBoards);
 
-  const getUserData = async () => {
-    const userId = 'test-user-1';
-    const data = await (
-      await fetch('./fakeData/boards.json', {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      })
-    ).json();
-    const ownedBoards = data.boards.filter((board: BoardSchema) =>
-      board.owners.includes(userId)
-    );
-    const memberOfBoards = data.boards.filter((board: BoardSchema) =>
-      board.members.includes(userId)
-    );
-    setOwnedBoards(ownedBoards);
-    setMemberOfBoards(memberOfBoards);
-  };
+  if (isLoading) return <Loader />;
+  if (error) return <div>Something went wrong...</div>;
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const ownedBoards = data.filter((board: BoardSchema) =>
+    board.owners.includes(userId)
+  );
+
+  const memberOfBoards = data.filter((board: BoardSchema) =>
+    board.members.includes(userId)
+  );
 
   const boardCategories = [
     {
@@ -50,6 +51,7 @@ const DashboardPage: React.FC = () => {
       icon: <PeopleOutlineOutlinedIcon />,
     },
   ];
+
   return (
     <DashboardLayout>
       {boardCategories.map(({ title, boardCategory, icon }) => (

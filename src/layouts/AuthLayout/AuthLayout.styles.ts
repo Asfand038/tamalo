@@ -21,9 +21,6 @@ export const StyledWrapper = styled.div`
   }
 `;
 
-/* '&&' makes specificity of our styles
-    greater than material-ui styles */
-
 export const StyledLink = styled(Link)`
   && {
     color: ${({ theme }) => theme.colors.blue[400]};
@@ -33,6 +30,7 @@ export const StyledLink = styled(Link)`
     }
   }
 `;
+
 export const StyledInputField = styled(TextField)<TextFieldProps>`
   & fieldset {
     border: none;
@@ -57,15 +55,16 @@ export const StyledAuthCard = styled(Paper)`
   padding: 25px 40px;
   width: 280px;
   margin: 20px auto;
-  & > div:first-child {
-    text-align: center;
-    color: ${({ theme }) => theme.colors.neutral[400]};
-    font-weight: 900;
-    font-size: ${({ theme }) => theme.typeScale.heading};
-    margin-top: 10px;
-    margin-bottom: 25px;
-    word-spacing: 2px;
-  }
+`;
+
+export const StyledAuthCardTitle = styled.div`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.neutral[400]};
+  font-weight: 900;
+  font-size: ${({ theme }) => theme.typeScale.heading};
+  margin-top: 10px;
+  margin-bottom: 25px;
+  word-spacing: 2px;
 `;
 
 export const StyledLogo = styled.div`

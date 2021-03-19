@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { AuthProvider } from './context/auth-context';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { AuthProvider } from './context';
 
 import App from './App';
 
@@ -14,6 +15,7 @@ ReactDOM.render(
       <AuthProvider>
         <App />
       </AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </BrowserRouter>,
   document.getElementById('root')
