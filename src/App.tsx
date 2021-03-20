@@ -13,7 +13,7 @@ const App: React.FC = () => {
         <Route path="/login" exact component={LoginPage} />
         <Route path="/signup" exact component={SignupPage} />
         <Route path="/boards" exact component={DashboardPage} />
-        <Route path="/boards/:id" component={BoardPage} />
+        <Route path="/test" component={BoardPage} />
         <Redirect from="/" to="/login" />
       </Switch>
     </ThemeProvider>
