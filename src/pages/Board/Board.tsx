@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { BoardLayout } from '../../layouts';
-import { Column, initialData } from './components';
+import { SecondaryNavbar, Column, initialData } from './components';
 
 const Container = styled.div`
   display: flex;
@@ -92,6 +92,7 @@ const BoardPage: React.FC = () => {
 
   return (
     <BoardLayout>
+      <SecondaryNavbar />
       <DragDropContext
         // onDragStart={onDragStart}
         // onDragUpdate={onDragUpdate}

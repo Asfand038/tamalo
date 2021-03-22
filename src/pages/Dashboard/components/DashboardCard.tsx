@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Grid } from '@material-ui/core';
-import { StarOutline as StarOutlineIcon } from '@material-ui/icons';
+import { StarBorderRounded as StarBorderRoundedIcon } from '@material-ui/icons';
 
 import { defaultTheme } from '../../../theme';
 import { BoardSchema } from './boardSchema';
@@ -91,7 +91,7 @@ const DashboardCard: React.FC<CardProps> = ({ details }) => {
     >
       <div>
         <StyledTitle>{title}</StyledTitle>
-        <StarOutlineIcon />
+        <StarBorderRoundedIcon />
       </div>
     </StyledGridItem>
   );
