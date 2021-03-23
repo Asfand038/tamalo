@@ -34,6 +34,10 @@ export const defaultTheme = {
     red: {
       100: '#ff4500',
     },
+    green: {
+      100: '#5aac44',
+      200: '#61bd4f',
+    },
     transparency: {
       100: 'hsla(0, 0%, 100%, 0.1)',
       200: 'hsla(0, 0%, 100%, 0.2)',

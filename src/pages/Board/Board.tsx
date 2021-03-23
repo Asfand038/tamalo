@@ -3,10 +3,26 @@ import styled from 'styled-components';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { BoardLayout } from '../../layouts';
-import { SecondaryNavbar, Column, initialData } from './components';
+import { SecondaryNavbar, Column, initialData, AddList } from './components';
 
 const Container = styled.div`
   display: flex;
+  height: 86.5vh;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin: 0 8px;
+  &::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: hsla(0, 0%, 0%, 0.2);
+  }
+  &::-webkit-scrollbar {
+    height: 11px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: hsla(0, 0%, 100%, 0.5);
+  }
 `;
 
 const BoardPage: React.FC = () => {
@@ -120,6 +136,7 @@ const BoardPage: React.FC = () => {
                 );
               })}
               {provided.placeholder}
+              <AddList />
             </Container>
           )}
         </Droppable>

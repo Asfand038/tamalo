@@ -3,9 +3,6 @@ import { Toolbar, Button, Divider, Avatar } from '@material-ui/core';
 
 export const StyledNavbar = styled(Toolbar)`
   && {
-    position: fixed;
-    left: 0;
-    top: 44px;
     width: 100%;
     box-sizing: border-box;
     z-index: 5000;
@@ -16,7 +13,7 @@ export const StyledNavbar = styled(Toolbar)`
     min-height: 0;
     max-height: 40px;
     height: 40px;
-    padding: 0 8px;
+    padding: 0 4px 0 8px;
     & .d-flex {
       display: flex;
     }

@@ -4,8 +4,9 @@ import styled from 'styled-components';
 const StyledLoader = styled.div`
   color: #e1e1e1;
   text-indent: -9999em;
-  margin: 250px auto;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
   font-size: 11px;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);

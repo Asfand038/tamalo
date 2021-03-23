@@ -5,6 +5,6 @@ export const Wrapper = styled.div`
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.blue[100]};
   & > div:last-child {
-    margin-top: 80px;
+    margin-top: 44px;
   }
 `;
