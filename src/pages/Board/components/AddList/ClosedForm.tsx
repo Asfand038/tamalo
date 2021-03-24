@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { AddOutlined as AddOutlinedIcon } from '@material-ui/icons';
 
 const StyledOpenFormBtn = styled.div`
+  z-index: 1000;
   display: flex;
   align-items: center;
   background-color: hsla(0, 0%, 100%, 0.24);

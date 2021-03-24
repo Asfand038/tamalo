@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { Card, TextField, TextFieldProps } from '@material-ui/core';
 
-import { Card, TextField, Button, TextFieldProps } from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
+import ButtonContainer from '../ButtonContainer';
 
 const StyledContainer = styled.div`
   background-color: #ebecf0;
@@ -13,6 +13,7 @@ const StyledContainer = styled.div`
   width: 272px;
   padding: 4px;
   flex-shrink: 0;
+  z-index: 2000;
 `;
 
 const StyledCard = styled(Card)`
@@ -39,45 +40,6 @@ export const StyledListTitleInput = styled(TextField)<TextFieldProps>`
         opacity: 0.8 !important;
         color: #172b4d;
       }
-    }
-  }
-`;
-
-const ButtonContainer = styled.div`
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-`;
-
-const StyledButton = styled(Button)`
-  && {
-    color: ${({ theme }) => theme.colors.neutral[100]};
-    background-color: ${({ theme }) => theme.colors.green[100]};
-    font-weight: bold;
-    box-shadow: none;
-    transition: background-color 85ms ease;
-    text-transform: none;
-    padding: 4px 14px;
-    font-size: ${({ theme }) => theme.typeScale.paragraph};
-    font-weight: 400;
-    &:hover {
-      box-shadow: none;
-      background-color: ${({ theme }) => theme.colors.green[200]};
-    }
-  }
-`;
-
-const StyledCloseIcon = styled.div`
-  margin: 2px 0 0 5px;
-  & svg {
-    color: #6b778c;
-    width: 25px;
-    height: 25px;
-  }
-  &:hover {
-    cursor: pointer;
-    & svg {
-      color: #172b4d;
     }
   }
 `;
@@ -116,15 +78,9 @@ const OpenedForm: React.FC<IProps> = ({ setFormIsOpen }) => {
           variant="outlined"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          autoFocus
         />
       </StyledCard>
-      <ButtonContainer>
-        <StyledButton variant="contained">Add card</StyledButton>
-        <StyledCloseIcon>
-          <CloseIcon onClick={() => setFormIsOpen(false)} />
-        </StyledCloseIcon>
-      </ButtonContainer>
+      <ButtonContainer setFormIsOpen={setFormIsOpen} btnText="Add list" />
     </StyledContainer>
   );
 };

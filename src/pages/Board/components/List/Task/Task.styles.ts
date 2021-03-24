@@ -1,13 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
-import { Draggable } from 'react-beautiful-dnd';
-
-import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 
 interface IContainer {
   isDragging: boolean;
 }
-const Container = styled.div<IContainer>`
+
+export const StyledTaskContainer = styled.div<IContainer>`
   && {
     position: relative;
     display: flex;
@@ -29,7 +26,7 @@ const Container = styled.div<IContainer>`
   }
 `;
 
-const EditBtn = styled.span`
+export const StyledEditBtn = styled.span`
   position: absolute;
   top: 2px;
   right: 2px;
@@ -38,7 +35,7 @@ const EditBtn = styled.span`
   border-radius: 3px;
   display: none;
   opacity: 0.8;
-  ${Container}:hover & {
+  ${StyledTaskContainer}:hover & {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,35 +51,3 @@ const EditBtn = styled.span`
     opacity: 1;
   }
 `;
-
-interface ITask {
-  id: string;
-  content: string;
-}
-
-interface Props {
-  task: ITask;
-  index: number;
-}
-
-const Task: React.FC<Props> = ({ task, index }) => {
-  return (
-    <Draggable draggableId={task.id} index={index}>
-      {(provided, snapshot) => (
-        <Container
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-        >
-          {task.content}
-          <EditBtn>
-            <CreateOutlinedIcon />
-          </EditBtn>
-        </Container>
-      )}
-    </Draggable>
-  );
-};
-
-export default Task;

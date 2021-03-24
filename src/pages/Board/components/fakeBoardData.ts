@@ -12,12 +12,8 @@ const initialData = {
     {
       id: 'task-10',
       content:
-        'placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text ',
+        'placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text ',
     },
-    { id: 'task-11', content: 'Cook dinner' },
-    { id: 'task-12', content: 'Cook dinner' },
-    { id: 'task-13', content: 'Cook dinner' },
-    { id: 'task-14', content: 'Cook dinner' },
   ],
   columns: [
     {
@@ -32,12 +28,6 @@ const initialData = {
         'task-6',
         'task-7',
         'task-8',
-        'task-9',
-        'task-10',
-        'task-11',
-        'task-12',
-        'task-13',
-        'task-14',
       ],
     },
     {
@@ -57,7 +47,7 @@ const initialData = {
     },
   ],
   // Facilitate reordering of the columns
-  columnOrder: ['column-1', 'column-2', 'column-3', 'column-4'],
+  columnOrder: ['column-1'],
 };
 
 export default initialData;

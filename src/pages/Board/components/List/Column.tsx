@@ -3,6 +3,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
 import AddCard from './AddCard/AddCard';
+import { Task } from './Task';
 
 import {
   Container,
@@ -10,7 +11,6 @@ import {
   TaskList,
   StyledListTitle,
 } from './Column.styles';
-import Task from './Task';
 
 interface IColumn {
   id: string;

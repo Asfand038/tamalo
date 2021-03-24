@@ -1,47 +1,14 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { BoardLayout } from '../../layouts';
 import { SecondaryNavbar, Column, initialData, AddList } from './components';
-
-const Container = styled.div`
-  display: flex;
-  height: 86.5vh;
-  overflow-y: hidden;
-  overflow-x: auto;
-  margin: 0 8px;
-  &::-webkit-scrollbar-track {
-    border-radius: 3px;
-    background-color: hsla(0, 0%, 0%, 0.2);
-  }
-  &::-webkit-scrollbar {
-    height: 11px;
-    background-color: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: hsla(0, 0%, 100%, 0.5);
-  }
-`;
+import { StyledBoardContainer } from './Board.styles';
 
 const BoardPage: React.FC = () => {
   const [columnOrder, setColumnOrder] = useState(initialData.columnOrder);
   const [columns, setColumns] = useState(initialData.columns);
   const [tasks] = useState(initialData.tasks);
-
-  // const onDragStart = () => {
-  //   document.body.style.color = 'orange';
-  //   document.body.style.transition = 'background-color 0.2s ease';
-  // };
-
-  // const onDragUpdate = (update: DragUpdate) => {
-  //   const { destination } = update;
-  //   const opacity = destination
-  //     ? destination.index / Object.keys(tasks).length
-  //     : 0;
-  //   document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`;
-  // };
 
   const onDragEnd = (result: DropResult) => {
     document.body.style.backgroundColor = 'inherit';
@@ -109,18 +76,17 @@ const BoardPage: React.FC = () => {
   return (
     <BoardLayout>
       <SecondaryNavbar />
-      <DragDropContext
-        // onDragStart={onDragStart}
-        // onDragUpdate={onDragUpdate}
-        onDragEnd={onDragEnd}
-      >
+      <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
           droppableId="all-columns"
           direction="horizontal"
           type="column"
         >
           {(provided) => (
-            <Container {...provided.droppableProps} ref={provided.innerRef}>
+            <StyledBoardContainer
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {columnOrder.map((columnId, index) => {
                 const column = columns.find((el) => el.id === columnId)!;
                 const columnTasks = column.taskIds.map((taskId) =>
@@ -137,7 +103,7 @@ const BoardPage: React.FC = () => {
               })}
               {provided.placeholder}
               <AddList />
-            </Container>
+            </StyledBoardContainer>
           )}
         </Droppable>
       </DragDropContext>
