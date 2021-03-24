@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Collapse } from '@material-ui/core';
+import { AddOutlined as AddOutlinedIcon } from '@material-ui/icons';
 
-import OpenedForm from './OpenedForm';
-import ClosedForm from './ClosedForm';
-
-const StyledCollapse = styled(Collapse)`
-  && {
-    margin-top: -54px;
-  }
-`;
+import AddListForm from './AddListForm';
+import { StyledCollapse, StyledOpenFormBtn } from './AddList.styles';
 
 const AddList: React.FC = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   return (
     <div>
-      <ClosedForm setFormIsOpen={setFormIsOpen} />
+      <StyledOpenFormBtn onClick={() => setFormIsOpen(true)}>
+        <AddOutlinedIcon />
+        <div>Add another list</div>
+      </StyledOpenFormBtn>
       <StyledCollapse in={formIsOpen} timeout={{ enter: 200, exit: 150 }}>
-        <OpenedForm setFormIsOpen={setFormIsOpen} />
+        <AddListForm setFormIsOpen={setFormIsOpen} />
       </StyledCollapse>
     </div>
   );

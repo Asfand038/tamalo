@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
+import { TextField, TextFieldProps } from '@material-ui/core';
 
 export const Container = styled.div`
   box-sizing: border-box;
   padding-right: 4px;
   margin: 14px 4px 0 0;
-  background-color: #ebecf0;
+  background-color: ${({ theme }) => theme.colors.neutral[250]};
   border-radius: 3px;
   width: 272px;
   display: flex;
@@ -16,13 +16,13 @@ export const Container = styled.div`
 
 export const ListTitle = styled.div`
   padding: 8px;
-  color: #172b4d;
+  color: ${({ theme }) => theme.colors.blue[400]};
   font-weight: 600;
 `;
 
-export const ListTitleInput = styled(TextField)`
+export const ListTitleInput = styled(TextField)<TextFieldProps>`
   padding: 8px;
-  color: #172b4d;
+  color: ${({ theme }) => theme.colors.blue[400]};
   font-weight: 600;
   border: none;
   width: 100%;
@@ -32,12 +32,13 @@ export const ListTitleInput = styled(TextField)`
       border-radius: 3px;
       padding: 7px 8px 4px;
       box-sizing: border-box;
-      color: #172b4d;
+      color: ${({ theme }) => theme.colors.blue[400]};
       font-weight: 600;
       min-height: 28px;
       &:focus {
-        background-color: #fff;
-        box-shadow: inset 0 0 0 2px #0079bf;
+        background-color: ${({ theme }) => theme.colors.neutral[100]};
+        box-shadow: ${({ theme }) =>
+          `inset 0 0 0 2px ${theme.colors.blue[100]}`};
       }
     }
   }
@@ -53,15 +54,15 @@ export const TaskList = styled.div`
   overflow-y: auto;
   &::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: #d3d3d3;
+    background-color: ${({ theme }) => theme.colors.darkness[100]};
   }
   &::-webkit-scrollbar {
-    width: 10px;
-    background-color: #f5f5f5;
+    width: 8px;
+    background-color: ${({ theme }) => theme.colors.neutral[200]};
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #c0c0c0;
+    background-color: ${({ theme }) => theme.colors.darkness[100]};
   }
 `;
 
@@ -76,10 +77,10 @@ export const StyledListTitle = styled.div`
     cursor: pointer;
     border-radius: 3px;
     &:hover {
-      background-color: rgba(9, 30, 66, 0.08);
+      background-color: ${({ theme }) => theme.colors.darkness[50]};
     }
     svg {
-      color: #6b778c;
+      color: ${({ theme }) => theme.colors.neutral[500]};
     }
   }
 `;

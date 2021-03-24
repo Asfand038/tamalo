@@ -14,14 +14,16 @@ export const StyledTaskContainer = styled.div<IContainer>`
     margin-bottom: 8px;
     max-width: 300px;
     min-height: 22px;
-    box-shadow: ${({ isDragging }) =>
-      isDragging ? '0 0 3px rgb(9 30 66 / 25%)' : '0 1px 0 rgb(9 30 66 / 25%)'};
+    box-shadow: ${({ isDragging, theme }) =>
+      isDragging
+        ? `0 0 3px ${theme.colors.boxShadow}`
+        : `0 1px 0 ${theme.colors.boxShadow}`};
     font-weight: 400;
     line-height: 20px;
-    color: #172b4d;
-    background-color: #fff;
+    color: ${({ theme }) => theme.colors.blue[400]};
+    background-color: ${({ theme }) => theme.colors.neutral[100]};
     &:hover {
-      background-color: #f4f5f7;
+      background-color: ${({ theme }) => theme.colors.neutral[200]};
     }
   }
 `;
@@ -42,12 +44,12 @@ export const StyledEditBtn = styled.span`
     cursor: pointer;
   }
   & svg {
-    color: #42526e;
+    color: ${({ theme }) => theme.colors.blue[300]};
     height: 16px;
     width: 16px;
   }
   &:hover {
-    background-color: #ebecf0;
+    background-color: ${({ theme }) => theme.colors.neutral[250]};
     opacity: 1;
   }
 `;

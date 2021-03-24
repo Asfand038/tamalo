@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
-import AddCard from './AddCard/AddCard';
+import { AddCard } from './AddCard';
 import { Task } from './Task';
 
 import {
@@ -10,7 +10,7 @@ import {
   ListTitleInput,
   TaskList,
   StyledListTitle,
-} from './Column.styles';
+} from './List.styles';
 
 interface IColumn {
   id: string;
@@ -27,7 +27,7 @@ interface Props {
   index: number;
 }
 
-const Column: React.FC<Props> = ({ column, tasks, index }) => {
+const List: React.FC<Props> = ({ column, tasks, index }) => {
   const [title, setTitle] = useState(column.title);
   return (
     <Draggable draggableId={column.id} index={index}>
@@ -67,4 +67,4 @@ const Column: React.FC<Props> = ({ column, tasks, index }) => {
   );
 };
 
-export default Column;
+export default List;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { BoardLayout } from '../../layouts';
-import { SecondaryNavbar, Column, initialData, AddList } from './components';
+import { SecondaryNavbar, List, initialData, AddList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 
 const BoardPage: React.FC = () => {
@@ -93,7 +93,7 @@ const BoardPage: React.FC = () => {
                   tasks.find((el) => el.id === taskId)
                 );
                 return (
-                  <Column
+                  <List
                     key={column.id}
                     column={column}
                     tasks={columnTasks}

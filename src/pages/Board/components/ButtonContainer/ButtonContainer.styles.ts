@@ -1,15 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
 
-const StyledButtonContainer = styled.div`
-  margin: 8px 0 0 8px;
+export const StyledButtonContainer = styled.div`
+  margin-top: 8px;
   display: flex;
   align-items: center;
 `;
 
-const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)`
   && {
     color: ${({ theme }) => theme.colors.neutral[100]};
     background-color: ${({ theme }) => theme.colors.green[100]};
@@ -27,7 +25,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const StyledCloseIcon = styled.div`
+export const StyledCloseIcon = styled.div`
   margin: 2px 0 0 5px;
   & svg {
     color: ${({ theme }) => theme.colors.neutral[500]};
@@ -41,26 +39,3 @@ const StyledCloseIcon = styled.div`
     }
   }
 `;
-
-interface IProps {
-  setFormIsOpen: (bool: boolean) => void;
-  btnText: string;
-}
-
-const ButtonContainer: React.FC<IProps> = ({
-  children,
-  setFormIsOpen,
-  btnText,
-}) => {
-  return (
-    <StyledButtonContainer>
-      <StyledButton variant="contained">{btnText}</StyledButton>
-      <StyledCloseIcon>
-        <CloseIcon onClick={() => setFormIsOpen(false)} />
-      </StyledCloseIcon>
-      {children}
-    </StyledButtonContainer>
-  );
-};
-
-export default ButtonContainer;

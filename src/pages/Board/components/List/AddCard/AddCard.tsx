@@ -6,10 +6,11 @@ import ClosedForm from './ClosedForm';
 const AddCard: React.FC = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
 
-  return formIsOpen ? (
-    <OpenedForm setFormIsOpen={setFormIsOpen} />
-  ) : (
-    <ClosedForm setFormIsOpen={setFormIsOpen} />
+  return (
+    <>
+      {!formIsOpen && <ClosedForm setFormIsOpen={setFormIsOpen} />}
+      {formIsOpen && <OpenedForm setFormIsOpen={setFormIsOpen} />}
+    </>
   );
 };
 
