@@ -2,23 +2,16 @@ import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { AddCard } from './AddCard';
-import { Task } from './Task';
+import { Tasks } from './Tasks';
 import { ListTitle } from './ListTitle';
-import { getTransformValue } from '../../../../utils';
+import { IColumn, ITask } from '../schemas';
+import { getTransformValue } from '../../../../../utils';
+
 import { StyledListContainer, StyledTaskList } from './List.styles';
 
-interface IColumn {
-  id: string;
-  title: string;
-  taskIds: string[];
-}
-interface ITask {
-  id: string;
-  content: string;
-}
 interface IProps {
   column: IColumn;
-  tasks: (ITask | undefined)[];
+  tasks: ITask[];
   index: number;
 }
 
@@ -40,13 +33,7 @@ const List: React.FC<IProps> = ({ column, tasks, index }) => {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {tasks.map((task, index) => (
-                  <Task
-                    key={task?.id}
-                    task={task || { id: '', content: '' }}
-                    index={index}
-                  />
-                ))}
+                <Tasks tasks={tasks} />
                 {provided.placeholder}
               </StyledTaskList>
             )}

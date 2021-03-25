@@ -75,5 +75,3 @@ export const StyledListTitleInput = styled(TextField)<TextFieldProps>`
     }
   }
 `;
-
-// Styles for ClosedForm

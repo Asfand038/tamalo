@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
-import { ButtonContainer } from '../../ButtonContainer';
+import { ButtonContainer } from '../../../ButtonContainer';
 import {
   StyledBtnWrapper,
   StyledCard,

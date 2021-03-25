@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { BoardLayout } from '../../layouts';
-import { SecondaryNavbar, List, initialData, AddList } from './components';
+import { initialData, SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 
 const BoardPage: React.FC = () => {
@@ -89,14 +89,11 @@ const BoardPage: React.FC = () => {
             >
               {columnOrder.map((columnId, index) => {
                 const column = columns.find((el) => el.id === columnId)!;
-                const columnTasks = column.taskIds.map((taskId) =>
-                  tasks.find((el) => el.id === taskId)
-                );
                 return (
-                  <List
+                  <InnerList
                     key={column.id}
                     column={column}
-                    tasks={columnTasks}
+                    tasks={tasks}
                     index={index}
                   />
                 );

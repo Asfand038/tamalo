@@ -2,7 +2,7 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 
-import { getTransformValue } from '../../../../../utils';
+import { getTransformValue } from '../../../../../../../utils';
 import { StyledTaskContainer, StyledEditBtn } from './Task.styles';
 
 interface ITask {
