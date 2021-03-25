@@ -1,32 +1,31 @@
 import styled from 'styled-components';
 
-interface IContainer {
+interface ITaskContainer {
   isDragging: boolean;
+  currentTransform: string;
 }
 
-export const StyledTaskContainer = styled.div<IContainer>`
-  && {
-    left: auto !important;
-    top: auto !important;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 3px;
-    padding: 6px 8px 2px;
-    margin-bottom: 8px;
-    max-width: 300px;
-    min-height: 22px;
-    box-shadow: ${({ isDragging, theme }) =>
-      isDragging
-        ? `0 0 3px ${theme.colors.boxShadow}`
-        : `0 1px 0 ${theme.colors.boxShadow}`};
-    font-weight: 400;
-    line-height: 20px;
-    color: ${({ theme }) => theme.colors.blue[400]};
-    background-color: ${({ theme }) => theme.colors.neutral[100]};
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.neutral[200]};
-    }
+export const StyledTaskContainer = styled.div<ITaskContainer>`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 3px;
+  padding: 6px 8px 2px;
+  margin-bottom: 8px;
+  max-width: 300px;
+  min-height: 22px;
+  box-shadow: ${({ isDragging, theme }) =>
+    isDragging
+      ? `0 0 3px ${theme.colors.boxShadow}`
+      : `0 1px 0 ${theme.colors.boxShadow}`};
+  font-weight: 400;
+  line-height: 20px;
+  color: ${({ theme }) => theme.colors.blue[400]};
+  background-color: ${({ theme }) => theme.colors.neutral[100]};
+  transform: ${({ isDragging, currentTransform }) =>
+    isDragging ? `${currentTransform} rotate(3deg) !important` : null};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.neutral[200]};
   }
 `;
 

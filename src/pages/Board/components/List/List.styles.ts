@@ -1,20 +1,23 @@
 import styled from 'styled-components';
 
-interface IContainer {
+interface IListContainer {
   isDragging: boolean;
+  currentTransform: string;
 }
 
-export const Container = styled.div<IContainer>`
+export const StyledListContainer = styled.div<IListContainer>`
   box-sizing: border-box;
   padding-right: 4px;
   margin: 14px 8px 0 0;
-  /* background-color: ${({ theme }) => theme.colors.neutral[250]}; */
+  background-color: ${({ theme }) => theme.colors.neutral[250]};
   border-radius: 3px;
   width: 272px;
   display: flex;
   flex-direction: column;
   height: fit-content;
   flex-shrink: 0;
+  transform: ${({ isDragging, currentTransform }) =>
+    isDragging ? `${currentTransform} rotate(3deg) !important` : null};
 `;
 
 export const StyledTaskList = styled.div`
@@ -35,11 +38,4 @@ export const StyledTaskList = styled.div`
     border-radius: 10px;
     background-color: ${({ theme }) => theme.colors.darkness[100]};
   }
-`;
-
-export const StyledTiltWrapper = styled.div<IContainer>`
-  background-color: ${({ theme }) => theme.colors.neutral[250]};
-  border-radius: 3px;
-  transform: ${({ isDragging }) =>
-    isDragging ? 'rotate(3deg)' : 'rotate(0deg)'};
 `;

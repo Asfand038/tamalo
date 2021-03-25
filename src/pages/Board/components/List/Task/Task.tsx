@@ -2,6 +2,7 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 
+import { getTransformValue } from '../../../../../utils';
 import { StyledTaskContainer, StyledEditBtn } from './Task.styles';
 
 interface ITask {
@@ -22,7 +23,9 @@ const Task: React.FC<IProps> = ({ task, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
+          id={task.id}
+          isDragging={snapshot.isDragging && !snapshot.isDropAnimating}
+          currentTransform={getTransformValue(task.id)}
         >
           {task.content}
           <StyledEditBtn>
