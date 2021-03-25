@@ -6,6 +6,8 @@ interface IContainer {
 
 export const StyledTaskContainer = styled.div<IContainer>`
   && {
+    left: auto !important;
+    top: auto !important;
     position: relative;
     display: flex;
     justify-content: space-between;
