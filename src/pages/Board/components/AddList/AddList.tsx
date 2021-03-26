@@ -19,4 +19,4 @@ const AddList: React.FC = () => {
   );
 };
 
-export default AddList;
+export default React.memo(AddList);

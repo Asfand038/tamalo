@@ -4,11 +4,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 
 import { getTransformValue } from '../../../../../../../utils';
 import { StyledTaskContainer, StyledEditBtn } from './Task.styles';
-
-interface ITask {
-  id: string;
-  content: string;
-}
+import { ITask } from '../../../schemas';
 
 interface IProps {
   task: ITask;
