@@ -1,23 +1,19 @@
 import styled from 'styled-components';
-import { Collapse, TextField, TextFieldProps, Card } from '@material-ui/core';
+import { TextField, TextFieldProps, Card, Collapse } from '@material-ui/core';
 
-export const StyledCollapse = styled(Collapse)`
-  && {
-    margin-top: -54px;
-  }
+export const StyledContainer = styled.div`
+  margin: 14px 4px 0 8px;
 `;
 
 export const StyledOpenFormBtn = styled.div`
+  height: 32px;
   z-index: 1000;
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.transparency[200]};
   cursor: pointer;
   border-radius: 3px;
-  height: fit-content;
-  min-height: 32px;
   padding: 4px;
-  margin: 14px 4px 0 8px;
   transition: background-color 85ms ease-in, opacity 40ms ease-in,
     border-color 85ms ease-in;
   color: ${({ theme }) => theme.colors.neutral[100]};
@@ -34,14 +30,19 @@ export const StyledOpenFormBtn = styled.div`
   }
 `;
 
+export const StyledCollapse = styled(Collapse)`
+  && {
+    z-index: 2000;
+    margin-top: -40px;
+  }
+`;
+
 // Styles for AddListForm
 
 export const StyledAddListContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral[250]};
   border-radius: 3px;
   height: fit-content;
-  margin: 14px 4px 0 8px;
-  min-height: 32px;
   width: 272px;
   padding: 4px;
   flex-shrink: 0;

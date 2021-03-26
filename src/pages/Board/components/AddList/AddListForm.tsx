@@ -43,6 +43,7 @@ const AddListForm: React.FC<IProps> = ({ setFormIsOpen }) => {
           variant="outlined"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          autoFocus
         />
       </StyledCard>
       <ButtonContainer setFormIsOpen={setFormIsOpen} btnText="Add list" />

@@ -29,6 +29,11 @@ export const StyledTaskContainer = styled.div<ITaskContainer>`
   }
 `;
 
+export const StyledContent = styled.span`
+  width: 100%;
+  word-break: break-word;
+`;
+
 export const StyledEditBtn = styled.span`
   position: absolute;
   top: 2px;
@@ -38,6 +43,7 @@ export const StyledEditBtn = styled.span`
   border-radius: 3px;
   display: none;
   opacity: 0.8;
+  background-color: ${({ theme }) => theme.colors.neutral[200]};
   ${StyledTaskContainer}:hover & {
     display: flex;
     justify-content: center;
