@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Task } from './Task';
-import { ITask } from '../../schemas';
+import { ITask } from '../../types';
 
 interface IProps {
   tasks: ITask[];

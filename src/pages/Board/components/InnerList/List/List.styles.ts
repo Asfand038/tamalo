@@ -15,6 +15,7 @@ export const StyledListContainer = styled.div<IListContainer>`
   display: flex;
   flex-direction: column;
   height: fit-content;
+  max-height: 524px;
   flex-shrink: 0;
   transform: ${({ isDragging, currentTransform }) =>
     isDragging ? `${currentTransform} rotate(3deg) !important` : null};
@@ -24,7 +25,7 @@ export const StyledTaskList = styled.div`
   padding: 0 8px;
   flex-grow: 1;
   min-height: 2px;
-  max-height: 442px;
+  height: fit-content;
   overflow-y: auto;
   &::-webkit-scrollbar-track {
     border-radius: 10px;

@@ -3,6 +3,7 @@ import { TextField, TextFieldProps, Card, Collapse } from '@material-ui/core';
 
 export const StyledContainer = styled.div`
   margin: 14px 4px 0 8px;
+  max-height: 40px;
 `;
 
 export const StyledOpenFormBtn = styled.div`

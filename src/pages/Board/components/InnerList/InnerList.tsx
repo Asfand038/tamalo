@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List } from './List';
-import { IColumn, ITask } from './schemas';
+import { IColumn, ITask } from './types';
 
 interface IProps {
   column: IColumn;
