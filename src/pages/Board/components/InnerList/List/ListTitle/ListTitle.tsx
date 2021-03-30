@@ -46,4 +46,4 @@ const ListTitle: React.FC<IProps> = ({ provided, title }) => {
   );
 };
 
-export default ListTitle;
+export default React.memo(ListTitle);

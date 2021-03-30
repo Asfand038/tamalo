@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Route } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
+import { TaskPage } from '../Task';
 import { BoardLayout } from '../../layouts';
 import { initialData, SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
@@ -74,37 +76,40 @@ const BoardPage: React.FC = () => {
   };
 
   return (
-    <BoardLayout>
-      <SecondaryNavbar />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable
-          droppableId="all-columns"
-          direction="horizontal"
-          type="column"
-        >
-          {(provided) => (
-            <StyledBoardContainer
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {columnOrder.map((columnId, index) => {
-                const column = columns.find((el) => el.id === columnId)!;
-                return (
-                  <InnerList
-                    key={column.id}
-                    column={column}
-                    tasks={tasks}
-                    index={index}
-                  />
-                );
-              })}
-              {provided.placeholder}
-              <AddList />
-            </StyledBoardContainer>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </BoardLayout>
+    <>
+      <BoardLayout>
+        <SecondaryNavbar />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable
+            droppableId="all-columns"
+            direction="horizontal"
+            type="column"
+          >
+            {(provided) => (
+              <StyledBoardContainer
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {columnOrder.map((columnId, index) => {
+                  const column = columns.find((el) => el.id === columnId)!;
+                  return (
+                    <InnerList
+                      key={column.id}
+                      column={column}
+                      tasks={tasks}
+                      index={index}
+                    />
+                  );
+                })}
+                {provided.placeholder}
+                <AddList />
+              </StyledBoardContainer>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </BoardLayout>
+      <Route path="/boards/:id/tasks/:id" component={TaskPage} />
+    </>
   );
 };
 

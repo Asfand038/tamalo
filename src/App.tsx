@@ -10,10 +10,10 @@ const App: React.FC = () => {
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
       <Switch>
-        <Route path="/login" exact component={LoginPage} />
-        <Route path="/signup" exact component={SignupPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
         <Route path="/boards" exact component={DashboardPage} />
-        <Route path="/test" component={BoardPage} />
+        <Route path="/boards/:id" component={BoardPage} />
         <Redirect from="/" to="/login" />
       </Switch>
     </ThemeProvider>

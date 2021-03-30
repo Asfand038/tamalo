@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { AddCard } from './AddCard';
+import { ClosedForm, OpenedForm } from './AddCard';
 import { Tasks } from './Tasks';
 import { ListTitle } from './ListTitle';
 import { IColumn, ITask } from '../types';
@@ -16,6 +16,8 @@ interface IProps {
 }
 
 const List: React.FC<IProps> = ({ column, tasks, index }) => {
+  const [formIsOpen, setFormIsOpen] = useState(false);
+
   return (
     <Draggable draggableId={column.id} index={index}>
       {(provided, snapshot) => (
@@ -35,10 +37,11 @@ const List: React.FC<IProps> = ({ column, tasks, index }) => {
               >
                 <Tasks tasks={tasks} />
                 {provided.placeholder}
+                {formIsOpen && <OpenedForm setFormIsOpen={setFormIsOpen} />}
               </StyledTaskList>
             )}
           </Droppable>
-          <AddCard />
+          {!formIsOpen && <ClosedForm setFormIsOpen={setFormIsOpen} />}
         </StyledListContainer>
       )}
     </Draggable>

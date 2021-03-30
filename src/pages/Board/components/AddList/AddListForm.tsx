@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
-import { ButtonContainer } from '../ButtonContainer';
+import { ButtonContainer } from '../../../../components';
 import {
   StyledCard,
   StyledAddListContainer,

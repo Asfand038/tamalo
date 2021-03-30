@@ -5,7 +5,6 @@ export const StyledNavbar = styled(Toolbar)`
   && {
     width: 100%;
     box-sizing: border-box;
-    z-index: 5000;
     background-color: inherit;
     display: flex;
     justify-content: space-between;

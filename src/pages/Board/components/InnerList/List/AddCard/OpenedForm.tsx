@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Card } from '@material-ui/core';
 import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
-import { ButtonContainer } from '../../../ButtonContainer';
+import { ButtonContainer } from '../../../../../../components';
 import {
-  StyledBtnWrapper,
-  StyledCard,
   StyledOpenedFormContainer,
   StyledOptionsIcon,
   StyledTextArea,
@@ -38,7 +37,7 @@ const OpenedForm: React.FC<IProps> = ({ setFormIsOpen }) => {
 
   return (
     <StyledOpenedFormContainer ref={formRef}>
-      <StyledCard>
+      <Card>
         <StyledTextArea
           placeholder="Enter a title for this card..."
           variant="outlined"
@@ -48,14 +47,12 @@ const OpenedForm: React.FC<IProps> = ({ setFormIsOpen }) => {
           rowsMax="8"
           onChange={(e) => setCardTitle(e.target.value)}
         />
-      </StyledCard>
-      <StyledBtnWrapper>
-        <ButtonContainer btnText="Add Card" setFormIsOpen={setFormIsOpen}>
-          <StyledOptionsIcon>
-            <MoreHorizIcon />
-          </StyledOptionsIcon>
-        </ButtonContainer>
-      </StyledBtnWrapper>
+      </Card>
+      <ButtonContainer btnText="Add Card" setFormIsOpen={setFormIsOpen}>
+        <StyledOptionsIcon>
+          <MoreHorizIcon />
+        </StyledOptionsIcon>
+      </ButtonContainer>
     </StyledOpenedFormContainer>
   );
 };

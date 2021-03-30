@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card, TextField, TextFieldProps } from '@material-ui/core';
+import { TextField, TextFieldProps } from '@material-ui/core';
 
 // Styles for ClosedForm
 
@@ -65,10 +65,6 @@ export const StyledOpenedFormContainer = styled.div`
   margin-bottom: 8px;
 `;
 
-export const StyledCard = styled(Card)`
-  margin: 0 8px;
-`;
-
 export const StyledTextArea = styled(TextField)<TextFieldProps>`
   && {
     background-color: ${({ theme }) => theme.colors.neutral[100]};
@@ -103,7 +99,7 @@ export const StyledOptionsIcon = styled.div`
   width: 32px;
   display: flex;
   border-radius: 3px;
-  margin: 0 8px 0 auto;
+  margin-left: auto;
   & svg {
     color: ${({ theme }) => theme.colors.neutral[500]};
     width: 25px;
@@ -117,8 +113,4 @@ export const StyledOptionsIcon = styled.div`
       color: ${({ theme }) => theme.colors.blue[400]};
     }
   }
-`;
-
-export const StyledBtnWrapper = styled.div`
-  margin-left: 8px;
 `;
