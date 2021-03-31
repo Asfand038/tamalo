@@ -1,3 +1,3 @@
-export { default as Title } from './Title';
-export { default as Sidebar } from './Sidebar';
-export { default as MainContent } from './MainContent';
+export { TaskTitle } from './TaskTitle';
+export { Sidebar } from './Sidebar';
+export { MainContent } from './MainContent';

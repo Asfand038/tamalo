@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Fade } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { Title, Sidebar, MainContent } from './components';
+import { TaskTitle, Sidebar, MainContent } from './components';
 import {
   StyledModal,
   StyledBackdrop,
@@ -14,22 +14,32 @@ import {
 
 const TaskModal: React.FC = () => {
   const history = useHistory();
+  const modalRef = useRef<HTMLDivElement>(null);
+
   return (
     <StyledModal
+      ref={modalRef}
       open
       onClose={() => history.goBack()}
-      closeAfterTransition
       BackdropComponent={StyledBackdrop}
       BackdropProps={{
         timeout: 500,
       }}
+      onRendered={() => {
+        const modal = modalRef.current;
+        setTimeout(() => {
+          if (modal) {
+            modal.scrollTo(0, 0);
+          }
+        }, 85);
+      }}
     >
       <Fade in>
-        <StyledTaskContainer>
+        <StyledTaskContainer id="task-container">
           <StyledCloseIcon>
             <CloseIcon onClick={() => history.goBack()} />
           </StyledCloseIcon>
-          <Title />
+          <TaskTitle />
           <StyledBody>
             <MainContent />
             <Sidebar />
