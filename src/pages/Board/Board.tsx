@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
@@ -8,7 +8,7 @@ import { BoardLayout } from '../../layouts';
 import { Loader } from '../../components';
 import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
-import { IList, ITask, IBoard } from './types';
+import { IBoard } from './types';
 import { getBoardById, updateBoard } from './api';
 
 interface IRouteParams {
@@ -17,60 +17,44 @@ interface IRouteParams {
 
 const BoardPage: React.FC = () => {
   const { id } = useParams<IRouteParams>();
-  const [listsOrder, setListsOrder] = useState<string[]>([]);
-  const [lists, setLists] = useState<IList[]>([]);
-  const [tasks, setTasks] = useState<ITask[]>([]);
 
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(updateBoard, {
-    // When mutate is called:
     onMutate: async (newBoard: IBoard) => {
-      // Cancel any outgoing refetches
-      // (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries(['board', id]);
-
-      // Snapshot the previous value
       const previousBoard = queryClient.getQueryData<IBoard>(['board', id]);
-
-      // Optimistically update to the new value
       queryClient.setQueryData<IBoard>(['board', id], newBoard);
-
-      // Return a context with the previous and new board
       return { previousBoard, newBoard };
     },
-    // If the mutation fails, use the context we returned above
+
     onError: (err, newBoard, context) => {
       if (context?.previousBoard) {
         queryClient.setQueryData('board', context.previousBoard);
       }
     },
 
-    // Always refetch after error or success:
     onSettled: () => {
       queryClient.invalidateQueries(['board', id]);
     },
   });
 
-  const { isLoading, error } = useQuery(['board', id], () => getBoardById(id), {
-    onSuccess: ({ lists, tasks, listsOrder }) => {
-      setListsOrder(listsOrder);
-      setLists(lists);
-      setTasks(tasks);
-    },
-  });
+  const { data, isLoading, error } = useQuery(['board', id], () =>
+    getBoardById(id)
+  );
 
   if (isLoading) return <Loader />;
   if (error) return <div>Something went wrong...</div>;
 
+  const { listsOrder, lists, tasks } = data!;
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
-    // Checks if an object is dropped not within a valid destination
     if (!destination) {
       return;
     }
-    // Checking if an object is dropped at the same place.
+
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -82,11 +66,10 @@ const BoardPage: React.FC = () => {
       const newListsOrder = [...listsOrder];
       newListsOrder.splice(source.index, 1);
       newListsOrder.splice(destination.index, 0, draggableId);
-      setListsOrder(newListsOrder);
       mutate({ id, tasks, lists, listsOrder: newListsOrder });
       return;
     }
-    // Updating state if card dropped somewhere else which is valid destination.
+
     const start = lists.find((el) => el.id === source.droppableId)!;
     const finish = lists.find((el) => el.id === destination.droppableId)!;
 
@@ -98,13 +81,11 @@ const BoardPage: React.FC = () => {
         ...start,
         tasksOrder: newTasksOrder,
       };
-
       const newLists = lists.filter((list) => list.id !== source.droppableId);
-      setLists([...newLists, newList]);
       mutate({ id, lists: [...newLists, newList], listsOrder, tasks });
       return;
     }
-    // Moving from one list to another
+
     const startTasksOrder = [...start.tasksOrder];
     startTasksOrder.splice(source.index, 1);
     const newStartList = {
@@ -121,7 +102,6 @@ const BoardPage: React.FC = () => {
       (list) =>
         list.id !== source.droppableId && list.id !== destination.droppableId
     );
-    setLists([...newLists, newStartList, newFinishList]);
     mutate({
       id,
       lists: [...newLists, newStartList, newFinishList],
