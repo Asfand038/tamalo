@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { TaskPage } from '../Task';
@@ -8,33 +8,8 @@ import { BoardLayout } from '../../layouts';
 import { Loader } from '../../components';
 import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
-import { IList, ITask } from './types';
-
-const getBoardById = async (id: string) => {
-  const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-  ).json();
-
-  const tasksArray = data.tasks.map((task: ITask) => ({
-    id: task.id,
-    title: task.title,
-  }));
-  const listsArray = data.lists.map((list: IList) => ({
-    id: list.id,
-    title: list.title,
-    tasksOrder: list.tasksOrder,
-  }));
-  const boardData = {
-    tasks: tasksArray,
-    lists: listsArray,
-    listsOrder: data.listsOrder,
-  };
-  return boardData;
-};
+import { IList, ITask, IBoard } from './types';
+import { getBoardById, updateBoard } from './api';
 
 interface IRouteParams {
   id: string;
@@ -46,17 +21,44 @@ const BoardPage: React.FC = () => {
   const [lists, setLists] = useState<IList[]>([]);
   const [tasks, setTasks] = useState<ITask[]>([]);
 
-  const { data, isLoading, error } = useQuery(['board', id], () =>
-    getBoardById(id)
-  );
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (data) {
-      setListsOrder(data.listsOrder);
-      setLists(data.lists);
-      setTasks(data.tasks);
-    }
-  }, [data]);
+  const { mutate } = useMutation(updateBoard, {
+    // When mutate is called:
+    onMutate: async (newBoard: IBoard) => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries(['board', id]);
+
+      // Snapshot the previous value
+      const previousBoard = queryClient.getQueryData<IBoard>(['board', id]);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData<IBoard>(['board', id], newBoard);
+
+      // Return a context with the previous and new board
+      return { previousBoard, newBoard };
+    },
+    // If the mutation fails, use the context we returned above
+    onError: (err, newBoard, context) => {
+      if (context?.previousBoard) {
+        queryClient.setQueryData('board', context.previousBoard);
+      }
+    },
+
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries(['board', id]);
+    },
+  });
+
+  const { isLoading, error } = useQuery(['board', id], () => getBoardById(id), {
+    onSuccess: ({ lists, tasks, listsOrder }) => {
+      setListsOrder(listsOrder);
+      setLists(lists);
+      setTasks(tasks);
+    },
+  });
 
   if (isLoading) return <Loader />;
   if (error) return <div>Something went wrong...</div>;
@@ -81,6 +83,7 @@ const BoardPage: React.FC = () => {
       newListsOrder.splice(source.index, 1);
       newListsOrder.splice(destination.index, 0, draggableId);
       setListsOrder(newListsOrder);
+      mutate({ id, tasks, lists, listsOrder: newListsOrder });
       return;
     }
     // Updating state if card dropped somewhere else which is valid destination.
@@ -98,6 +101,7 @@ const BoardPage: React.FC = () => {
 
       const newLists = lists.filter((list) => list.id !== source.droppableId);
       setLists([...newLists, newList]);
+      mutate({ id, lists: [...newLists, newList], listsOrder, tasks });
       return;
     }
     // Moving from one list to another
@@ -118,6 +122,12 @@ const BoardPage: React.FC = () => {
         list.id !== source.droppableId && list.id !== destination.droppableId
     );
     setLists([...newLists, newStartList, newFinishList]);
+    mutate({
+      id,
+      lists: [...newLists, newStartList, newFinishList],
+      listsOrder,
+      tasks,
+    });
   };
 
   return (

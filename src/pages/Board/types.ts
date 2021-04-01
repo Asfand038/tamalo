@@ -8,3 +8,10 @@ export interface IList {
   title: string;
   tasksOrder: string[];
 }
+
+export interface IBoard {
+  id: string;
+  tasks: ITask[];
+  lists: IList[];
+  listsOrder: string[];
+}
