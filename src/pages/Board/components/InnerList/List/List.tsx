@@ -4,32 +4,32 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { ClosedForm, OpenedForm } from './AddCard';
 import { Tasks } from './Tasks';
 import { ListTitle } from './ListTitle';
-import { IColumn, ITask } from '../types';
+import { IList, ITask } from '../../../types';
 import { getTransformValue } from '../../../../../utils';
 
 import { StyledListContainer, StyledTaskList } from './List.styles';
 
 interface IProps {
-  column: IColumn;
+  list: IList;
   tasks: ITask[];
   index: number;
 }
 
-const List: React.FC<IProps> = ({ column, tasks, index }) => {
+const List: React.FC<IProps> = ({ list, tasks, index }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
 
   return (
-    <Draggable draggableId={column.id} index={index}>
+    <Draggable draggableId={list.id} index={index}>
       {(provided, snapshot) => (
         <StyledListContainer
           {...provided.draggableProps}
           ref={provided.innerRef}
-          id={column.id}
+          id={list.id}
           isDragging={snapshot.isDragging && !snapshot.isDropAnimating}
-          currentTransform={getTransformValue(column.id)}
+          currentTransform={getTransformValue(list.id)}
         >
-          <ListTitle provided={provided} title={column.title} />
-          <Droppable droppableId={column.id} type="task">
+          <ListTitle provided={provided} title={list.title} />
+          <Droppable droppableId={list.id} type="task">
             {(provided) => (
               <StyledTaskList
                 ref={provided.innerRef}

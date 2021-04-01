@@ -35,7 +35,7 @@ const TaskModal: React.FC = () => {
       }}
     >
       <Fade in>
-        <StyledTaskContainer id="task-container">
+        <StyledTaskContainer>
           <StyledCloseIcon>
             <CloseIcon onClick={() => history.goBack()} />
           </StyledCloseIcon>

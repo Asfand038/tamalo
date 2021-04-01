@@ -1,19 +1,67 @@
-import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { TaskPage } from '../Task';
 import { BoardLayout } from '../../layouts';
-import { initialData, SecondaryNavbar, AddList, InnerList } from './components';
+import { Loader } from '../../components';
+import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
+import { IList, ITask } from './types';
+
+const getBoardById = async (id: string) => {
+  const data = await (
+    await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+  ).json();
+
+  const tasksArray = data.tasks.map((task: ITask) => ({
+    id: task.id,
+    title: task.title,
+  }));
+  const listsArray = data.lists.map((list: IList) => ({
+    id: list.id,
+    title: list.title,
+    tasksOrder: list.tasksOrder,
+  }));
+  const boardData = {
+    tasks: tasksArray,
+    lists: listsArray,
+    listsOrder: data.listsOrder,
+  };
+  return boardData;
+};
+
+interface IRouteParams {
+  id: string;
+}
 
 const BoardPage: React.FC = () => {
-  const [columnOrder, setColumnOrder] = useState(initialData.columnOrder);
-  const [columns, setColumns] = useState(initialData.columns);
-  const [tasks] = useState(initialData.tasks);
+  const { id } = useParams<IRouteParams>();
+  const [listsOrder, setListsOrder] = useState<string[]>([]);
+  const [lists, setLists] = useState<IList[]>([]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
+
+  const { data, isLoading, error } = useQuery(['board', id], () =>
+    getBoardById(id)
+  );
+
+  useEffect(() => {
+    if (data) {
+      setListsOrder(data.listsOrder);
+      setLists(data.lists);
+      setTasks(data.tasks);
+    }
+  }, [data]);
+
+  if (isLoading) return <Loader />;
+  if (error) return <div>Something went wrong...</div>;
 
   const onDragEnd = (result: DropResult) => {
-    document.body.style.backgroundColor = 'inherit';
     const { destination, source, draggableId, type } = result;
 
     // Checks if an object is dropped not within a valid destination
@@ -28,51 +76,48 @@ const BoardPage: React.FC = () => {
       return;
     }
 
-    if (type === 'column') {
-      const newColumnOrder = [...columnOrder];
-      newColumnOrder.splice(source.index, 1);
-      newColumnOrder.splice(destination.index, 0, draggableId);
-      setColumnOrder(newColumnOrder);
+    if (type === 'list') {
+      const newListsOrder = [...listsOrder];
+      newListsOrder.splice(source.index, 1);
+      newListsOrder.splice(destination.index, 0, draggableId);
+      setListsOrder(newListsOrder);
       return;
     }
     // Updating state if card dropped somewhere else which is valid destination.
-    const start = columns.find((el) => el.id === source.droppableId)!;
-    const finish = columns.find((el) => el.id === destination.droppableId)!;
+    const start = lists.find((el) => el.id === source.droppableId)!;
+    const finish = lists.find((el) => el.id === destination.droppableId)!;
 
     if (start === finish) {
-      const newTaskIds = [...start.taskIds];
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, draggableId);
-      const newColumn = {
+      const newTasksOrder = [...start.tasksOrder];
+      newTasksOrder.splice(source.index, 1);
+      newTasksOrder.splice(destination.index, 0, draggableId);
+      const newList = {
         ...start,
-        taskIds: newTaskIds,
+        tasksOrder: newTasksOrder,
       };
 
-      const newColumns = columns.filter(
-        (column) => column.id !== source.droppableId
-      );
-      setColumns([...newColumns, newColumn]);
+      const newLists = lists.filter((list) => list.id !== source.droppableId);
+      setLists([...newLists, newList]);
       return;
     }
     // Moving from one list to another
-    const startTaskIds = [...start.taskIds];
-    startTaskIds.splice(source.index, 1);
-    const newStartColumn = {
+    const startTasksOrder = [...start.tasksOrder];
+    startTasksOrder.splice(source.index, 1);
+    const newStartList = {
       ...start,
-      taskIds: startTaskIds,
+      tasksOrder: startTasksOrder,
     };
-    const finishTaskIds = [...finish.taskIds];
-    finishTaskIds.splice(destination.index, 0, draggableId);
-    const newFinishColumn = {
+    const finishTasksOrder = [...finish.tasksOrder];
+    finishTasksOrder.splice(destination.index, 0, draggableId);
+    const newFinishList = {
       ...finish,
-      taskIds: finishTaskIds,
+      tasksOrder: finishTasksOrder,
     };
-    const newColumns = columns.filter(
-      (column) =>
-        column.id !== source.droppableId &&
-        column.id !== destination.droppableId
+    const newLists = lists.filter(
+      (list) =>
+        list.id !== source.droppableId && list.id !== destination.droppableId
     );
-    setColumns([...newColumns, newStartColumn, newFinishColumn]);
+    setLists([...newLists, newStartList, newFinishList]);
   };
 
   return (
@@ -80,22 +125,18 @@ const BoardPage: React.FC = () => {
       <BoardLayout>
         <SecondaryNavbar />
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable
-            droppableId="all-columns"
-            direction="horizontal"
-            type="column"
-          >
+          <Droppable droppableId="all-lists" direction="horizontal" type="list">
             {(provided) => (
               <StyledBoardContainer
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {columnOrder.map((columnId, index) => {
-                  const column = columns.find((el) => el.id === columnId)!;
+                {listsOrder.map((listId, index) => {
+                  const list = lists.find((el) => el.id === listId)!;
                   return (
                     <InnerList
-                      key={column.id}
-                      column={column}
+                      key={list.id}
+                      list={list}
                       tasks={tasks}
                       index={index}
                     />

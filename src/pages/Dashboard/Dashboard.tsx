@@ -1,6 +1,5 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-
 import { Grid } from '@material-ui/core';
 import {
   PersonOutline as PersonOutlineIcon,

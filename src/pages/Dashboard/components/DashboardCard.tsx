@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Grid } from '@material-ui/core';
 import { StarBorderRounded as StarBorderRoundedIcon } from '@material-ui/icons';
@@ -77,6 +78,7 @@ const DashboardCard: React.FC<CardProps> = ({ details }) => {
     title,
   } = details;
   const [hoverBoard, setHoverBoard] = useState('');
+  const history = useHistory();
 
   return (
     <StyledGridItem
@@ -88,6 +90,7 @@ const DashboardCard: React.FC<CardProps> = ({ details }) => {
       hovered={+(hoverBoard === id)}
       onMouseEnter={() => setHoverBoard(id)}
       onMouseLeave={() => setHoverBoard('')}
+      onClick={() => history.push(`/boards/${id}`)}
     >
       <div>
         <StyledTitle>{title}</StyledTitle>

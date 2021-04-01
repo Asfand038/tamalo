@@ -8,7 +8,7 @@ import {
   StyledEditBtn,
   StyledContent,
 } from './Task.styles';
-import { ITask } from '../../../types';
+import { ITask } from '../../../../../types';
 import { getTransformValue } from '../../../../../../../utils';
 
 interface IProps {
@@ -30,7 +30,7 @@ const Task: React.FC<IProps> = ({ task, index }) => {
           currentTransform={getTransformValue(task.id)}
           onClick={() => history.push('/boards/abc/tasks/123')}
         >
-          <StyledContent>{task.content}</StyledContent>
+          <StyledContent>{task.title}</StyledContent>
           <StyledEditBtn>
             <CreateOutlinedIcon />
           </StyledEditBtn>
