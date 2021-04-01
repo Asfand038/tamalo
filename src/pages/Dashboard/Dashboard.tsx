@@ -6,37 +6,23 @@ import {
   PeopleOutlineOutlined as PeopleOutlineOutlinedIcon,
 } from '@material-ui/icons';
 
-import { DashboardLayout } from '../../layouts';
 import { StyledTitle, StyledBoardsCategory } from './Dashboard.styles';
+import { DashboardLayout } from '../../layouts';
 import { Loader } from '../../components';
 import { BoardSchema, DashboardCard } from './components';
-import { useAuth } from '../../context';
-
-const getBoards = async () => {
-  const data = await (
-    await fetch('https://tamalo.herokuapp.com/boards', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-  ).json();
-  return data;
-};
+import { useAuth } from '../../contexts';
+import { getBoards } from './api';
 
 const DashboardPage: React.FC = () => {
   const { userId } = useAuth();
-  const { data, isLoading, error } = useQuery('boards', getBoards);
+  const { data, isLoading, error } = useQuery(['boards'], () =>
+    getBoards(userId)
+  );
 
   if (isLoading) return <Loader />;
   if (error) return <div>Something went wrong...</div>;
 
-  const ownedBoards = data.filter((board: BoardSchema) =>
-    board.owners.includes(userId)
-  );
-
-  const memberOfBoards = data.filter((board: BoardSchema) =>
-    board.members.includes(userId)
-  );
+  const { ownedBoards, memberOfBoards } = data!;
 
   const boardCategories = [
     {

@@ -15,7 +15,7 @@ import {
   StyledSSOLink,
   ErrorMessage,
 } from './Login.styles';
-import { useAuth } from '../../context';
+import { useAuth } from '../../contexts';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
