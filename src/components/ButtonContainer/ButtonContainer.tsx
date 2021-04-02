@@ -19,7 +19,9 @@ const ButtonContainer: React.FC<IProps> = ({
 }) => {
   return (
     <StyledButtonContainer>
-      <StyledButton variant="contained">{btnText}</StyledButton>
+      <StyledButton variant="contained" type="submit">
+        {btnText}
+      </StyledButton>
       <StyledCloseIcon>
         <CloseIcon onClick={() => setFormIsOpen(false)} />
       </StyledCloseIcon>

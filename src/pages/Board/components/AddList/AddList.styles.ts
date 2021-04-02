@@ -40,7 +40,7 @@ export const StyledCollapse = styled(Collapse)`
 
 // Styles for AddListForm
 
-export const StyledAddListContainer = styled.div`
+export const StyledAddListContainer = styled.form`
   background-color: ${({ theme }) => theme.colors.neutral[250]};
   border-radius: 3px;
   height: fit-content;

@@ -61,7 +61,7 @@ export const StyledCreateFromTemplateBtn = styled.div`
 
 // Styles for OpenedForm
 
-export const StyledOpenedFormContainer = styled.div`
+export const StyledOpenedFormContainer = styled.form`
   margin-bottom: 8px;
 `;
 

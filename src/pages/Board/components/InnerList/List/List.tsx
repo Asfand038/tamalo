@@ -17,7 +17,6 @@ interface IProps {
 
 const List: React.FC<IProps> = ({ list, tasks, index }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
-
   return (
     <Draggable draggableId={list.id} index={index}>
       {(provided, snapshot) => (
@@ -37,7 +36,9 @@ const List: React.FC<IProps> = ({ list, tasks, index }) => {
               >
                 <Tasks tasks={tasks} />
                 {provided.placeholder}
-                {formIsOpen && <OpenedForm setFormIsOpen={setFormIsOpen} />}
+                {formIsOpen && (
+                  <OpenedForm setFormIsOpen={setFormIsOpen} listId={list.id} />
+                )}
               </StyledTaskList>
             )}
           </Droppable>

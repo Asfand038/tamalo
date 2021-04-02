@@ -8,8 +8,8 @@ import { BoardLayout } from '../../layouts';
 import { Loader } from '../../components';
 import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
-import { IBoard } from './types';
-import { getBoardById, updateBoard } from './api';
+import { getBoardById, updateOneBoard } from './api';
+import { mutationConfig } from './utils';
 
 interface IRouteParams {
   id: string;
@@ -20,24 +20,10 @@ const BoardPage: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(updateBoard, {
-    onMutate: async (newBoard: IBoard) => {
-      await queryClient.cancelQueries(['board', id]);
-      const previousBoard = queryClient.getQueryData<IBoard>(['board', id]);
-      queryClient.setQueryData<IBoard>(['board', id], newBoard);
-      return { previousBoard, newBoard };
-    },
-
-    onError: (err, newBoard, context) => {
-      if (context?.previousBoard) {
-        queryClient.setQueryData('board', context.previousBoard);
-      }
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries(['board', id]);
-    },
-  });
+  const { mutate: updateBoard } = useMutation(
+    updateOneBoard,
+    mutationConfig(id, queryClient)
+  );
 
   const { data, isLoading, error } = useQuery(['board', id], () =>
     getBoardById(id)
@@ -66,7 +52,7 @@ const BoardPage: React.FC = () => {
       const newListsOrder = [...listsOrder];
       newListsOrder.splice(source.index, 1);
       newListsOrder.splice(destination.index, 0, draggableId);
-      mutate({ id, tasks, lists, listsOrder: newListsOrder });
+      updateBoard({ id, tasks, lists, listsOrder: newListsOrder });
       return;
     }
 
@@ -82,7 +68,7 @@ const BoardPage: React.FC = () => {
         tasksOrder: newTasksOrder,
       };
       const newLists = lists.filter((list) => list.id !== source.droppableId);
-      mutate({ id, lists: [...newLists, newList], listsOrder, tasks });
+      updateBoard({ id, lists: [...newLists, newList], listsOrder, tasks });
       return;
     }
 
@@ -102,7 +88,7 @@ const BoardPage: React.FC = () => {
       (list) =>
         list.id !== source.droppableId && list.id !== destination.droppableId
     );
-    mutate({
+    updateBoard({
       id,
       lists: [...newLists, newStartList, newFinishList],
       listsOrder,
