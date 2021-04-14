@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 import { IBoard } from '../../../types';
 import { mutationConfig } from '../../../utils';
 import { updateOneBoard } from '../../../api';
-import { StyledInput } from './BoardTitle.styles';
+import { StyledAutoSizeInput } from './BoardTitle.styles';
 
 interface IProps {
   title: string;
@@ -19,7 +19,6 @@ const BoardTitle: React.FC<IProps> = ({ title }) => {
   const [boardTitle, setBoardTitle] = useState(title);
 
   const { id } = useParams<IRouteParams>();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const queryClient = useQueryClient();
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
@@ -38,17 +37,17 @@ const BoardTitle: React.FC<IProps> = ({ title }) => {
   };
 
   return (
-    <StyledInput
-      ref={inputRef}
-      type="text"
+    <StyledAutoSizeInput
+      id={id}
       value={boardTitle}
       onChange={(e) => setBoardTitle(e.target.value)}
       onFocus={(e) => e.target.select()}
       onBlur={updateBoardTitleHandler}
-      onKeyPress={(e) => {
+      onKeyDown={(e) => {
         if (e.key === 'Enter') {
           updateBoardTitleHandler();
-          inputRef.current?.blur();
+          const input = document.getElementById(id)! as HTMLInputElement;
+          input.blur();
         }
       }}
     />
