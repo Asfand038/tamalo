@@ -22,6 +22,7 @@ export const StyledTaskContainer = styled.div`
   &:focus {
     outline: none;
   }
+  min-height: 900px;
 `;
 
 export const StyledCloseIcon = styled.span`

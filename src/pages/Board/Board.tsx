@@ -126,7 +126,7 @@ const BoardPage: React.FC = () => {
           </Droppable>
         </DragDropContext>
       </BoardLayout>
-      <Route path="/boards/:id/tasks/:id" component={TaskPage} />
+      <Route path="/boards/:boardId/tasks/:taskId" component={TaskPage} />
     </>
   );
 };
