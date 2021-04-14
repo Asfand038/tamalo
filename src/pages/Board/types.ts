@@ -11,6 +11,7 @@ export interface IList {
 
 export interface IBoard {
   id: string;
+  title: string;
   tasks: ITask[];
   lists: IList[];
   listsOrder: string[];

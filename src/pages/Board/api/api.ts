@@ -1,4 +1,4 @@
-import { IBoard } from '../types';
+import { IBoard, IList, ITask } from '../types';
 import { getRequiredBoardData, getTasksOrder } from '../utils';
 
 export const getBoardById = async (id: string) => {
@@ -12,7 +12,12 @@ export const getBoardById = async (id: string) => {
   return getRequiredBoardData(data);
 };
 
-export const updateOneBoard = async ({ id, listsOrder, lists }: IBoard) => {
+export const updateOneBoard = async ({
+  id,
+  listsOrder,
+  lists,
+  title,
+}: IBoard) => {
   const tasksOrder = getTasksOrder(lists);
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
@@ -21,7 +26,7 @@ export const updateOneBoard = async ({ id, listsOrder, lists }: IBoard) => {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ listsOrder, tasksOrder }),
+      body: JSON.stringify({ title, listsOrder, tasksOrder }),
     })
   ).json();
 
@@ -59,4 +64,24 @@ export const addOneTask = async (id: string, listId: string, title: string) => {
   ).json();
 
   return getRequiredBoardData(data);
+};
+
+export const updateOneList = async (
+  listId: string,
+  title: string,
+  lists: IList[],
+  tasks: ITask[]
+) => {
+  const data = await (
+    await fetch(`https://tamalo.herokuapp.com/lists/${listId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title }),
+    })
+  ).json();
+
+  return getRequiredBoardData({ ...data.board, lists, tasks });
 };

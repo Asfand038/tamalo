@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 
@@ -9,15 +9,21 @@ import {
   StyledContent,
 } from './Task.styles';
 import { ITask } from '../../../../../types';
-import { getTransformValue } from '../../../../../../../utils';
+import { getTransformValue } from '../../../../../utils';
 
 interface IProps {
   task: ITask;
   index: number;
 }
 
+interface IRouteParams {
+  id: string;
+}
+
 const Task: React.FC<IProps> = ({ task, index }) => {
   const history = useHistory();
+  const { id } = useParams<IRouteParams>();
+
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
@@ -28,7 +34,7 @@ const Task: React.FC<IProps> = ({ task, index }) => {
           id={task.id}
           isDragging={snapshot.isDragging && !snapshot.isDropAnimating}
           currentTransform={getTransformValue(task.id)}
-          onClick={() => history.push('/boards/abc/tasks/123')}
+          onClick={() => history.push(`/boards/${id}/tasks/${task.id}`)}
         >
           <StyledContent>{task.title}</StyledContent>
           <StyledEditBtn>

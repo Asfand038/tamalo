@@ -9,11 +9,11 @@ import {
   MoreHoriz as MoreHorizIcon,
 } from '@material-ui/icons';
 
+import { BoardTitle } from './BoardTitle';
 import {
   StyledNavbar,
   StyledNavBtn,
   StyledBoardBtn,
-  StyledBoardTitleBtn,
   StyledBoardCategoryBtn,
   StyledIconOnLeftBtn,
   StyledInviteBtn,
@@ -21,7 +21,11 @@ import {
   StyledDivider,
 } from './SecondaryNavbar.styles';
 
-const SecondaryNavbar: React.FC = () => {
+interface IProps {
+  boardTitle: string;
+}
+
+const SecondaryNavbar: React.FC<IProps> = ({ boardTitle }) => {
   return (
     <StyledNavbar disableGutters>
       <div className="d-flex">
@@ -32,7 +36,7 @@ const SecondaryNavbar: React.FC = () => {
         >
           Board
         </StyledBoardBtn>
-        <StyledBoardTitleBtn>practice</StyledBoardTitleBtn>
+        <BoardTitle title={boardTitle} />
         <StyledNavBtn>
           <StarBorderRoundedIcon />
         </StyledNavBtn>

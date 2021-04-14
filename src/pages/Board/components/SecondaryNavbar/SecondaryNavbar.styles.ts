@@ -84,16 +84,6 @@ export const StyledBoardBtn = styled(StyledNavBtn)`
   }
 `;
 
-export const StyledBoardTitleBtn = styled(StyledNavBtn)`
-  && {
-    font-size: 18px;
-    font-weight: 700;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: auto;
-  }
-`;
-
 export const StyledBoardCategoryBtn = styled(StyledNavBtn)`
   && {
     width: auto;

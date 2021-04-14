@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
+import { updateOneList } from '../../../../api';
+import { IBoard } from '../../../../types';
+import { mutationConfig } from '../../../../utils';
 import {
   StyledListTitle,
   StyledListTitleWrapper,
@@ -11,11 +16,41 @@ import {
 interface IProps {
   provided: DraggableProvided;
   title: string;
+  listId: string;
 }
 
-const ListTitle: React.FC<IProps> = ({ provided, title }) => {
+interface IRouteParams {
+  id: string;
+}
+
+const ListTitle: React.FC<IProps> = ({ provided, title, listId }) => {
+  const { id } = useParams<IRouteParams>();
   const [listTitle, setListTitle] = useState(title);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
+  const { lists, tasks } = boardData;
+
+  const { mutate: updateListTitle } = useMutation(
+    () => updateOneList(listId, listTitle, lists, tasks),
+    mutationConfig(id, queryClient)
+  );
+
+  const updateListTitleHandler = () => {
+    if (listTitle && listTitle.length) {
+      const targetList = lists.find((el) => el.id === listId)!;
+      targetList.title = listTitle;
+      const newLists = lists.filter((el) => el.id !== listId)!;
+      newLists.push(targetList);
+      updateListTitle({ ...boardData, lists: newLists });
+    } else {
+      const targetList = lists.find((el) => el.id === listId)!;
+      setListTitle(targetList.title);
+    }
+    setIsEditingTitle(false);
+  };
 
   return (
     <StyledListTitleWrapper>
@@ -24,7 +59,7 @@ const ListTitle: React.FC<IProps> = ({ provided, title }) => {
           onClick={() => setIsEditingTitle(true)}
           {...provided.dragHandleProps}
         >
-          {title}
+          {listTitle}
         </StyledListTitle>
       )}
       {isEditingTitle && (
@@ -36,7 +71,12 @@ const ListTitle: React.FC<IProps> = ({ provided, title }) => {
           onChange={(e) => setListTitle(e.target.value)}
           autoFocus
           onFocus={(e) => e.target.select()}
-          onBlur={() => setIsEditingTitle(false)}
+          onBlur={updateListTitleHandler}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              updateListTitleHandler();
+            }
+          }}
         />
       )}
       <span>

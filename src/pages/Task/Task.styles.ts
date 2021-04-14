@@ -13,7 +13,7 @@ export const StyledBackdrop = styled(Backdrop)`
   }
 `;
 export const StyledTaskContainer = styled.div`
-  background-color: #f4f5f7;
+  background-color: ${({ theme }) => theme.colors.neutral[200]};
   border-radius: 2px;
   margin: 48px auto 80px;
   overflow: hidden;
@@ -25,7 +25,7 @@ export const StyledTaskContainer = styled.div`
 `;
 
 export const StyledCloseIcon = styled.span`
-  color: #42526e;
+  color: ${({ theme }) => theme.colors.blue[300]};
   border-radius: 50%;
   position: absolute;
   top: 0;

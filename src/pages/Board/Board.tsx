@@ -10,6 +10,7 @@ import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 import { getBoardById, updateOneBoard } from './api';
 import { mutationConfig } from './utils';
+import { IBoard } from './types';
 
 interface IRouteParams {
   id: string;
@@ -32,7 +33,9 @@ const BoardPage: React.FC = () => {
   if (isLoading) return <Loader />;
   if (error) return <div>Something went wrong...</div>;
 
-  const { listsOrder, lists, tasks } = data!;
+  const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
+
+  const { listsOrder, lists, tasks, title } = data!;
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
@@ -52,7 +55,7 @@ const BoardPage: React.FC = () => {
       const newListsOrder = [...listsOrder];
       newListsOrder.splice(source.index, 1);
       newListsOrder.splice(destination.index, 0, draggableId);
-      updateBoard({ id, tasks, lists, listsOrder: newListsOrder });
+      updateBoard({ ...boardData, listsOrder: newListsOrder });
       return;
     }
 
@@ -68,7 +71,7 @@ const BoardPage: React.FC = () => {
         tasksOrder: newTasksOrder,
       };
       const newLists = lists.filter((list) => list.id !== source.droppableId);
-      updateBoard({ id, lists: [...newLists, newList], listsOrder, tasks });
+      updateBoard({ ...boardData, lists: [...newLists, newList] });
       return;
     }
 
@@ -89,17 +92,15 @@ const BoardPage: React.FC = () => {
         list.id !== source.droppableId && list.id !== destination.droppableId
     );
     updateBoard({
-      id,
+      ...boardData,
       lists: [...newLists, newStartList, newFinishList],
-      listsOrder,
-      tasks,
     });
   };
 
   return (
     <>
       <BoardLayout>
-        <SecondaryNavbar />
+        <SecondaryNavbar boardTitle={title} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-lists" direction="horizontal" type="list">
             {(provided) => (

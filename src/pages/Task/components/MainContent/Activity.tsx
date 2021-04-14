@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   ListRounded as ListRoundedIcon,
@@ -170,9 +171,8 @@ const Activity: React.FC = () => {
             <StyledAccordionDetails>
               <StyledSaveButton>Save</StyledSaveButton>
               <StyledIconBtnContainer>
-                {iconBtnList.map(({ icon }, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <StyledIconButton key={index}>{icon}</StyledIconButton>
+                {iconBtnList.map(({ icon }) => (
+                  <StyledIconButton key={uuidv4()}>{icon}</StyledIconButton>
                 ))}
               </StyledIconBtnContainer>
             </StyledAccordionDetails>

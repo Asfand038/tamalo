@@ -15,6 +15,7 @@ export const getRequiredBoardData = (data: any) => {
 
   const boardData: IBoard = {
     id: data.id,
+    title: data.title,
     tasks: tasksArray,
     lists: listsArray,
     listsOrder: data.listsOrder,
@@ -41,10 +42,6 @@ export const mutationConfig = (id: string, queryClient: QueryClient) => ({
     await queryClient.cancelQueries(['board', id]);
     const previousBoard = queryClient.getQueryData<IBoard>(['board', id]);
     queryClient.setQueryData<IBoard>(['board', id], newBoard);
-    console.log(
-      queryClient.setQueryData<IBoard>(['board', id], newBoard),
-      'optimistic update'
-    );
     return { previousBoard, newBoard };
   },
 
@@ -62,3 +59,12 @@ export const mutationConfig = (id: string, queryClient: QueryClient) => ({
     queryClient.invalidateQueries(['board', id]);
   },
 });
+
+export const getTransformValue = (id: string) => {
+  const draggedItem = document.getElementById(id);
+  if (draggedItem) {
+    const currentTransform = (draggedItem as HTMLElement).style.transform;
+    return currentTransform;
+  }
+  return '';
+};

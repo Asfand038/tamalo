@@ -5,7 +5,7 @@ import { ClosedForm, OpenedForm } from './AddCard';
 import { Tasks } from './Tasks';
 import { ListTitle } from './ListTitle';
 import { IList, ITask } from '../../../types';
-import { getTransformValue } from '../../../../../utils';
+import { getTransformValue } from '../../../utils';
 
 import { StyledListContainer, StyledTaskList } from './List.styles';
 
@@ -27,7 +27,7 @@ const List: React.FC<IProps> = ({ list, tasks, index }) => {
           isDragging={snapshot.isDragging && !snapshot.isDropAnimating}
           currentTransform={getTransformValue(list.id)}
         >
-          <ListTitle provided={provided} title={list.title} />
+          <ListTitle provided={provided} title={list.title} listId={list.id} />
           <Droppable droppableId={list.id} type="task">
             {(provided) => (
               <StyledTaskList

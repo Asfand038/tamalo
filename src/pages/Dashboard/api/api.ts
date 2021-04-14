@@ -8,7 +8,6 @@ export const getBoards = async (userId: string) => {
       },
     })
   ).json();
-
   const ownedBoards = data.filter((board: BoardSchema) =>
     board.owners.includes(userId)
   );
