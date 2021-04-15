@@ -7,7 +7,7 @@ import { TaskLayout } from '../../layouts';
 import { TaskTitle, Sidebar, MainContent } from './components';
 import { Loader } from '../../components';
 import { getTaskById } from './api';
-import { IList, IBoard } from '../../utils';
+import { IList, IBoard } from './utils';
 import { StyledCloseIcon, StyledBody } from './Task.styles';
 
 interface IRouteParams {

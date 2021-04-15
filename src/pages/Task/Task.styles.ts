@@ -12,7 +12,7 @@ export const StyledCloseIcon = styled.span`
   width: 32px;
   transition: background-color 85ms;
   &:hover {
-    background-color: rgba(9, 30, 66, 0.08);
+    background-color: ${({ theme }) => theme.colors.darkness[50]};
     cursor: pointer;
   }
   & svg {

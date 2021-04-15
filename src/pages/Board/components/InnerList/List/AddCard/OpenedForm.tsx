@@ -5,9 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Card, ClickAwayListener } from '@material-ui/core';
 import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
-import { mutationConfig } from '../../../../utils';
+import { mutationConfig, IBoard } from '../../../../utils';
 import { addOneTask } from '../../../../api';
-import { IBoard } from '../../../../../../utils';
 import { ButtonContainer } from '../../../../../../components';
 import {
   StyledOpenedFormContainer,

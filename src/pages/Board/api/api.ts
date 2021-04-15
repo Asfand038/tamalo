@@ -1,5 +1,10 @@
-import { IBoard, IList, ITask } from '../../../utils';
-import { getRequiredBoardData, getTasksOrder } from '../utils';
+import {
+  getRequiredBoardData,
+  getTasksOrder,
+  IBoard,
+  IList,
+  ITask,
+} from '../utils';
 
 export const getBoardById = async (id: string) => {
   const data = await (

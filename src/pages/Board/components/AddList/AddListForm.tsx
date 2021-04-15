@@ -4,9 +4,8 @@ import { useParams } from 'react-router-dom';
 import { useQueryClient, useMutation } from 'react-query';
 import { ClickAwayListener } from '@material-ui/core';
 
-import { mutationConfig } from '../../utils';
+import { mutationConfig, IBoard } from '../../utils';
 import { addOneList } from '../../api';
-import { IBoard } from '../../../../utils';
 import { ButtonContainer } from '../../../../components';
 import {
   StyledCard,

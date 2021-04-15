@@ -1,5 +1,5 @@
 import { QueryClient } from 'react-query';
-import { IBoard, IList, ITask } from '../../../utils';
+import { IBoard, IList, ITask } from './types';
 
 export const getRequiredBoardData = (data: any) => {
   const tasksArray: ITask[] = data.tasks.map((task: ITask) => ({
@@ -37,6 +37,15 @@ export const getTasksOrder = (lists: IList[]) => {
   return tasksOrder;
 };
 
+export const getTransformValue = (id: string) => {
+  const draggedItem = document.getElementById(id);
+  if (draggedItem) {
+    const currentTransform = (draggedItem as HTMLElement).style.transform;
+    return currentTransform;
+  }
+  return '';
+};
+
 export const mutationConfig = (id: string, queryClient: QueryClient) => ({
   onMutate: async (newBoard: IBoard) => {
     await queryClient.cancelQueries(['board', id]);
@@ -59,12 +68,3 @@ export const mutationConfig = (id: string, queryClient: QueryClient) => ({
     queryClient.invalidateQueries(['board', id]);
   },
 });
-
-export const getTransformValue = (id: string) => {
-  const draggedItem = document.getElementById(id);
-  if (draggedItem) {
-    const currentTransform = (draggedItem as HTMLElement).style.transform;
-    return currentTransform;
-  }
-  return '';
-};

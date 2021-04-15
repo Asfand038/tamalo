@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { SubjectRounded as SubjectRoundedIcon } from '@material-ui/icons';
 
-import { ButtonContainer } from '../../../../components';
+import { ButtonContainer } from '../../../../../components';
+
+import { StyledBtnWrapper, StyledTextField } from './AddDescription.styles';
 import {
   StyledTitleContainer,
   StyledTitle,
   StyledIcon,
-  StyledTextField,
-  StyledBtnWrapper,
   StyledButton,
-} from './MainContent.styles';
+} from '../MainContent.styles';
 
 const AddDescription: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);

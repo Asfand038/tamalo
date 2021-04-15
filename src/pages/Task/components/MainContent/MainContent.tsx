@@ -1,7 +1,7 @@
 import React from 'react';
 
-import AddDescription from './AddDescription';
-import Activity from './Activity';
+import { AddDescription } from './AddDescription';
+import { Activity } from './Activity';
 import { StyledContainer } from './MainContent.styles';
 
 const MainContent: React.FC = () => {

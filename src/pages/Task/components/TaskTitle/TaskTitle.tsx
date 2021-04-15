@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 
-import { IBoard } from '../../../../utils';
 import { updateOneTask } from '../../api';
-import { ITaskDetails } from '../../utils';
+import { ITaskDetails, IBoard } from '../../utils';
 import {
   StyledContainer,
   StyledIcon,

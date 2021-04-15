@@ -3,13 +3,12 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 
+import { getTransformValue, ITask } from '../../../../../utils';
 import {
   StyledTaskContainer,
   StyledEditBtn,
   StyledContent,
 } from './Task.styles';
-import { ITask } from '../../../../../../../utils';
-import { getTransformValue } from '../../../../../utils';
 
 interface IProps {
   task: ITask;

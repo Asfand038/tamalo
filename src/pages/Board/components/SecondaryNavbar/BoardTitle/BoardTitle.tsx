@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 
-import { mutationConfig } from '../../../utils';
+import { mutationConfig, IBoard } from '../../../utils';
 import { updateOneBoard } from '../../../api';
-import { IBoard } from '../../../../../utils';
 import { StyledAutoSizeInput } from './BoardTitle.styles';
 
 interface IProps {

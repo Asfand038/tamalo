@@ -9,8 +9,7 @@ import { Loader } from '../../components';
 import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 import { getBoardById, updateOneBoard } from './api';
-import { mutationConfig } from './utils';
-import { IBoard } from '../../utils';
+import { mutationConfig, IBoard } from './utils';
 
 interface IRouteParams {
   id: string;

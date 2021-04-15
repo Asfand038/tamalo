@@ -4,8 +4,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { ClosedForm, OpenedForm } from './AddCard';
 import { Tasks } from './Tasks';
 import { ListTitle } from './ListTitle';
-import { IList, ITask } from '../../../../../utils';
-import { getTransformValue } from '../../../utils';
+import { getTransformValue, IList, ITask } from '../../../utils';
 
 import { StyledListContainer, StyledTaskList } from './List.styles';
 

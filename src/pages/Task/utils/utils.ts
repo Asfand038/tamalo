@@ -1,7 +1,4 @@
-export interface ITaskDetails {
-  id: string;
-  title: string;
-}
+import { ITaskDetails } from './types';
 
 export const getRequiredTaskData = (data: any) => {
   const taskData: ITaskDetails = {

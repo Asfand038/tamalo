@@ -37,7 +37,7 @@ export const StyledListButton = styled(Button)`
     width: 100%;
     text-transform: none;
     color: ${({ theme }) => theme.colors.blue[400]};
-    background-color: rgba(9, 30, 66, 0.04);
+    background-color: ${({ theme }) => theme.colors.darkness[40]};
     box-shadow: none;
     border: none;
     border-radius: 3px;
