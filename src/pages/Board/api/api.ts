@@ -1,4 +1,4 @@
-import { IBoard, IList, ITask } from '../types';
+import { IBoard, IList, ITask } from '../../../utils';
 import { getRequiredBoardData, getTasksOrder } from '../utils';
 
 export const getBoardById = async (id: string) => {
@@ -9,6 +9,7 @@ export const getBoardById = async (id: string) => {
       },
     })
   ).json();
+
   return getRequiredBoardData(data);
 };
 

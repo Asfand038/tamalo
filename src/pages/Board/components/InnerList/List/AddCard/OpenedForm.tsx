@@ -7,7 +7,7 @@ import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
 import { mutationConfig } from '../../../../utils';
 import { addOneTask } from '../../../../api';
-import { IBoard } from '../../../../types';
+import { IBoard } from '../../../../../../utils';
 import { ButtonContainer } from '../../../../../../components';
 import {
   StyledOpenedFormContainer,

@@ -22,7 +22,7 @@ const AddDescription: React.FC = () => {
       </StyledTitleContainer>
       <StyledTextField
         InputProps={{ spellCheck: false }}
-        editing={isEditing}
+        editing={+isEditing}
         variant="outlined"
         multiline
         rows={isEditing ? '4' : '2'}

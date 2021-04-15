@@ -6,7 +6,7 @@ import { ClickAwayListener } from '@material-ui/core';
 
 import { mutationConfig } from '../../utils';
 import { addOneList } from '../../api';
-import { IBoard } from '../../types';
+import { IBoard } from '../../../../utils';
 import { ButtonContainer } from '../../../../components';
 import {
   StyledCard,

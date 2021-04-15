@@ -6,7 +6,7 @@ const StyledLoader = styled.div`
   text-indent: -9999em;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%;
   font-size: 11px;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);

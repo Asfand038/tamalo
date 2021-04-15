@@ -10,7 +10,7 @@ import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 import { getBoardById, updateOneBoard } from './api';
 import { mutationConfig } from './utils';
-import { IBoard } from './types';
+import { IBoard } from '../../utils';
 
 interface IRouteParams {
   id: string;

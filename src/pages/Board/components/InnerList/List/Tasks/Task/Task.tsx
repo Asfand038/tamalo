@@ -8,7 +8,7 @@ import {
   StyledEditBtn,
   StyledContent,
 } from './Task.styles';
-import { ITask } from '../../../../../types';
+import { ITask } from '../../../../../../../utils';
 import { getTransformValue } from '../../../../../utils';
 
 interface IProps {

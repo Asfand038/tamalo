@@ -22,7 +22,7 @@ export const StyledList = styled.div`
 `;
 
 export const StyledTitle = styled.div`
-  color: #5e6c84;
+  color: ${({ theme }) => theme.colors.neutral[550]};
   font-size: 12px;
   font-weight: 500;
   margin-top: 16px;
@@ -36,7 +36,7 @@ export const StyledListButton = styled(Button)`
     font-weight: 400;
     width: 100%;
     text-transform: none;
-    color: #172b4d;
+    color: ${({ theme }) => theme.colors.blue[400]};
     background-color: rgba(9, 30, 66, 0.04);
     box-shadow: none;
     border: none;
@@ -53,13 +53,13 @@ export const StyledListButton = styled(Button)`
       justify-content: flex-start;
     }
     &:hover {
-      background-color: rgba(9, 30, 66, 0.08);
+      background-color: ${({ theme }) => theme.colors.darkness[50]};
       box-shadow: none;
       border: none;
-      color: #091e42;
+      color: ${({ theme }) => theme.colors.blue[500]};
     }
     & svg {
-      color: #42526e;
+      color: ${({ theme }) => theme.colors.blue[300]};
       font-size: 16px;
     }
   }

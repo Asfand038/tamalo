@@ -1,5 +1,5 @@
 import { QueryClient } from 'react-query';
-import { IBoard, IList, ITask } from '../types';
+import { IBoard, IList, ITask } from '../../../utils';
 
 export const getRequiredBoardData = (data: any) => {
   const tasksArray: ITask[] = data.tasks.map((task: ITask) => ({

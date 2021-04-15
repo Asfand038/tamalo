@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List } from './List';
-import { IList, ITask } from '../../types';
+import { IList, ITask } from '../../../../utils';
 
 interface IProps {
   list: IList;

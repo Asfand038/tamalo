@@ -36,7 +36,7 @@ export const StyledAvatar = styled(Avatar)`
 // Styles for Add Description
 
 interface ITextField {
-  editing: boolean;
+  editing: number;
 }
 
 export const StyledTextField = styled(TextField)<ITextField>`

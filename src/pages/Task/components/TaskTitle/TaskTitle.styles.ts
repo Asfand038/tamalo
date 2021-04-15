@@ -13,7 +13,7 @@ export const StyledIcon = styled.span`
   position: absolute;
   top: 4px;
   & svg {
-    color: #42526e;
+    color: ${({ theme }) => theme.colors.blue[300]};
   }
 `;
 
@@ -21,13 +21,13 @@ export const StyledTaskTitle = styled.div`
   width: 100%;
   & > div:last-child {
     margin: 4px 0 0 -1px;
-    color: #5e6c84;
+    color: ${({ theme }) => theme.colors.neutral[550]};
     cursor: context-menu;
     & span {
       text-decoration: underline;
       cursor: pointer;
       &:hover {
-        color: #172b4d;
+        color: ${({ theme }) => theme.colors.blue[400]};
       }
     }
   }

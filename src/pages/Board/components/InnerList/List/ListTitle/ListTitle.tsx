@@ -5,7 +5,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
 import { updateOneList } from '../../../../api';
-import { IBoard } from '../../../../types';
+import { IBoard } from '../../../../../../utils';
 import { mutationConfig } from '../../../../utils';
 import {
   StyledListTitle,
