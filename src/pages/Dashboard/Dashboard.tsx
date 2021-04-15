@@ -1,42 +1,28 @@
-import React, { useEffect, useState } from 'react';
-
+import React from 'react';
+import { useQuery } from 'react-query';
 import { Grid } from '@material-ui/core';
 import {
   PersonOutline as PersonOutlineIcon,
   PeopleOutlineOutlined as PeopleOutlineOutlinedIcon,
 } from '@material-ui/icons';
 
-import { DashboardLayout } from '../../layouts';
 import { StyledTitle, StyledBoardsCategory } from './Dashboard.styles';
+import { DashboardLayout } from '../../layouts';
+import { Loader } from '../../components';
 import { BoardSchema, DashboardCard } from './components';
+import { useAuth } from '../../contexts';
+import { getBoards } from './api';
 
 const DashboardPage: React.FC = () => {
-  const [ownedBoards, setOwnedBoards] = useState<BoardSchema[]>([]);
-  const [memberOfBoards, setMemberOfBoards] = useState<BoardSchema[]>([]);
+  const { userId } = useAuth();
+  const { data, isLoading, error } = useQuery(['boards'], () =>
+    getBoards(userId)
+  );
 
-  const getUserData = async () => {
-    const userId = 'test-user-1';
-    const data = await (
-      await fetch('./fakeData/boards.json', {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      })
-    ).json();
-    const ownedBoards = data.boards.filter((board: BoardSchema) =>
-      board.owners.includes(userId)
-    );
-    const memberOfBoards = data.boards.filter((board: BoardSchema) =>
-      board.members.includes(userId)
-    );
-    setOwnedBoards(ownedBoards);
-    setMemberOfBoards(memberOfBoards);
-  };
+  if (isLoading) return <Loader />;
+  if (error) return <div>Something went wrong...</div>;
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const { ownedBoards, memberOfBoards } = data!;
 
   const boardCategories = [
     {
@@ -50,6 +36,7 @@ const DashboardPage: React.FC = () => {
       icon: <PeopleOutlineOutlinedIcon />,
     },
   ];
+
   return (
     <DashboardLayout>
       {boardCategories.map(({ title, boardCategory, icon }) => (

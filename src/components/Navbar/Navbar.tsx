@@ -31,10 +31,10 @@ const Navbar: React.FC = () => {
   return (
     <StyledNavbar disableGutters>
       <div className="d-flex">
-        <StyledNavBtn size="small" aria-label="open drawer">
+        <StyledNavBtn size="small">
           <AppsSharpIcon />
         </StyledNavBtn>
-        <StyledNavBtn aria-label="open drawer">
+        <StyledNavBtn>
           <HomeOutlinedIcon />
         </StyledNavBtn>
         <StyledBoardBtn
@@ -69,13 +69,13 @@ const Navbar: React.FC = () => {
         <span>Tamalo</span>
       </AppLogo>
       <div className="d-flex">
-        <StyledNavBtn color="inherit" aria-label="create">
+        <StyledNavBtn color="inherit">
           <AddIcon />
         </StyledNavBtn>
-        <StyledNavBtn color="inherit" aria-label="information">
+        <StyledNavBtn color="inherit">
           <InfoOutlinedIcon />
         </StyledNavBtn>
-        <StyledNavBtn color="inherit" aria-label="notifications">
+        <StyledNavBtn color="inherit">
           <NotificationsNoneOutlinedIcon />
         </StyledNavBtn>
         <StyledAvatar>AJ</StyledAvatar>

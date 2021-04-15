@@ -24,5 +24,9 @@ export const AuthTheme = {
       100: '#5aac44',
       200: '#61bd4f',
     },
+    red: {
+      50: '#fbedeb',
+      100: '#eb5a46',
+    },
   },
 };

@@ -1,31 +1,73 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 
 import { AuthProviders } from '../../components';
-import { AuthLayout, StyledInputField, StyledLink } from '../../layouts';
-import { LoginButton, StyledIcon, StyledSSOLink } from './Login.styles';
+import {
+  AuthLayout,
+  StyledAuthCardTitle,
+  StyledInputField,
+  StyledLink,
+} from '../../layouts';
+import {
+  LoginButton,
+  StyledIcon,
+  StyledSSOLink,
+  ErrorMessage,
+} from './Login.styles';
+import { useAuth } from '../../contexts';
 
 const LoginPage: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { login, isLoading, error, isLoggedIn } = useAuth();
+
+  const submitHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setEmail('');
+    setPassword('');
+    login(email, password);
+  };
+
   return (
     <AuthLayout>
-      <div>Log in to Tamalo</div>
-      <StyledInputField
-        variant="outlined"
-        placeholder="Enter email"
-        fullWidth
-        required
-      />
-      <StyledInputField
-        variant="outlined"
-        placeholder="Enter password"
-        type="password"
-        fullWidth
-        required
-      />
-      <LoginButton type="submit" variant="contained" fullWidth>
-        Log in
-      </LoginButton>
+      {isLoggedIn && <Redirect to="/boards" />}
+      {error && (
+        <ErrorMessage>
+          <p>{error}</p>
+        </ErrorMessage>
+      )}
+      <StyledAuthCardTitle>Log in to Tamalo</StyledAuthCardTitle>
+      <form onSubmit={submitHandler}>
+        <StyledInputField
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          variant="outlined"
+          placeholder="Enter email"
+          fullWidth
+          required
+          disabled={isLoading}
+        />
+        <StyledInputField
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          variant="outlined"
+          placeholder="Enter password"
+          type="password"
+          fullWidth
+          required
+          disabled={isLoading}
+        />
+        <LoginButton
+          type="submit"
+          variant="contained"
+          fullWidth
+          disabled={isLoading}
+        >
+          Log in
+        </LoginButton>
+      </form>
       <div className="login-method-separator">OR</div>
       <AuthProviders />
       <StyledSSOLink to="#">Login with SSO</StyledSSOLink>

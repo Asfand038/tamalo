@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Grid } from '@material-ui/core';
-import { StarOutline as StarOutlineIcon } from '@material-ui/icons';
 
-import { BoardSchema } from './boardSchema';
-
-// Styles
 interface GridItemProps {
   color: string;
   hovered: number;
@@ -55,7 +50,7 @@ export const StyledGridItem = styled(Grid)<GridItemProps>`
   }
 `;
 
-const StyledTitle = styled.div`
+export const StyledTitle = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -64,32 +59,3 @@ const StyledTitle = styled.div`
   color: ${({ theme }) => theme.colors.neutral[100]};
   font-weight: 700;
 `;
-
-interface CardProps {
-  details: BoardSchema;
-}
-
-const DashboardCard: React.FC<CardProps> = ({ details }) => {
-  const { id, background, title } = details;
-  const [hoverBoard, setHoverBoard] = useState('');
-
-  return (
-    <StyledGridItem
-      item
-      sm={6}
-      md={3}
-      key={id}
-      color={background.color}
-      hovered={+(hoverBoard === id)}
-      onMouseEnter={() => setHoverBoard(id)}
-      onMouseLeave={() => setHoverBoard('')}
-    >
-      <div>
-        <StyledTitle>{title}</StyledTitle>
-        <StarOutlineIcon />
-      </div>
-    </StyledGridItem>
-  );
-};
-
-export default DashboardCard;
