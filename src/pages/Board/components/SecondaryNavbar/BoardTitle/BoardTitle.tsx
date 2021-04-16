@@ -37,7 +37,7 @@ const BoardTitle: React.FC<IProps> = ({ title }) => {
 
   return (
     <StyledAutoSizeInput
-      id={id}
+      id={`title-${id}`}
       value={boardTitle}
       onChange={(e) => setBoardTitle(e.target.value)}
       onFocus={(e) => e.target.select()}
@@ -45,7 +45,9 @@ const BoardTitle: React.FC<IProps> = ({ title }) => {
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
           updateBoardTitleHandler();
-          const input = document.getElementById(id)! as HTMLInputElement;
+          const input = document.getElementById(
+            `title-${id}`
+          )! as HTMLInputElement;
           input.blur();
         }
       }}
