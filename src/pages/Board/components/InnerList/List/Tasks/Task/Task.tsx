@@ -8,6 +8,7 @@ import {
   StyledTaskContainer,
   StyledEditBtn,
   StyledContent,
+  StyledSkeleton,
 } from './Task.styles';
 
 interface IProps {
@@ -24,7 +25,11 @@ const Task: React.FC<IProps> = ({ task, index }) => {
   const { id } = useParams<IRouteParams>();
 
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable
+      draggableId={task.id}
+      index={index}
+      isDragDisabled={task.id.includes('optimistic')}
+    >
       {(provided, snapshot) => (
         <StyledTaskContainer
           {...provided.draggableProps}
@@ -33,8 +38,12 @@ const Task: React.FC<IProps> = ({ task, index }) => {
           id={task.id}
           isDragging={snapshot.isDragging && !snapshot.isDropAnimating}
           currentTransform={getTransformValue(task.id)}
+          isCreated={!task.id.includes('optimistic')}
           onClick={() => history.push(`/boards/${id}/tasks/${task.id}`)}
         >
+          {task.id.includes('optimistic') && (
+            <StyledSkeleton variant="rect" animation="wave" />
+          )}
           <StyledContent>{task.title}</StyledContent>
           <StyledEditBtn>
             <CreateOutlinedIcon />

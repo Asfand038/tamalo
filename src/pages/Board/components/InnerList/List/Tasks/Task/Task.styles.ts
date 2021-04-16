@@ -1,12 +1,15 @@
+import { Skeleton } from '@material-ui/lab';
 import styled from 'styled-components';
 
 interface ITaskContainer {
   isDragging: boolean;
+  isCreated: boolean;
   currentTransform: string;
 }
 
 export const StyledTaskContainer = styled.div<ITaskContainer>`
   position: relative;
+  pointer-events: ${({ isCreated }) => (isCreated ? 'auto' : 'none')};
   display: flex;
   justify-content: space-between;
   border-radius: 3px;
@@ -26,6 +29,17 @@ export const StyledTaskContainer = styled.div<ITaskContainer>`
     isDragging ? `${currentTransform} rotate(3deg) !important` : null};
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral[200]};
+  }
+`;
+
+export const StyledSkeleton = styled(Skeleton)`
+  && {
+    position: absolute;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    left: 0;
+    top: 0;
+    border-radius: 3px;
   }
 `;
 

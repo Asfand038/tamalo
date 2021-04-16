@@ -1,11 +1,15 @@
 import styled from 'styled-components';
+import { Skeleton } from '@material-ui/lab';
 
 interface IListContainer {
   isDragging: boolean;
   currentTransform: string;
+  isCreated: boolean;
 }
 
 export const StyledListContainer = styled.div<IListContainer>`
+  position: relative;
+  pointer-events: ${({ isCreated }) => (isCreated ? 'auto' : 'none')};
   box-sizing: border-box;
   padding-right: 4px;
   margin: 14px 8px 0 0;
@@ -19,6 +23,14 @@ export const StyledListContainer = styled.div<IListContainer>`
   flex-shrink: 0;
   transform: ${({ isDragging, currentTransform }) =>
     isDragging ? `${currentTransform} rotate(3deg) !important` : null};
+`;
+
+export const StyledSkeleton = styled(Skeleton)`
+  && {
+    position: absolute;
+    width: inherit;
+    height: -webkit-fill-available;
+  }
 `;
 
 export const StyledTaskList = styled.div`

@@ -29,6 +29,7 @@ export const StyledListTitle = styled.div`
     padding: 9px 0 8px 16.5px;
     color: ${({ theme }) => theme.colors.blue[400]};
     font-weight: 600;
+    word-break: break-word;
   }
 `;
 
