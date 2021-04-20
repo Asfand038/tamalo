@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { StarBorderRounded as StarBorderRoundedIcon } from '@material-ui/icons';
 
 import { defaultTheme } from '../../../../theme';
-import { BoardSchema } from '../boardSchema';
+import { BoardSchema } from '../../../../utils';
 import { StyledGridItem, StyledTitle } from './DashboardCard.styles';
 
 interface CardProps {

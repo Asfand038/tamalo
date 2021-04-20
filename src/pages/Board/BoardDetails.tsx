@@ -8,6 +8,7 @@ import { BoardLayout } from '../../layouts';
 import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 import { IBoard } from './utils';
+import { UserSchema } from '../../utils';
 
 interface IProps {
   data: IBoard;
@@ -17,6 +18,14 @@ interface IProps {
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
   const { listsOrder, lists, tasks, title, id } = data;
 
+  const queryClient = useQueryClient();
+  const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
+  const userData = queryClient.getQueryData<UserSchema>(['boards']);
+  let userProfileImg = '';
+  if (userData) {
+    userProfileImg = userData.userProfileImg;
+  }
+
   useEffect(() => {
     const boardContainer = document.getElementById(id)! as HTMLDivElement;
     window.addEventListener('wheel', (e) => {
@@ -24,9 +33,6 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
       else boardContainer.scrollLeft -= 100;
     });
   }, [id]);
-
-  const queryClient = useQueryClient();
-  const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
@@ -90,7 +96,7 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
 
   return (
     <>
-      <BoardLayout>
+      <BoardLayout profileImg={userProfileImg}>
         <SecondaryNavbar boardTitle={title} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-lists" direction="horizontal" type="list">

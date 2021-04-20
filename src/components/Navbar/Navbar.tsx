@@ -22,7 +22,11 @@ import {
   StyledAvatar,
 } from './Navbar.styles';
 
-const Navbar: React.FC = () => {
+interface IProps {
+  profileImg: string;
+}
+
+const Navbar: React.FC<IProps> = ({ profileImg }) => {
   // State for focus on SeachField so that it can be passed
   // to other components to change their styles.
   const [searchFocus, setSearchFocus] = useState(false);
@@ -78,7 +82,7 @@ const Navbar: React.FC = () => {
         <StyledNavBtn color="inherit">
           <NotificationsNoneOutlinedIcon />
         </StyledNavBtn>
-        <StyledAvatar>AJ</StyledAvatar>
+        <StyledAvatar src={profileImg}>A</StyledAvatar>
       </div>
     </StyledNavbar>
   );

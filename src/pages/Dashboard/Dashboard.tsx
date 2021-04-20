@@ -9,20 +9,23 @@ import {
 import { StyledTitle, StyledBoardsCategory } from './Dashboard.styles';
 import { DashboardLayout } from '../../layouts';
 import { Loader } from '../../components';
-import { BoardSchema, DashboardCard } from './components';
+import { DashboardCard } from './components';
 import { useAuth } from '../../contexts';
 import { getBoards } from './api';
+import { BoardSchema } from '../../utils';
 
 const DashboardPage: React.FC = () => {
   const { userId } = useAuth();
-  const { data, isLoading, error } = useQuery(['boards'], () =>
-    getBoards(userId)
+  const { data, isLoading, error } = useQuery(
+    ['boards'],
+    () => getBoards(userId),
+    { refetchOnWindowFocus: false, refetchOnMount: false }
   );
 
   if (isLoading) return <Loader />;
   if (error) return <div>Something went wrong...</div>;
 
-  const { ownedBoards, memberOfBoards } = data!;
+  const { ownedBoards, memberOfBoards, userProfileImg } = data!;
 
   const boardCategories = [
     {
@@ -38,7 +41,7 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <DashboardLayout>
+    <DashboardLayout profileImg={userProfileImg}>
       {boardCategories.map(({ title, boardCategory, icon }) => (
         <StyledBoardsCategory key={title}>
           <StyledTitle>

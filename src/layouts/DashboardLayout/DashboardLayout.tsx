@@ -3,10 +3,14 @@ import React from 'react';
 import { Navbar, Sidebar } from '../../components';
 import { StyledDashboard, StyledPage } from './DashboardLayout.styles';
 
-const DashboardLayout: React.FC = ({ children }) => {
+interface IProps {
+  profileImg: string;
+}
+
+const DashboardLayout: React.FC<IProps> = ({ children, profileImg }) => {
   return (
     <StyledDashboard>
-      <Navbar />
+      <Navbar profileImg={profileImg} />
       <StyledPage>
         <Sidebar />
         <div>{children}</div>
