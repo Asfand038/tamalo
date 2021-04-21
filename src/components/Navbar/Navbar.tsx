@@ -82,7 +82,7 @@ const Navbar: React.FC<IProps> = ({ profileImg }) => {
         <StyledNavBtn color="inherit">
           <NotificationsNoneOutlinedIcon />
         </StyledNavBtn>
-        <StyledAvatar src={profileImg}>A</StyledAvatar>
+        <StyledAvatar src={profileImg} />
       </div>
     </StyledNavbar>
   );

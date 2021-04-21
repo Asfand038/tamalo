@@ -15,7 +15,6 @@ export const getBoardById = async (id: string) => {
     })
   ).json();
 
-  console.log(data);
   return getRequiredBoardData(data);
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   StarBorderRounded as StarBorderRoundedIcon,
@@ -9,6 +10,8 @@ import {
   MoreHoriz as MoreHorizIcon,
 } from '@material-ui/icons';
 
+import { OwnerIcon } from '../../../../assets';
+import { IUser } from '../../utils';
 import { BoardTitle } from './BoardTitle';
 import {
   StyledNavbar,
@@ -17,15 +20,27 @@ import {
   StyledBoardCategoryBtn,
   StyledIconOnLeftBtn,
   StyledInviteBtn,
+  StyledAvatarGroup,
   StyledAvatar,
+  StyledBadge,
   StyledDivider,
 } from './SecondaryNavbar.styles';
 
 interface IProps {
   boardTitle: string;
+  members: IUser[];
+  owners: IUser[];
 }
 
-const SecondaryNavbar: React.FC<IProps> = ({ boardTitle }) => {
+const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
+  const ownerDetails = owners.map(({ profileImg }) => {
+    return { img: profileImg, owner: true };
+  });
+  const memberDetails = members.map(({ profileImg }) => {
+    return { img: profileImg, owner: false };
+  });
+  const avatarGroupData = [...ownerDetails, ...memberDetails];
+
   return (
     <StyledNavbar disableGutters>
       <div className="d-flex">
@@ -53,7 +68,22 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle }) => {
           <span>Team visible</span>
         </StyledIconOnLeftBtn>
         <StyledDivider orientation="vertical" flexItem />
-        <StyledAvatar>AJ</StyledAvatar>
+        <StyledAvatarGroup spacing={2}>
+          {avatarGroupData.map(({ img, owner }) => {
+            if (owner) {
+              return (
+                <StyledBadge
+                  key={uuidv4()}
+                  badgeContent={<OwnerIcon />}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                >
+                  <StyledAvatar src={img} />
+                </StyledBadge>
+              );
+            }
+            return <StyledAvatar src={img} key={uuidv4()} />;
+          })}
+        </StyledAvatarGroup>
         <StyledInviteBtn>Invite</StyledInviteBtn>
       </div>
       <div className="d-flex">

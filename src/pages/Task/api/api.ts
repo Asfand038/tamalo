@@ -26,3 +26,26 @@ export const updateOneTask = async (id: string, title: string) => {
 
   return getRequiredTaskData(data);
 };
+
+export const addOneComment = async (
+  commentText: string,
+  authorId: string,
+  taskId: string
+) => {
+  const data = await (
+    await fetch(`https://tamalo.herokuapp.com/comments`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: commentText,
+        author: authorId,
+        task: taskId,
+      }),
+    })
+  ).json();
+
+  return getRequiredTaskData(data);
+};

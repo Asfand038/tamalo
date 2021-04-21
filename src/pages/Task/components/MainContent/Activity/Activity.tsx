@@ -29,15 +29,15 @@ import {
   StyledButton,
 } from '../MainContent.styles';
 
+export const iconBtnList = [
+  { icon: <AttachmentIcon className="md-icon" /> },
+  { icon: <AlternateEmailIcon className="sm-icon" /> },
+  { icon: <SentimentSatisfiedRoundedIcon className="sm-icon" /> },
+  { icon: <VideoLabelIcon className="sm-icon" /> },
+];
+
 const Activity: React.FC = () => {
   const [isWritingComment, setIsWritingComment] = useState(false);
-
-  const iconBtnList = [
-    { icon: <AttachmentIcon className="md-icon" /> },
-    { icon: <AlternateEmailIcon className="sm-icon" /> },
-    { icon: <SentimentSatisfiedRoundedIcon className="sm-icon" /> },
-    { icon: <VideoLabelIcon className="sm-icon" /> },
-  ];
 
   return (
     <StyledWrapper>

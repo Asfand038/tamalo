@@ -16,10 +16,8 @@ import { BoardSchema } from '../../utils';
 
 const DashboardPage: React.FC = () => {
   const { userId } = useAuth();
-  const { data, isLoading, error } = useQuery(
-    ['boards'],
-    () => getBoards(userId),
-    { refetchOnWindowFocus: false, refetchOnMount: false }
+  const { data, isLoading, error } = useQuery(['boards'], () =>
+    getBoards(userId)
   );
 
   if (isLoading) return <Loader />;

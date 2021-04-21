@@ -36,7 +36,7 @@ const TaskModal: React.FC = () => {
 
   if (error) return <div>Something went wrong...</div>;
 
-  const { title } = data!;
+  const { title, comments } = data!;
 
   const targetList: IList = boardData.lists.find((list) =>
     list.tasksOrder.includes(taskId)
@@ -49,7 +49,7 @@ const TaskModal: React.FC = () => {
       </StyledCloseIcon>
       <TaskTitle taskTitle={title} listTitle={targetList.title} />
       <StyledBody>
-        <MainContent />
+        <MainContent comments={comments} />
         <Sidebar />
       </StyledBody>
     </TaskLayout>

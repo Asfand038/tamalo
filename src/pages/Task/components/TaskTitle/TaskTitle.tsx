@@ -29,6 +29,7 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
   const { taskId, boardId } = useParams<IRouteParams>();
 
   const queryClient = useQueryClient();
+  const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
 
   const { mutate: updateTaskTitle } = useMutation(
     () => updateOneTask(taskId, title),
@@ -81,7 +82,7 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
 
   const updateTaskTitleHandler = () => {
     if (title && title.length) {
-      updateTaskTitle({ id: taskId, title });
+      updateTaskTitle({ ...taskData, title });
     } else {
       setTitle(taskTitle);
     }

@@ -35,7 +35,7 @@ export const StyledAccordion = styled(Accordion)`
     flex: 1;
     border: none;
     transition: none;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.neutral[100]};
     border-radius: 3px;
     margin: 0;
     margin-left: 14px;

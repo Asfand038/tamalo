@@ -16,10 +16,11 @@ interface IProps {
 }
 
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
-  const { listsOrder, lists, tasks, title, id } = data;
+  const { listsOrder, lists, tasks, title, id, members, owners } = data;
 
   const queryClient = useQueryClient();
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
+  // Change it in future
   const userData = queryClient.getQueryData<UserSchema>(['boards']);
   let userProfileImg = '';
   if (userData) {
@@ -97,7 +98,7 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
   return (
     <>
       <BoardLayout profileImg={userProfileImg}>
-        <SecondaryNavbar boardTitle={title} />
+        <SecondaryNavbar boardTitle={title} members={members} owners={owners} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-lists" direction="horizontal" type="list">
             {(provided) => (

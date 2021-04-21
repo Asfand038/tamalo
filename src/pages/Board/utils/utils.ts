@@ -1,5 +1,6 @@
 import { QueryClient } from 'react-query';
-import { IBoard, IList, ITask } from './types';
+import { getRandomImg } from '../../../utils';
+import { IBoard, IList, ITask, IUser } from './types';
 
 export const getRequiredBoardData = (data: any) => {
   const tasksArray: ITask[] = data.tasks.map((task: ITask) => ({
@@ -13,12 +14,26 @@ export const getRequiredBoardData = (data: any) => {
     tasksOrder: data.tasksOrder[list.id],
   }));
 
+  const ownersArray: IUser[] = data.owners.map(
+    ({ id, email, username }: IUser) => {
+      return { id, email, username, profileImg: getRandomImg() };
+    }
+  );
+
+  const membersArray: IUser[] = data.members.map(
+    ({ id, email, username }: IUser) => {
+      return { id, email, username, profileImg: getRandomImg() };
+    }
+  );
+
   const boardData: IBoard = {
     id: data.id,
     title: data.title,
     tasks: tasksArray,
     lists: listsArray,
     listsOrder: data.listsOrder,
+    owners: ownersArray,
+    members: membersArray,
   };
 
   return boardData;
