@@ -6,16 +6,23 @@ import {
   ITask,
 } from '../utils';
 
-export const getBoardById = async (id: string) => {
+export const getBoardById = async (
+  boardId: string,
+  userId: string,
+  profileImg: string
+) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
+    await fetch(`https://tamalo.herokuapp.com/boards/${boardId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
   ).json();
 
-  return getRequiredBoardData(data);
+  data.userId = userId;
+  data.profileImg = profileImg;
+  const requiredBoardData = await getRequiredBoardData(data);
+  return requiredBoardData;
 };
 
 export const updateOneBoard = async ({

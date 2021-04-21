@@ -3,12 +3,13 @@ import { useQueryClient } from 'react-query';
 import { Route } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
+import { useAuth } from '../../contexts';
 import { TaskPage } from '../Task';
 import { BoardLayout } from '../../layouts';
 import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 import { IBoard } from './utils';
-import { UserSchema } from '../../utils';
+import { getAvatarFallbackName } from '../../utils';
 
 interface IProps {
   data: IBoard;
@@ -18,14 +19,9 @@ interface IProps {
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
   const { listsOrder, lists, tasks, title, id, members, owners } = data;
 
+  const { user } = useAuth();
   const queryClient = useQueryClient();
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
-  // Change it in future
-  const userData = queryClient.getQueryData<UserSchema>(['boards']);
-  let userProfileImg = '';
-  if (userData) {
-    userProfileImg = userData.userProfileImg;
-  }
 
   useEffect(() => {
     const boardContainer = document.getElementById(id)! as HTMLDivElement;
@@ -97,7 +93,10 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
 
   return (
     <>
-      <BoardLayout profileImg={userProfileImg}>
+      <BoardLayout
+        profileImg={user.profileImg}
+        avatarFallbackName={getAvatarFallbackName(user.username)}
+      >
         <SecondaryNavbar boardTitle={title} members={members} owners={owners} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-lists" direction="horizontal" type="list">

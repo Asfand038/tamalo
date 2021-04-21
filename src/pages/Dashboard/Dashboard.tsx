@@ -12,18 +12,19 @@ import { Loader } from '../../components';
 import { DashboardCard } from './components';
 import { useAuth } from '../../contexts';
 import { getBoards } from './api';
-import { BoardSchema } from '../../utils';
+import { BoardSchema } from './utils';
+import { getAvatarFallbackName } from '../../utils';
 
 const DashboardPage: React.FC = () => {
-  const { userId } = useAuth();
+  const { user } = useAuth();
   const { data, isLoading, error } = useQuery(['boards'], () =>
-    getBoards(userId)
+    getBoards(user.id)
   );
 
   if (isLoading) return <Loader />;
   if (error) return <div>Something went wrong...</div>;
 
-  const { ownedBoards, memberOfBoards, userProfileImg } = data!;
+  const { ownedBoards, memberOfBoards } = data!;
 
   const boardCategories = [
     {
@@ -39,7 +40,10 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <DashboardLayout profileImg={userProfileImg}>
+    <DashboardLayout
+      profileImg={user.profileImg}
+      avatarFallbackName={getAvatarFallbackName(user.username)}
+    >
       {boardCategories.map(({ title, boardCategory, icon }) => (
         <StyledBoardsCategory key={title}>
           <StyledTitle>

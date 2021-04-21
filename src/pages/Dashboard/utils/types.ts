@@ -5,9 +5,3 @@ export interface BoardSchema {
   members: string[];
   background: { [prop: string]: string };
 }
-
-export interface UserSchema {
-  ownedBoards: BoardSchema[];
-  memberOfBoards: BoardSchema[];
-  userProfileImg: string;
-}

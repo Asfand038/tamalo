@@ -1,4 +1,4 @@
-import { getRandomImg, BoardSchema } from '../../../utils';
+import { BoardSchema } from '../utils';
 
 export const getBoards = async (userId: string) => {
   const data = await (
@@ -17,7 +17,5 @@ export const getBoards = async (userId: string) => {
     board.members.includes(userId)
   );
 
-  const userProfileImg = getRandomImg();
-
-  return { ownedBoards, memberOfBoards, userProfileImg };
+  return { ownedBoards, memberOfBoards };
 };

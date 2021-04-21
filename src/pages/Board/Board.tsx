@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
+import { useAuth } from '../../contexts';
 import BoardDetails from './BoardDetails';
 import { Loader } from '../../components';
 import { getBoardById, updateOneBoard } from './api';
@@ -13,7 +14,7 @@ interface IRouteParams {
 
 const BoardPage: React.FC = () => {
   const { id } = useParams<IRouteParams>();
-
+  const { user } = useAuth();
   const queryClient = useQueryClient();
 
   const { mutate: updateBoard } = useMutation(
@@ -21,8 +22,10 @@ const BoardPage: React.FC = () => {
     mutationConfig(id, queryClient)
   );
 
-  const { data, isLoading, error } = useQuery(['board', id], () =>
-    getBoardById(id)
+  const { data, isLoading, error } = useQuery(
+    ['board', id],
+    () => getBoardById(id, user.id, user.profileImg),
+    { refetchOnWindowFocus: false }
   );
 
   if (isLoading) return <Loader />;

@@ -5,12 +5,17 @@ import { StyledDashboard, StyledPage } from './DashboardLayout.styles';
 
 interface IProps {
   profileImg: string;
+  avatarFallbackName: string;
 }
 
-const DashboardLayout: React.FC<IProps> = ({ children, profileImg }) => {
+const DashboardLayout: React.FC<IProps> = ({
+  children,
+  profileImg,
+  avatarFallbackName,
+}) => {
   return (
     <StyledDashboard>
-      <Navbar profileImg={profileImg} />
+      <Navbar profileImg={profileImg} avatarFallbackName={avatarFallbackName} />
       <StyledPage>
         <Sidebar />
         <div>{children}</div>

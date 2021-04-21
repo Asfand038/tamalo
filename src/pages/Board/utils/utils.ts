@@ -1,8 +1,8 @@
 import { QueryClient } from 'react-query';
-import { getRandomImg } from '../../../utils';
+import { getMultipleImgsFromMockApi } from '../../../utils';
 import { IBoard, IList, ITask, IUser } from './types';
 
-export const getRequiredBoardData = (data: any) => {
+export const getRequiredBoardData = async (data: any) => {
   const tasksArray: ITask[] = data.tasks.map((task: ITask) => ({
     id: task.id,
     title: task.title,
@@ -14,15 +14,28 @@ export const getRequiredBoardData = (data: any) => {
     tasksOrder: data.tasksOrder[list.id],
   }));
 
+  const requiredNumOfImgs = [...data.owners, ...data.members].length - 1;
+  const images = await getMultipleImgsFromMockApi(requiredNumOfImgs);
+
   const ownersArray: IUser[] = data.owners.map(
     ({ id, email, username }: IUser) => {
-      return { id, email, username, profileImg: getRandomImg() };
+      if (data.userId === id) {
+        return { id, email, username, profileImg: data.profileImg };
+      }
+      const image = images[0];
+      images.splice(0, 1);
+      return { id, email, username, profileImg: image };
     }
   );
 
   const membersArray: IUser[] = data.members.map(
     ({ id, email, username }: IUser) => {
-      return { id, email, username, profileImg: getRandomImg() };
+      if (data.userId === id) {
+        return { id, email, username, profileImg: data.profileImg };
+      }
+      const image = images[0];
+      images.splice(0, 1);
+      return { id, email, username, profileImg: image };
     }
   );
 

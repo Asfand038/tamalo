@@ -32,12 +32,7 @@ export interface IComment {
   createdAt: string;
   taskId: string;
   updatedAt: string;
-  author: {
-    id: string;
-    username: string;
-    image: string;
-    avatarName: string;
-  };
+  author: IUser;
 }
 
 export interface ITaskDetails {

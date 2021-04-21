@@ -1,2 +1,2 @@
-export { getRandomImg } from './getRandomImg';
-export * from './types';
+export * from './getImgFromMockApi';
+export { getAvatarFallbackName } from './getAvatarFallback';

@@ -10,6 +10,7 @@ import {
 
 import { ButtonContainer } from '../../../../../../components';
 import { IComment } from '../../../../utils';
+import { getAvatarFallbackName } from '../../../../../../utils';
 import {
   StyledWrapper,
   StyledComment,
@@ -46,7 +47,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
   const editCommentHandler = () => {};
   return (
     <StyledWrapper>
-      <StyledAvatar>{author.avatarName}</StyledAvatar>
+      <StyledAvatar>{getAvatarFallbackName(author.username)}</StyledAvatar>
       <StyledComment>
         <StyledCommentDetails>
           <span>{author.username}</span>

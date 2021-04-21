@@ -10,6 +10,7 @@ import {
   MoreHoriz as MoreHorizIcon,
 } from '@material-ui/icons';
 
+import { getAvatarFallbackName } from '../../../../utils';
 import { OwnerIcon } from '../../../../assets';
 import { IUser } from '../../utils';
 import { BoardTitle } from './BoardTitle';
@@ -33,12 +34,21 @@ interface IProps {
 }
 
 const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
-  const ownerDetails = owners.map(({ profileImg }) => {
-    return { img: profileImg, owner: true };
+  const ownerDetails = owners.map(({ profileImg, username }) => {
+    return {
+      img: profileImg,
+      owner: true,
+      avatarFallbackText: getAvatarFallbackName(username),
+    };
   });
-  const memberDetails = members.map(({ profileImg }) => {
-    return { img: profileImg, owner: false };
+  const memberDetails = members.map(({ profileImg, username }) => {
+    return {
+      img: profileImg,
+      owner: false,
+      avatarFallbackText: getAvatarFallbackName(username),
+    };
   });
+
   const avatarGroupData = [...ownerDetails, ...memberDetails];
 
   return (
@@ -69,7 +79,7 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
         </StyledIconOnLeftBtn>
         <StyledDivider orientation="vertical" flexItem />
         <StyledAvatarGroup spacing={2}>
-          {avatarGroupData.map(({ img, owner }) => {
+          {avatarGroupData.map(({ img, owner, avatarFallbackText }) => {
             if (owner) {
               return (
                 <StyledBadge
@@ -77,7 +87,7 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
                   badgeContent={<OwnerIcon />}
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 >
-                  <StyledAvatar src={img} />
+                  <StyledAvatar src={img}>{avatarFallbackText}</StyledAvatar>
                 </StyledBadge>
               );
             }

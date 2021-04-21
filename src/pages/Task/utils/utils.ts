@@ -1,12 +1,5 @@
-import { ITaskDetails, IUser, IComment } from './types';
-
-const getAvatarName = (username: string) => {
-  const blankspaceIndex = username.indexOf(' ');
-  if (blankspaceIndex === -1) {
-    return username.slice(0, 2).toUpperCase();
-  }
-  return `${username[0]}${username[blankspaceIndex + 1]}`.toUpperCase();
-};
+import { QueryClient } from 'react-query';
+import { ITaskDetails, IUser, IComment, IBoard } from './types';
 
 const getDesiredDateFormat = (dateString: string) => {
   const dateDetails = new Date(dateString);
@@ -45,9 +38,9 @@ export const getCommentsWithDetails = (
       const user = users.find((el) => el.id === authorId)!;
       const author = {
         id: authorId,
+        email: user.email,
         username: user.username,
-        image: user.profileImg,
-        avatarName: getAvatarName(user.username),
+        profileImg: user.profileImg,
       };
       return {
         commentId,
@@ -88,3 +81,54 @@ export const getRequiredTaskData = (data: any) => {
 
   return taskData;
 };
+
+export const taskMutationConfig = (
+  boardId: string,
+  taskId: string,
+  title: string,
+  queryClient: QueryClient
+) => ({
+  onMutate: async (updatedTask: ITaskDetails) => {
+    await queryClient.cancelQueries(['task', taskId]);
+    const previousTask = queryClient.getQueryData<ITaskDetails>([
+      'task',
+      taskId,
+    ]);
+    queryClient.setQueryData<ITaskDetails>(['task', taskId], updatedTask);
+
+    const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+
+    const newTasks = boardData.tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, title };
+      }
+      return task;
+    });
+
+    queryClient.setQueryData<IBoard>(['board', boardId], {
+      ...boardData,
+      tasks: newTasks,
+    });
+
+    return { previousTask, updatedTask };
+  },
+
+  onError: (
+    error: any,
+    variables: ITaskDetails,
+    context:
+      | {
+          previousTask: ITaskDetails | undefined;
+          updatedTask: ITaskDetails;
+        }
+      | undefined
+  ) => {
+    if (context?.previousTask) {
+      queryClient.setQueryData('task', context.previousTask);
+    }
+  },
+
+  onSettled: () => {
+    queryClient.invalidateQueries(['task', taskId]);
+  },
+});

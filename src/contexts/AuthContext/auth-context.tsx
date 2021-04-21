@@ -1,18 +1,33 @@
 import React, { createContext, useContext, useState } from 'react';
+import { getImgFromMockApi } from '../../utils';
+
+export interface IUser {
+  id: string;
+  email: string;
+  username: string;
+  profileImg: string;
+}
 
 interface IAuthContext {
   isLoggedIn: boolean;
   isLoading: boolean;
   error: string;
-  userId: string;
+  user: IUser;
   login: Function;
 }
+
+const initialUserData = {
+  id: '',
+  email: '',
+  username: '',
+  profileImg: '',
+};
 
 const initialContext = {
   isLoggedIn: false,
   isLoading: false,
   error: '',
-  userId: '',
+  user: initialUserData,
   login: () => {},
 };
 
@@ -21,7 +36,7 @@ const AuthContext = createContext<IAuthContext>(initialContext);
 export const AuthProvider: React.FC = (children) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState('');
+  const [user, setUser] = useState<IUser>(initialUserData);
   const [error, setError] = useState('');
 
   const login = async (identifier: string, password: string) => {
@@ -36,9 +51,16 @@ export const AuthProvider: React.FC = (children) => {
     const data = await response.json();
 
     if (data.user) {
-      localStorage.setItem('token', data.jwt);
-      // eslint-disable-next-line no-underscore-dangle
-      setUserId(data.user._id);
+      const image = await getImgFromMockApi();
+      const { jwt, user } = data;
+      localStorage.setItem('token', jwt);
+      setUser({
+        // eslint-disable-next-line no-underscore-dangle
+        id: user._id,
+        email: user.email,
+        username: user.username,
+        profileImg: image,
+      });
       setIsLoggedIn(true);
       setIsLoading(false);
     }
@@ -50,7 +72,7 @@ export const AuthProvider: React.FC = (children) => {
   };
 
   const authContextValue = {
-    userId,
+    user,
     isLoading,
     isLoggedIn,
     error,
