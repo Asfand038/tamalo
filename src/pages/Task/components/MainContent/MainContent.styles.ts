@@ -11,7 +11,9 @@ export const StyledContainer = styled.div`
   width: 552px;
 `;
 
-// Styles for both(Add description and activity)
+export const StyledActivityContainer = styled.div`
+  margin-top: 24px;
+`;
 
 export const StyledTitleContainer = styled.div`
   position: relative;

@@ -2,22 +2,27 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
+import {
+  Attachment as AttachmentIcon,
+  AlternateEmail as AlternateEmailIcon,
+  SentimentSatisfiedRounded as SentimentSatisfiedRoundedIcon,
+  VideoLabel as VideoLabelIcon,
+} from '@material-ui/icons';
 
 // Edit this code later
+import { AddComment } from './AddComment';
 import { IComment, IBoard, getCommentsWithDetails } from '../../../utils';
-import { iconBtnList } from '../Activity/Activity';
-import {
-  StyledAvatar,
-  StyledTextField,
-  StyledSaveButton,
-  StyledIconButton,
-  StyledIconBtnContainer,
-} from '../Activity/Activity.styles';
+
 import {
   StyledWrapper,
   StyledComment,
   StyledCommentEditor,
   StyledBtnContainer,
+  StyledAvatar,
+  StyledTextField,
+  StyledSaveButton,
+  StyledIconButton,
+  StyledIconBtnContainer,
 } from './Comments.styles';
 
 interface IProps {
@@ -27,6 +32,13 @@ interface IProps {
 interface IRouteParams {
   boardId: string;
 }
+
+const iconBtnList = [
+  { icon: <AttachmentIcon className="md-icon" /> },
+  { icon: <AlternateEmailIcon className="sm-icon" /> },
+  { icon: <SentimentSatisfiedRoundedIcon className="sm-icon" /> },
+  { icon: <VideoLabelIcon className="sm-icon" /> },
+];
 
 const Comments: React.FC<IProps> = ({ comments }) => {
   const [isEditingComment, setIsEditingComment] = useState(false);
@@ -42,6 +54,7 @@ const Comments: React.FC<IProps> = ({ comments }) => {
 
   return (
     <>
+      <AddComment />
       {commentsDetailedList.map(
         ({ commentId, author, createdAt, commentText }) => (
           <StyledWrapper key={commentId}>
@@ -59,6 +72,7 @@ const Comments: React.FC<IProps> = ({ comments }) => {
                   onFocus={() => setIsEditingComment(true)}
                   multiline
                   variant="outlined"
+                  isWriting={isEditingComment}
                 />
                 <StyledBtnContainer>
                   <StyledSaveButton>Save</StyledSaveButton>
