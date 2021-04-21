@@ -22,9 +22,11 @@ const TaskModal: React.FC = () => {
   const queryClient = useQueryClient();
 
   const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+  const { owners, members, lists } = boardData;
+  const users = [...owners, ...members];
 
   const { data, isLoading, error } = useQuery(['task', taskId], () =>
-    getTaskById(taskId)
+    getTaskById(taskId, users)
   );
 
   if (isLoading)
@@ -38,7 +40,7 @@ const TaskModal: React.FC = () => {
 
   const { title, comments } = data!;
 
-  const targetList: IList = boardData.lists.find((list) =>
+  const targetList: IList = lists.find((list) =>
     list.tasksOrder.includes(taskId)
   )!;
 

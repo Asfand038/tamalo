@@ -1,26 +1,4 @@
-import { IComment, ITaskDetails, IUser } from './types';
-
-export const getRequiredTaskData = (data: any) => {
-  const commentsArray: IComment[] = data.comments.map((comment: any) => {
-    const { author, id, text, createdAt, task, updatedAt } = comment;
-    return {
-      commentId: id,
-      authorId: author,
-      taskId: task,
-      commentText: text,
-      createdAt,
-      updatedAt,
-    };
-  });
-
-  const taskData: ITaskDetails = {
-    id: data.id,
-    title: data.title,
-    comments: commentsArray,
-  };
-
-  return taskData;
-};
+import { ITaskDetails, IUser, IComment } from './types';
 
 const getAvatarName = (username: string) => {
   const blankspaceIndex = username.indexOf(' ');
@@ -49,11 +27,20 @@ const getDesiredDateFormat = (dateString: string) => {
   return `${month} ${date} at ${time}`;
 };
 
+export interface ICommentLessDetails {
+  authorId: string;
+  taskId: string;
+  commentId: string;
+  createdAt: string;
+  updatedAt: string;
+  commentText: string;
+}
+
 export const getCommentsWithDetails = (
-  comments: IComment[],
+  comments: ICommentLessDetails[],
   users: IUser[]
 ) => {
-  const commentsWithDetails = comments.map(
+  const commentsWithDetails: IComment[] = comments.map(
     ({ authorId, commentText, commentId, createdAt, taskId, updatedAt }) => {
       const user = users.find((el) => el.id === authorId)!;
       const author = {
@@ -73,4 +60,31 @@ export const getCommentsWithDetails = (
     }
   );
   return commentsWithDetails;
+};
+
+export const getRequiredTaskData = (data: any) => {
+  const commentsArray = data.comments.map((comment: any) => {
+    const { author, id, text, createdAt, task, updatedAt } = comment;
+    return {
+      commentId: id,
+      authorId: author,
+      taskId: task,
+      commentText: text,
+      createdAt,
+      updatedAt,
+    };
+  });
+
+  const commentsDetailedList: IComment[] = getCommentsWithDetails(
+    commentsArray,
+    data.users
+  );
+
+  const taskData: ITaskDetails = {
+    id: data.id,
+    title: data.title,
+    comments: commentsDetailedList,
+  };
+
+  return taskData;
 };

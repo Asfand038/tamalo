@@ -36,22 +36,25 @@ const iconBtnList = [
 const AddComment: React.FC = () => {
   const [isWritingComment, setIsWritingComment] = useState(false);
 
+  const addCommentHandler = () => {};
   return (
     <StyledWrapper>
       <StyledAvatar>AJ</StyledAvatar>
       <ClickAwayListener onClickAway={() => setIsWritingComment(false)}>
         <StyledAccordion expanded={isWritingComment}>
-          <StyledAccordionSummary isWriting={isWritingComment}>
+          <StyledAccordionSummary iswriting={+isWritingComment}>
             <StyledTextField
               onFocus={() => setIsWritingComment(true)}
               multiline
               variant="outlined"
               placeholder="Write a comment..."
-              isWriting={isWritingComment}
+              iswriting={+isWritingComment}
             />
           </StyledAccordionSummary>
           <StyledAccordionDetails>
-            <StyledSaveButton>Save</StyledSaveButton>
+            <StyledSaveButton onClick={addCommentHandler}>
+              Save
+            </StyledSaveButton>
             <StyledIconBtnContainer>
               {iconBtnList.map(({ icon }) => (
                 <StyledIconButton key={uuidv4()}>{icon}</StyledIconButton>

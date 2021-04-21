@@ -1,6 +1,6 @@
-import { getRequiredTaskData } from '../utils';
+import { getRequiredTaskData, IUser } from '../utils';
 
-export const getTaskById = async (id: string) => {
+export const getTaskById = async (id: string, users: IUser[]) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/tasks/${id}`, {
       headers: {
@@ -9,6 +9,7 @@ export const getTaskById = async (id: string) => {
     })
   ).json();
 
+  data.users = users;
   return getRequiredTaskData(data);
 };
 

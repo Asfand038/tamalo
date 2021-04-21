@@ -27,12 +27,17 @@ export interface IBoard {
 }
 
 export interface IComment {
-  authorId: string;
-  taskId: string;
   commentId: string;
-  createdAt: string;
-  updatedAt: string;
   commentText: string;
+  createdAt: string;
+  taskId: string;
+  updatedAt: string;
+  author: {
+    id: string;
+    username: string;
+    image: string;
+    avatarName: string;
+  };
 }
 
 export interface ITaskDetails {
