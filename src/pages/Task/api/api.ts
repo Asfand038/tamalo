@@ -1,4 +1,9 @@
-import { getRequiredTaskData, IUser } from '../utils';
+import {
+  IUser,
+  IComment,
+  getRequiredTaskData,
+  getRequiredCommentData,
+} from '../utils';
 
 export const getTaskById = async (id: string, users: IUser[]) => {
   const data = await (
@@ -9,8 +14,7 @@ export const getTaskById = async (id: string, users: IUser[]) => {
     })
   ).json();
 
-  data.users = users;
-  return getRequiredTaskData(data);
+  return getRequiredTaskData({ ...data, users });
 };
 
 export const updateOneTask = async (id: string, title: string) => {
@@ -30,8 +34,9 @@ export const updateOneTask = async (id: string, title: string) => {
 
 export const addOneComment = async (
   commentText: string,
-  authorId: string,
-  taskId: string
+  author: IUser,
+  taskId: string,
+  comments: IComment[]
 ) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/comments`, {
@@ -42,11 +47,15 @@ export const addOneComment = async (
       },
       body: JSON.stringify({
         text: commentText,
-        author: authorId,
+        author: author.id,
         task: taskId,
       }),
     })
   ).json();
 
-  return getRequiredTaskData(data);
+  return getRequiredCommentData({
+    ...data,
+    comments,
+    author: { ...data.author, profileImg: author.profileImg },
+  });
 };

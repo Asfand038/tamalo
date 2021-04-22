@@ -8,7 +8,7 @@ import {
   SentimentSatisfiedOutlined as SentimentSatisfiedOutlinedIcon,
 } from '@material-ui/icons';
 
-import { ButtonContainer } from '../../../../../../components';
+import { ButtonContainer, Loader } from '../../../../../../components';
 import { IComment } from '../../../../utils';
 import { getAvatarFallbackName } from '../../../../../../utils';
 import {
@@ -39,7 +39,7 @@ interface IProps {
 }
 
 const Comment: React.FC<IProps> = ({ comment }) => {
-  const { author, createdAt, commentText } = comment;
+  const { author, createdAt, commentText, commentId } = comment;
 
   const [isEditingComment, setIsEditingComment] = useState(false);
   const [commentTextState, setCommentTextState] = useState(commentText);
@@ -47,7 +47,9 @@ const Comment: React.FC<IProps> = ({ comment }) => {
   const editCommentHandler = () => {};
   return (
     <StyledWrapper>
-      <StyledAvatar>{getAvatarFallbackName(author.username)}</StyledAvatar>
+      <StyledAvatar src={author.profileImg}>
+        {getAvatarFallbackName(author.username)}
+      </StyledAvatar>
       <StyledComment>
         <StyledCommentDetails>
           <span>{author.username}</span>
@@ -56,6 +58,11 @@ const Comment: React.FC<IProps> = ({ comment }) => {
         {!isEditingComment && (
           <>
             <StyledCommentText>{commentText}</StyledCommentText>
+            {commentId.includes('optimistic') && (
+              <div>
+                <Loader />
+              </div>
+            )}
             <StyledCommentUpdateBtns>
               <SentimentSatisfiedOutlinedIcon />
               <div>

@@ -85,3 +85,8 @@ export const StyledCommentUpdateBtns = styled.div`
     }
   }
 `;
+
+export const StyledDiv = styled.div`
+  position: absolute;
+  background-color: pink;
+`;

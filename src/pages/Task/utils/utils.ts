@@ -1,5 +1,4 @@
-import { QueryClient } from 'react-query';
-import { ITaskDetails, IUser, IComment, IBoard } from './types';
+import { ITaskDetails, IUser, IComment } from './types';
 
 const getDesiredDateFormat = (dateString: string) => {
   const dateDetails = new Date(dateString);
@@ -20,7 +19,7 @@ const getDesiredDateFormat = (dateString: string) => {
   return `${month} ${date} at ${time}`;
 };
 
-export interface ICommentLessDetails {
+interface ICommentLessDetails {
   authorId: string;
   taskId: string;
   commentId: string;
@@ -29,7 +28,7 @@ export interface ICommentLessDetails {
   commentText: string;
 }
 
-export const getCommentsWithDetails = (
+const getCommentsWithDetails = (
   comments: ICommentLessDetails[],
   users: IUser[]
 ) => {
@@ -55,21 +54,40 @@ export const getCommentsWithDetails = (
   return commentsWithDetails;
 };
 
+const sortCommentsFromLatestToFirst = (
+  a: ICommentLessDetails,
+  b: ICommentLessDetails
+) => {
+  if (new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) {
+    return 1;
+  }
+  if (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) {
+    return -1;
+  }
+  return 0;
+};
+
 export const getRequiredTaskData = (data: any) => {
-  const commentsArray = data.comments.map((comment: any) => {
-    const { author, id, text, createdAt, task, updatedAt } = comment;
-    return {
-      commentId: id,
-      authorId: author,
-      taskId: task,
-      commentText: text,
-      createdAt,
-      updatedAt,
-    };
-  });
+  const commentsArray: ICommentLessDetails[] = data.comments.map(
+    (comment: any) => {
+      const { author, id, text, createdAt, task, updatedAt } = comment;
+      return {
+        commentId: id,
+        authorId: author,
+        taskId: task,
+        commentText: text,
+        createdAt,
+        updatedAt,
+      };
+    }
+  );
+
+  const sortedCommentsArray: ICommentLessDetails[] = commentsArray.sort(
+    sortCommentsFromLatestToFirst
+  );
 
   const commentsDetailedList: IComment[] = getCommentsWithDetails(
-    commentsArray,
+    sortedCommentsArray,
     data.users
   );
 
@@ -82,53 +100,31 @@ export const getRequiredTaskData = (data: any) => {
   return taskData;
 };
 
-export const taskMutationConfig = (
-  boardId: string,
-  taskId: string,
-  title: string,
-  queryClient: QueryClient
-) => ({
-  onMutate: async (updatedTask: ITaskDetails) => {
-    await queryClient.cancelQueries(['task', taskId]);
-    const previousTask = queryClient.getQueryData<ITaskDetails>([
-      'task',
-      taskId,
-    ]);
-    queryClient.setQueryData<ITaskDetails>(['task', taskId], updatedTask);
+export const getRequiredCommentData = (data: any) => {
+  const { id, email, username, profileImg } = data.author;
+  const author = {
+    id,
+    email,
+    username,
+    profileImg,
+  };
 
-    const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+  const newComment: IComment = {
+    commentId: data.id,
+    commentText: data.text,
+    createdAt: getDesiredDateFormat(data.createdAt),
+    taskId: data.task.id,
+    updatedAt: data.updatedAt,
+    author,
+  };
 
-    const newTasks = boardData.tasks.map((task) => {
-      if (task.id === taskId) {
-        return { ...task, title };
-      }
-      return task;
-    });
+  const commentsArray = [newComment, ...data.comments];
 
-    queryClient.setQueryData<IBoard>(['board', boardId], {
-      ...boardData,
-      tasks: newTasks,
-    });
+  const taskData: ITaskDetails = {
+    id: data.id,
+    title: data.title,
+    comments: commentsArray,
+  };
 
-    return { previousTask, updatedTask };
-  },
-
-  onError: (
-    error: any,
-    variables: ITaskDetails,
-    context:
-      | {
-          previousTask: ITaskDetails | undefined;
-          updatedTask: ITaskDetails;
-        }
-      | undefined
-  ) => {
-    if (context?.previousTask) {
-      queryClient.setQueryData('task', context.previousTask);
-    }
-  },
-
-  onSettled: () => {
-    queryClient.invalidateQueries(['task', taskId]);
-  },
-});
+  return taskData;
+};

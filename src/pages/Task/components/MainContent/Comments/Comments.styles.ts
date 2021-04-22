@@ -76,6 +76,9 @@ export const StyledAccordionDetails = styled(AccordionDetails)`
     padding: 0;
     justify-content: space-between;
     margin: 12px 12px 8px;
+    & .cursor-not-allowed-wrapper {
+      cursor: not-allowed;
+    }
   }
 `;
 
@@ -143,6 +146,10 @@ export const StyledSaveButton = styled(Button)`
     &:hover {
       box-shadow: none;
       background-color: ${({ theme }) => theme.colors.green[200]};
+    }
+    &:disabled {
+      background-color: rgba(9, 30, 66, 0.04);
+      color: #a5adba;
     }
   }
 `;

@@ -12,6 +12,7 @@ import {
 } from '@material-ui/icons';
 
 import { useAuth } from '../../../../../../contexts';
+import { getAvatarFallbackName } from '../../../../../../utils';
 import { addOneComment } from '../../../../api';
 import { IComment, ITaskDetails } from '../../../../utils';
 import {
@@ -49,9 +50,10 @@ const AddComment: React.FC = () => {
   const { taskId } = useParams<IRouteParams>();
   const queryClient = useQueryClient();
   const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
+  const { comments } = taskData;
 
   const { mutate: addComment } = useMutation(
-    () => addOneComment(newCommentText, user.id, taskId),
+    () => addOneComment(newCommentText, user, taskId, comments),
     {
       onMutate: async (updatedTask: ITaskDetails) => {
         await queryClient.cancelQueries(['task', taskId]);
@@ -87,20 +89,36 @@ const AddComment: React.FC = () => {
 
   const addCommentHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const newComment: IComment = {
-      commentId: `optimistic${uuidv4()}`,
-      commentText: newCommentText,
-      createdAt: '',
-      updatedAt: '',
-      taskId,
-      author: user,
-    };
-    const newCommentsList = [newComment, ...taskData.comments];
-    addComment({ ...taskData, comments: newCommentsList });
+    if (newCommentText && newCommentText.length) {
+      const newComment: IComment = {
+        commentId: `optimistic${uuidv4()}`,
+        commentText: newCommentText,
+        createdAt: '',
+        updatedAt: '',
+        taskId,
+        author: user,
+      };
+      const newCommentsList = [newComment, ...taskData.comments];
+      addComment({ ...taskData, comments: newCommentsList });
+      setNewCommentText('');
+      setIsWritingComment(false);
+    }
   };
+
+  const SaveButton = () => (
+    <StyledSaveButton
+      onClick={addCommentHandler}
+      disabled={newCommentText.length === 0}
+    >
+      Save
+    </StyledSaveButton>
+  );
+
   return (
     <StyledWrapper>
-      <StyledAvatar>AJ</StyledAvatar>
+      <StyledAvatar src={user.profileImg}>
+        {getAvatarFallbackName(user.username)}
+      </StyledAvatar>
       <ClickAwayListener onClickAway={() => setIsWritingComment(false)}>
         <StyledAccordion expanded={isWritingComment}>
           <StyledAccordionSummary iswriting={+isWritingComment}>
@@ -115,9 +133,12 @@ const AddComment: React.FC = () => {
             />
           </StyledAccordionSummary>
           <StyledAccordionDetails>
-            <StyledSaveButton onClick={addCommentHandler}>
-              Save
-            </StyledSaveButton>
+            {!newCommentText.length && (
+              <div className="cursor-not-allowed-wrapper">
+                <SaveButton />
+              </div>
+            )}
+            {newCommentText.length > 0 && <SaveButton />}
             <StyledIconBtnContainer>
               {iconBtnList.map(({ icon }) => (
                 <StyledIconButton key={uuidv4()}>{icon}</StyledIconButton>
