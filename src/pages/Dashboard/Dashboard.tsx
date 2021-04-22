@@ -21,7 +21,7 @@ const DashboardPage: React.FC = () => {
     getBoards(user.id)
   );
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader color="#e1e1e1" />;
   if (error) return <div>Something went wrong...</div>;
 
   const { ownedBoards, memberOfBoards } = data!;

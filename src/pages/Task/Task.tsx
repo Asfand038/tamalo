@@ -32,7 +32,7 @@ const TaskModal: React.FC = () => {
   if (isLoading)
     return (
       <TaskLayout>
-        <Loader />
+        <Loader color="#e1e1e1" />
       </TaskLayout>
     );
 

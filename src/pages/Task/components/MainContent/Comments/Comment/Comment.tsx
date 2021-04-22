@@ -19,6 +19,7 @@ import {
   StyledCommentEditor,
   StyledBtnContainer,
   StyledCommentUpdateBtns,
+  StyledLoaderWrapper,
 } from './Comment.styles';
 import {
   StyledAvatar,
@@ -50,7 +51,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
       <StyledAvatar src={author.profileImg}>
         {getAvatarFallbackName(author.username)}
       </StyledAvatar>
-      <StyledComment>
+      <StyledComment id="comment-container">
         <StyledCommentDetails>
           <span>{author.username}</span>
           <span>{createdAt}</span>
@@ -59,25 +60,28 @@ const Comment: React.FC<IProps> = ({ comment }) => {
           <>
             <StyledCommentText>{commentText}</StyledCommentText>
             {commentId.includes('optimistic') && (
-              <div>
-                <Loader />
-              </div>
+              <StyledLoaderWrapper>
+                <Loader color="#737581" />
+                <div>Sending...</div>
+              </StyledLoaderWrapper>
             )}
-            <StyledCommentUpdateBtns>
-              <SentimentSatisfiedOutlinedIcon />
-              <div>
-                <span> - </span>
-                <span
-                  role="button"
-                  onClick={() => setIsEditingComment(true)}
-                  aria-hidden="true"
-                >
-                  Edit
-                </span>
-                <span> - </span>
-                <span>Delete</span>
-              </div>
-            </StyledCommentUpdateBtns>
+            {!commentId.includes('optimistic') && (
+              <StyledCommentUpdateBtns>
+                <SentimentSatisfiedOutlinedIcon />
+                <div>
+                  <span> - </span>
+                  <span
+                    role="button"
+                    onClick={() => setIsEditingComment(true)}
+                    aria-hidden="true"
+                  >
+                    Edit
+                  </span>
+                  <span> - </span>
+                  <span>Delete</span>
+                </div>
+              </StyledCommentUpdateBtns>
+            )}
           </>
         )}
         {isEditingComment && (

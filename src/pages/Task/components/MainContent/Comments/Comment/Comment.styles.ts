@@ -86,7 +86,24 @@ export const StyledCommentUpdateBtns = styled.div`
   }
 `;
 
-export const StyledDiv = styled.div`
-  position: absolute;
-  background-color: pink;
+export const StyledLoaderWrapper = styled.div`
+  && {
+    position: relative;
+    width: 30px;
+    height: 26px;
+    & > div:first-child {
+      font-size: 2px;
+      &::before {
+        left: -4px;
+      }
+      &::after {
+        left: 4px;
+      }
+    }
+    & > div:last-child {
+      font-size: 12px;
+      color: #6b778c;
+      margin: 8px 0 0 30px;
+    }
+  }
 `;

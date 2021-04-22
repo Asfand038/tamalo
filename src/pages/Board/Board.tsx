@@ -28,7 +28,7 @@ const BoardPage: React.FC = () => {
     { refetchOnWindowFocus: false }
   );
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader color="#e1e1e1" />;
   if (error) return <div>Something went wrong...</div>;
   return <BoardDetails data={data!} updateBoard={updateBoard} />;
 };
