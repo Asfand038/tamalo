@@ -17,7 +17,7 @@ export const StyledAvatar = styled(Avatar)`
     height: 28px;
     width: 28px;
     display: inline-flex;
-    background-color: ${({ theme }) => theme.colors.red[100]};
+    background-color: ${({ theme }) => theme.colors.red[200]};
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     &:hover {
       cursor: pointer;
@@ -76,7 +76,7 @@ export const StyledAccordionDetails = styled(AccordionDetails)`
     padding: 0;
     justify-content: space-between;
     margin: 12px 12px 8px;
-    & .cursor-not-allowed-wrapper {
+    & .not-allowed {
       cursor: not-allowed;
     }
   }

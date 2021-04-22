@@ -47,7 +47,7 @@ export const StyledAvatar = styled(Avatar)`
   && {
     height: 28px;
     width: 28px;
-    background-color: ${({ theme }) => theme.colors.red[100]};
+    background-color: ${({ theme }) => theme.colors.red[200]};
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     border: none;
     &:hover {

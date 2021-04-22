@@ -59,3 +59,51 @@ export const addOneComment = async (
     author: { ...data.author, profileImg: author.profileImg },
   });
 };
+
+export const updateOneComment = async (
+  commentId: string,
+  commentText: string,
+  author: IUser,
+  comments: IComment[]
+) => {
+  const data = await (
+    await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: commentText,
+      }),
+    })
+  ).json();
+
+  return getRequiredCommentData({
+    ...data,
+    comments,
+    author: { ...data.author, profileImg: author.profileImg },
+  });
+};
+
+export const deleteOneComment = async (
+  commentId: string,
+  author: IUser,
+  comments: IComment[]
+) => {
+  const data = await (
+    await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  ).json();
+
+  return getRequiredCommentData({
+    ...data,
+    comments,
+    author: { ...data.author, profileImg: author.profileImg },
+  });
+};

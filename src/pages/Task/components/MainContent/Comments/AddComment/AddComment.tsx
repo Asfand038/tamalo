@@ -14,7 +14,11 @@ import {
 import { useAuth } from '../../../../../../contexts';
 import { getAvatarFallbackName } from '../../../../../../utils';
 import { addOneComment } from '../../../../api';
-import { IComment, ITaskDetails } from '../../../../utils';
+import {
+  IComment,
+  ITaskDetails,
+  optimisticUpdateMutationConfig,
+} from '../../../../utils';
 import {
   StyledAccordion,
   StyledAccordionDetails,
@@ -54,37 +58,7 @@ const AddComment: React.FC = () => {
 
   const { mutate: addComment } = useMutation(
     () => addOneComment(newCommentText, user, taskId, comments),
-    {
-      onMutate: async (updatedTask: ITaskDetails) => {
-        await queryClient.cancelQueries(['task', taskId]);
-        const previousTask = queryClient.getQueryData<ITaskDetails>([
-          'task',
-          taskId,
-        ]);
-        queryClient.setQueryData<ITaskDetails>(['task', taskId], updatedTask);
-
-        return { previousTask, updatedTask };
-      },
-
-      onError: (
-        error: any,
-        variables: ITaskDetails,
-        context:
-          | {
-              previousTask: ITaskDetails | undefined;
-              updatedTask: ITaskDetails;
-            }
-          | undefined
-      ) => {
-        if (context?.previousTask) {
-          queryClient.setQueryData('task', context.previousTask);
-        }
-      },
-
-      onSettled: () => {
-        queryClient.invalidateQueries(['task', taskId]);
-      },
-    }
+    optimisticUpdateMutationConfig(taskId, queryClient)
   );
 
   const addCommentHandler = (event: React.FormEvent) => {
@@ -134,7 +108,7 @@ const AddComment: React.FC = () => {
           </StyledAccordionSummary>
           <StyledAccordionDetails>
             {!newCommentText.length && (
-              <div className="cursor-not-allowed-wrapper">
+              <div className="not-allowed">
                 <SaveButton />
               </div>
             )}

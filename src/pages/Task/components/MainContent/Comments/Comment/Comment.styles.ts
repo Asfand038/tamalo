@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button, IconButton } from '@material-ui/core';
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -15,10 +16,20 @@ export const StyledCommentEditor = styled.form`
     `0 4px 8px -2px ${theme.colors.boxShadow}, 0 0 0 1px rgb(9 30 66 / 8%)`};
 `;
 
-export const StyledBtnContainer = styled.div`
+interface IBtnContainer {
+  isTextFieldEmpty: boolean;
+}
+
+export const StyledBtnContainer = styled.div<IBtnContainer>`
   display: flex;
   justify-content: space-between;
   margin: 12px 12px 8px;
+  & button:first-of-type {
+    pointer-events: ${({ isTextFieldEmpty }) => isTextFieldEmpty && 'none'};
+    background-color: ${({ isTextFieldEmpty }) =>
+      isTextFieldEmpty && 'rgba(9, 30, 66, 0.04)'};
+    color: ${({ isTextFieldEmpty }) => isTextFieldEmpty && '#a5adba'};
+  }
 `;
 
 export const StyledComment = styled.div`
@@ -61,8 +72,8 @@ export const StyledCommentText = styled.div`
 
 export const StyledCommentUpdateBtns = styled.div`
   display: flex;
-  color: #6b778c;
   margin-top: 10px;
+  color: #6b778c;
   & svg {
     height: 16px;
     width: 16px;
@@ -75,10 +86,13 @@ export const StyledCommentUpdateBtns = styled.div`
   & > div {
     font-size: 12px;
     margin: 2.4px 0 0 3px;
-    & span:nth-child(even) {
-      cursor: pointer;
+    & button {
+      border: none;
+      background-color: inherit;
       text-decoration: underline;
-      margin: 0 2px;
+      color: #6b778c;
+      cursor: pointer;
+      padding: 0 3px;
       &:hover {
         color: #172b4d;
       }
@@ -104,6 +118,66 @@ export const StyledLoaderWrapper = styled.div`
       font-size: 12px;
       color: #6b778c;
       margin: 8px 0 0 30px;
+    }
+  }
+`;
+
+export const StyledDeletePopup = styled.div`
+  border-radius: 3px;
+  width: 304px;
+  & > div:first-child {
+    position: relative;
+    margin-bottom: 8px;
+    color: #5e6c84;
+    & > span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+      margin: 0 12px;
+    }
+  }
+  & > div:last-child {
+    padding: 0 12px 12px;
+    & p {
+      margin-bottom: 8px;
+      color: #172b4d;
+    }
+  }
+`;
+
+export const StyledDeleteButton = styled(Button)`
+  && {
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    font-weight: 400;
+    background-color: ${({ theme }) => theme.colors.red[200]};
+    color: ${({ theme }) => theme.colors.neutral[100]};
+    text-transform: none;
+    margin: 8px 4px 0 0;
+    box-shadow: none;
+    &:hover {
+      box-shadow: none;
+      background-color: ${({ theme }) => theme.colors.red[100]};
+    }
+  }
+`;
+
+export const StyledCloseIconButton = styled(IconButton)`
+  && {
+    position: absolute;
+    top: 11px;
+    right: 8px;
+    padding: 0;
+    & svg {
+      font-size: 17px;
+      color: #6b778c;
+    }
+    &:hover {
+      background-color: inherit;
+      & svg {
+        color: #172b4d;
+      }
     }
   }
 `;
