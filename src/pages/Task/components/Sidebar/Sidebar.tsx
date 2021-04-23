@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Add as AddIcon,
   PersonOutlineRounded as PersonOutlineRoundedIcon,
@@ -15,6 +16,7 @@ import {
   ShareOutlined as ShareOutlinedIcon,
 } from '@material-ui/icons';
 
+import { PopOver } from '../../../../components';
 import {
   StyledSidebar,
   StyledList,
@@ -22,54 +24,62 @@ import {
   StyledListButton,
   StyledButton,
   StyledDivider,
+  StyledCoverPopOverContent,
+  StyledPopOverButton,
 } from './Sidebar.styles';
 
-const Sidebar: React.FC = () => {
-  const addToCardBtns = [
-    {
-      text: 'Members',
-      startIcon: <PersonOutlineRoundedIcon />,
-    },
-    {
-      text: 'Labels',
-      startIcon: <LabelOutlinedIcon />,
-    },
-    {
-      text: 'Checklist',
-      startIcon: <CheckBoxOutlinedIcon />,
-    },
-    {
-      text: 'Due date',
-      startIcon: <WatchLaterOutlinedIcon />,
-    },
-    {
-      text: 'Attachment',
-      startIcon: <AttachmentOutlinedIcon />,
-    },
-    {
-      text: 'Cover',
-      startIcon: <VideoLabelIcon className="small-icon" />,
-    },
-  ];
+const addToCardBtns = [
+  {
+    text: 'Members',
+    startIcon: <PersonOutlineRoundedIcon />,
+  },
+  {
+    text: 'Labels',
+    startIcon: <LabelOutlinedIcon />,
+  },
+  {
+    text: 'Checklist',
+    startIcon: <CheckBoxOutlinedIcon />,
+  },
+  {
+    text: 'Due date',
+    startIcon: <WatchLaterOutlinedIcon />,
+  },
+  {
+    text: 'Attachment',
+    startIcon: <AttachmentOutlinedIcon />,
+  },
+];
 
-  const actionBtns = [
-    {
-      text: 'Move',
-      startIcon: <ArrowForwardIcon />,
-    },
-    {
-      text: 'Copy',
-      startIcon: <FileCopyOutlinedIcon />,
-    },
-    {
-      text: 'Make Template',
-      startIcon: <AssignmentOutlinedIcon />,
-    },
-    {
-      text: 'Watch',
-      startIcon: <VisibilityOutlinedIcon />,
-    },
-  ];
+const actionBtns = [
+  {
+    text: 'Move',
+    startIcon: <ArrowForwardIcon />,
+  },
+  {
+    text: 'Copy',
+    startIcon: <FileCopyOutlinedIcon />,
+  },
+  {
+    text: 'Make Template',
+    startIcon: <AssignmentOutlinedIcon />,
+  },
+  {
+    text: 'Watch',
+    startIcon: <VisibilityOutlinedIcon />,
+  },
+];
+
+const Sidebar: React.FC = () => {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const fileUploadRef = useRef<HTMLInputElement>(null);
+
+  const uploadCoverHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const fileData = new FormData();
+      fileData.append('file', event.target.files[0]);
+    }
+  };
 
   return (
     <StyledSidebar>
@@ -77,13 +87,42 @@ const Sidebar: React.FC = () => {
         <StyledTitle>ADD TO CARD</StyledTitle>
         {addToCardBtns.map(({ text, startIcon }) => (
           <StyledListButton
-            key={text}
+            key={uuidv4()}
             variant="contained"
             startIcon={startIcon}
           >
             {text}
           </StyledListButton>
         ))}
+        <StyledListButton
+          variant="contained"
+          startIcon={<VideoLabelIcon className="small-icon" />}
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+        >
+          Cover
+        </StyledListButton>
+        <PopOver
+          headingText="Cover"
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+        >
+          <StyledCoverPopOverContent>
+            <div>ATTACHMENTS</div>
+            <input
+              type="file"
+              ref={fileUploadRef}
+              style={{ display: 'none' }}
+              onChange={uploadCoverHandler}
+            />
+            <StyledPopOverButton
+              variant="contained"
+              fullWidth
+              onClick={() => fileUploadRef.current?.click()}
+            >
+              Upload a cover image
+            </StyledPopOverButton>
+          </StyledCoverPopOverContent>
+        </PopOver>
       </StyledList>
       <StyledTitle>POWER-UPS</StyledTitle>
       <StyledButton

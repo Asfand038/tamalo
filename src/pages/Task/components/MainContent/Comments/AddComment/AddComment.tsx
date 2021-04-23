@@ -17,7 +17,7 @@ import { addOneComment } from '../../../../api';
 import {
   IComment,
   ITaskDetails,
-  optimisticUpdateMutationConfig,
+  commentMutationConfig,
 } from '../../../../utils';
 import {
   StyledAccordion,
@@ -54,11 +54,11 @@ const AddComment: React.FC = () => {
   const { taskId } = useParams<IRouteParams>();
   const queryClient = useQueryClient();
   const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
-  const { comments } = taskData;
+  const { comments, cover } = taskData;
 
   const { mutate: addComment } = useMutation(
-    () => addOneComment(newCommentText, user, taskId, comments),
-    optimisticUpdateMutationConfig(taskId, queryClient)
+    () => addOneComment(newCommentText, user, taskId, comments, cover),
+    commentMutationConfig(taskId, queryClient)
   );
 
   const addCommentHandler = (event: React.FormEvent) => {

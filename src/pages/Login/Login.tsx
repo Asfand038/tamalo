@@ -20,6 +20,7 @@ import { useAuth } from '../../contexts';
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showErrorMessage, setShowErrorMessage] = useState(true);
 
   const { login, isLoading, error, isLoggedIn } = useAuth();
 
@@ -33,7 +34,7 @@ const LoginPage: React.FC = () => {
   return (
     <AuthLayout>
       {isLoggedIn && <Redirect to="/boards" />}
-      {error && (
+      {error && showErrorMessage && (
         <ErrorMessage>
           <p>{error}</p>
         </ErrorMessage>
@@ -42,7 +43,10 @@ const LoginPage: React.FC = () => {
       <form onSubmit={submitHandler}>
         <StyledInputField
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setShowErrorMessage(false);
+          }}
           variant="outlined"
           placeholder="Enter email"
           fullWidth
@@ -51,7 +55,10 @@ const LoginPage: React.FC = () => {
         />
         <StyledInputField
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setShowErrorMessage(false);
+          }}
           variant="outlined"
           placeholder="Enter password"
           type="password"

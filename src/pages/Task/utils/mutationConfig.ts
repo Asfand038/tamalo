@@ -1,7 +1,7 @@
 import { QueryClient } from 'react-query';
 import { ITaskDetails } from './types';
 
-export const optimisticUpdateMutationConfig = (
+export const commentMutationConfig = (
   taskId: string,
   queryClient: QueryClient
 ) => ({

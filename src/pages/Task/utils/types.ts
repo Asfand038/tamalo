@@ -35,8 +35,29 @@ export interface IComment {
   author: IUser;
 }
 
+export interface ICover {
+  id: string;
+  name: string;
+  url: string;
+  formats: {
+    thumbnail: {
+      name: string;
+      url: string;
+    };
+    medium: {
+      name: string;
+      url: string;
+    };
+    small: {
+      name: string;
+      url: string;
+    };
+  };
+}
+
 export interface ITaskDetails {
   id: string;
   title: string;
+  cover: ICover | null;
   comments: IComment[];
 }

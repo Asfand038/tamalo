@@ -4,11 +4,17 @@ import { useQuery, useQueryClient } from 'react-query';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { TaskLayout } from '../../layouts';
-import { TaskTitle, Sidebar, MainContent } from './components';
+import { TaskTitle, Sidebar, MainContent, TaskCover } from './components';
 import { Loader } from '../../components';
 import { getTaskById } from './api';
-import { IList, IBoard } from './utils';
+import { IList, IBoard, getRequiredSizeCoverImg } from './utils';
 import { StyledCloseIcon, StyledBody } from './Task.styles';
+
+enum CoverImageSizes {
+  thumbnail = 'thumbnail',
+  medium = 'medium',
+  small = 'small',
+}
 
 interface IRouteParams {
   boardId: string;
@@ -38,7 +44,7 @@ const TaskModal: React.FC = () => {
 
   if (error) return <div>Something went wrong...</div>;
 
-  const { title, comments } = data!;
+  const { title, comments, cover } = data!;
 
   const targetList: IList = lists.find((list) =>
     list.tasksOrder.includes(taskId)
@@ -46,9 +52,16 @@ const TaskModal: React.FC = () => {
 
   return (
     <TaskLayout>
-      <StyledCloseIcon>
-        <CloseIcon onClick={() => history.goBack()} />
-      </StyledCloseIcon>
+      {!cover && (
+        <StyledCloseIcon>
+          <CloseIcon onClick={() => history.goBack()} />
+        </StyledCloseIcon>
+      )}
+      {cover && (
+        <TaskCover
+          imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.small)}
+        />
+      )}
       <TaskTitle taskTitle={title} listTitle={targetList.title} />
       <StyledBody>
         <MainContent comments={comments} />

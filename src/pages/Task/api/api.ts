@@ -1,6 +1,7 @@
 import {
   IUser,
   IComment,
+  ICover,
   getRequiredTaskData,
   getRequiredCommentData,
 } from '../utils';
@@ -36,7 +37,8 @@ export const addOneComment = async (
   commentText: string,
   author: IUser,
   taskId: string,
-  comments: IComment[]
+  comments: IComment[],
+  cover: ICover | null
 ) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/comments`, {
@@ -57,6 +59,7 @@ export const addOneComment = async (
     ...data,
     comments,
     author: { ...data.author, profileImg: author.profileImg },
+    cover,
   });
 };
 
@@ -64,7 +67,8 @@ export const updateOneComment = async (
   commentId: string,
   commentText: string,
   author: IUser,
-  comments: IComment[]
+  comments: IComment[],
+  cover: ICover | null
 ) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
@@ -82,14 +86,15 @@ export const updateOneComment = async (
   return getRequiredCommentData({
     ...data,
     comments,
-    author: { ...data.author, profileImg: author.profileImg },
+    author: { ...data.author, profileImg: author.profileImg, cover },
   });
 };
 
 export const deleteOneComment = async (
   commentId: string,
   author: IUser,
-  comments: IComment[]
+  comments: IComment[],
+  cover: ICover | null
 ) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
@@ -104,6 +109,20 @@ export const deleteOneComment = async (
   return getRequiredCommentData({
     ...data,
     comments,
-    author: { ...data.author, profileImg: author.profileImg },
+    author: { ...data.author, profileImg: author.profileImg, cover },
   });
+};
+
+export const addOneCover = async (file: File) => {
+  const data = await (
+    await fetch(`https://tamalo.herokuapp.com/upload`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: file,
+    })
+  ).json();
+
+  return data;
 };

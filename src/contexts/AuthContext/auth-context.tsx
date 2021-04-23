@@ -1,12 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
-import { getImgFromMockApi } from '../../utils';
-
-export interface IUser {
-  id: string;
-  email: string;
-  username: string;
-  profileImg: string;
-}
+import { getImgFromMockApi, IUser } from '../../utils';
+import { sendLoginRequest, getUserInformationRequest } from './api';
 
 interface IAuthContext {
   isLoggedIn: boolean;
@@ -14,6 +8,7 @@ interface IAuthContext {
   error: string;
   user: IUser;
   login: Function;
+  getUserInformation: Function;
 }
 
 const initialUserData = {
@@ -29,6 +24,7 @@ const initialContext = {
   error: '',
   user: initialUserData,
   login: () => {},
+  getUserInformation: () => {},
 };
 
 const AuthContext = createContext<IAuthContext>(initialContext);
@@ -41,22 +37,15 @@ export const AuthProvider: React.FC = (children) => {
 
   const login = async (identifier: string, password: string) => {
     setIsLoading(true);
-    const response = await fetch('https://tamalo.herokuapp.com/auth/local', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ identifier, password }),
-    });
-    const data = await response.json();
+
+    const data = await sendLoginRequest(identifier, password);
 
     if (data.user) {
       const image = await getImgFromMockApi();
       const { jwt, user } = data;
       localStorage.setItem('token', jwt);
       setUser({
-        // eslint-disable-next-line no-underscore-dangle
-        id: user._id,
+        id: user.id,
         email: user.email,
         username: user.username,
         profileImg: image,
@@ -71,12 +60,35 @@ export const AuthProvider: React.FC = (children) => {
     }
   };
 
+  const getUserInformation = async () => {
+    setIsLoading(true);
+    const data = await getUserInformationRequest();
+
+    if (data.statusCode === 401) {
+      setError(data.message);
+      setIsLoggedIn(false);
+      setIsLoading(false);
+      return;
+    }
+
+    const image = await getImgFromMockApi();
+    setUser({
+      id: data.id,
+      email: data.email,
+      username: data.username,
+      profileImg: image,
+    });
+    setIsLoggedIn(true);
+    setIsLoading(false);
+  };
+
   const authContextValue = {
     user,
     isLoading,
     isLoggedIn,
     error,
     login,
+    getUserInformation,
   };
 
   return <AuthContext.Provider value={authContextValue} {...children} />;

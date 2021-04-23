@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { GlobalStyle, defaultTheme } from './theme';
+import { AuthenticatedRoute } from './contexts';
 import { LoginPage, SignupPage, DashboardPage, BoardPage } from './pages';
 
 const App: React.FC = () => {
@@ -12,8 +13,10 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
-        <Route path="/boards" exact component={DashboardPage} />
-        <Route path="/boards/:id" component={BoardPage} />
+        <AuthenticatedRoute>
+          <Route path="/boards" exact component={DashboardPage} />
+          <Route path="/boards/:id" component={BoardPage} />
+        </AuthenticatedRoute>
         <Redirect from="/" to="/login" />
       </Switch>
     </ThemeProvider>

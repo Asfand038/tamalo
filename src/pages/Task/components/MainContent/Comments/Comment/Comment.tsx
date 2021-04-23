@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
-import { Popover, Paper } from '@material-ui/core';
 import {
   Attachment as AttachmentIcon,
   AlternateEmail as AlternateEmailIcon,
   SentimentSatisfiedRounded as SentimentSatisfiedRoundedIcon,
   VideoLabel as VideoLabelIcon,
   SentimentSatisfiedOutlined as SentimentSatisfiedOutlinedIcon,
-  Close as CloseIcon,
 } from '@material-ui/icons';
 
 import { updateOneComment, deleteOneComment } from '../../../../api';
 import {
   ITaskDetails,
   IComment,
-  optimisticUpdateMutationConfig,
+  commentMutationConfig,
 } from '../../../../utils';
 import { getAvatarFallbackName } from '../../../../../../utils';
-import { ButtonContainer, Loader } from '../../../../../../components';
+import { ButtonContainer, Loader, PopOver } from '../../../../../../components';
 import {
   StyledWrapper,
   StyledComment,
@@ -28,9 +26,8 @@ import {
   StyledBtnContainer,
   StyledCommentUpdateBtns,
   StyledLoaderWrapper,
-  StyledDeletePopup,
   StyledDeleteButton,
-  StyledCloseIconButton,
+  StyledPopOverContent,
 } from './Comment.styles';
 import {
   StyledAvatar,
@@ -59,16 +56,17 @@ const Comment: React.FC<IProps> = ({ comment }) => {
 
   const queryClient = useQueryClient();
   const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
-  const { comments } = taskData;
+  const { comments, cover } = taskData;
 
   const { mutate: updateComment } = useMutation(
-    () => updateOneComment(commentId, commentTextState, author, comments),
-    optimisticUpdateMutationConfig(taskId, queryClient)
+    () =>
+      updateOneComment(commentId, commentTextState, author, comments, cover),
+    commentMutationConfig(taskId, queryClient)
   );
 
   const { mutate: deleteComment } = useMutation(
-    () => deleteOneComment(commentId, author, comments),
-    optimisticUpdateMutationConfig(taskId, queryClient)
+    () => deleteOneComment(commentId, author, comments, cover),
+    commentMutationConfig(taskId, queryClient)
   );
 
   const editCommentHandler = (event: React.FormEvent) => {
@@ -123,48 +121,26 @@ const Comment: React.FC<IProps> = ({ comment }) => {
                 <span> - </span>
                 <button
                   type="button"
-                  aria-describedby={anchorEl ? 'delete-popover' : undefined}
                   onClick={(e) => setAnchorEl(e.currentTarget)}
                 >
                   Delete
                 </button>
-                <Paper>
-                  <Popover
-                    id={anchorEl ? 'delete-popover' : undefined}
-                    open={Boolean(anchorEl)}
-                    anchorEl={anchorEl}
-                    onClose={() => setAnchorEl(null)}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                  >
-                    <StyledDeletePopup>
-                      <div>
-                        <span>Delete Comment?</span>
-                        <StyledCloseIconButton
-                          onClick={() => setAnchorEl(null)}
-                        >
-                          <CloseIcon />
-                        </StyledCloseIconButton>
-                      </div>
-                      <div>
-                        <p>Deleting a comment is forever. There is no undo.</p>
-                        <StyledDeleteButton
-                          variant="contained"
-                          fullWidth
-                          onClick={deleteCommentHandler}
-                        >
-                          Delete comment
-                        </StyledDeleteButton>
-                      </div>
-                    </StyledDeletePopup>
-                  </Popover>
-                </Paper>
+                <PopOver
+                  headingText="Delete comment?"
+                  anchorEl={anchorEl}
+                  setAnchorEl={setAnchorEl}
+                >
+                  <StyledPopOverContent>
+                    <p>Deleting a comment is forever. There is no undo.</p>
+                    <StyledDeleteButton
+                      variant="contained"
+                      fullWidth
+                      onClick={deleteCommentHandler}
+                    >
+                      Delete comment
+                    </StyledDeleteButton>
+                  </StyledPopOverContent>
+                </PopOver>
               </div>
             </StyledCommentUpdateBtns>
           </>

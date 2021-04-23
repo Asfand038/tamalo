@@ -17,6 +17,7 @@ import { getAvatarFallbackName } from '../../utils';
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
+
   const { data, isLoading, error } = useQuery(['boards'], () =>
     getBoards(user.id)
   );
