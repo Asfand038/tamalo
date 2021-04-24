@@ -22,10 +22,8 @@ const BoardPage: React.FC = () => {
     mutationConfig(id, queryClient)
   );
 
-  const { data, isLoading, error } = useQuery(
-    ['board', id],
-    () => getBoardById(id, user.id, user.profileImg),
-    { refetchOnWindowFocus: false }
+  const { data, isLoading, error } = useQuery(['board', id], () =>
+    getBoardById(id, user.id, user.profileImg)
   );
 
   if (isLoading) return <Loader color="#e1e1e1" />;

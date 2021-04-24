@@ -47,7 +47,7 @@ const OpenedForm: React.FC<IProps> = ({ setFormIsOpen, listId }) => {
       const newLists = lists.filter((el) => el.id !== listId)!;
       newLists.push(targetList);
       const newTasks = [...tasks];
-      newTasks.push({ id: optimisticTaskId, title: cardTitle });
+      newTasks.push({ id: optimisticTaskId, title: cardTitle, cover: null });
       addCard({ ...boardData, lists: newLists, tasks: newTasks });
       setCardTitle('');
     }

@@ -12,7 +12,7 @@ export const StyledListContainer = styled.div<IListContainer>`
   pointer-events: ${({ isCreated }) => (isCreated ? 'auto' : 'none')};
   box-sizing: border-box;
   padding-right: 4px;
-  margin: 14px 8px 0 0;
+  margin: 14px 4px 0 8px;
   background-color: ${({ theme }) => theme.colors.neutral[250]};
   border-radius: 3px;
   width: 272px;
@@ -39,6 +39,7 @@ export const StyledTaskList = styled.div`
   min-height: 2px;
   height: fit-content;
   overflow-y: auto;
+  overflow-x: hidden;
   &::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: ${({ theme }) => theme.colors.darkness[100]};

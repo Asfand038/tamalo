@@ -12,15 +12,23 @@ import {
   StyledButton,
   StyledIcon,
   StyledActivityContainer,
+  StyledDueDate,
 } from './MainContent.styles';
 
 interface IProps {
   comments: IComment[];
+  dueDate: string | undefined;
 }
 
-const MainContent: React.FC<IProps> = ({ comments }) => {
+const MainContent: React.FC<IProps> = ({ comments, dueDate }) => {
   return (
     <StyledContainer>
+      {dueDate && (
+        <StyledDueDate>
+          <div>DUE DATE</div>
+          <StyledButton>{dueDate}</StyledButton>
+        </StyledDueDate>
+      )}
       <AddDescription />
       <StyledActivityContainer>
         <StyledTitleContainer>

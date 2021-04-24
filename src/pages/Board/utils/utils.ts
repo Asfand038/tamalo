@@ -1,12 +1,27 @@
 import { QueryClient } from 'react-query';
-import { getMultipleImgsFromMockApi } from '../../../utils';
+import {
+  getDesiredDateFormat,
+  getMultipleImgsFromMockApi,
+  getRequiredCoverData,
+} from '../../../utils';
+
 import { IBoard, IList, ITask, IUser } from './types';
 
 export const getRequiredBoardData = async (data: any) => {
-  const tasksArray: ITask[] = data.tasks.map((task: ITask) => ({
-    id: task.id,
-    title: task.title,
-  }));
+  const tasksArray: ITask[] = data.tasks.map((el: ITask) => {
+    const task: ITask = {
+      id: el.id,
+      title: el.title,
+      cover: null,
+    };
+    if (el.cover) {
+      task.cover = getRequiredCoverData(el);
+    }
+    if (el.dueDate) {
+      task.dueDate = getDesiredDateFormat(el.dueDate);
+    }
+    return task;
+  });
 
   const listsArray: IList[] = data.lists.map((list: IList) => ({
     id: list.id,
@@ -96,3 +111,8 @@ export const mutationConfig = (id: string, queryClient: QueryClient) => ({
     queryClient.invalidateQueries(['board', id]);
   },
 });
+
+export const desiredDateFormat = (date: string) => {
+  const index = date.indexOf('at') - 1;
+  return date.slice(0, index);
+};

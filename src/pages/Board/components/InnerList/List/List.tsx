@@ -20,6 +20,7 @@ interface IProps {
 
 const List: React.FC<IProps> = ({ list, tasks, index }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
+
   return (
     <Draggable
       draggableId={list.id}

@@ -9,6 +9,7 @@ export const StyledCoverWrapper = styled.div<{
   background-image: ${({ imgSrc }) =>
     `url('https://tamalo.herokuapp.com${imgSrc}')`};
   height: 160px;
+  width: 100%;
   background-size: contain;
   background-origin: content-box;
   box-sizing: border-box;

@@ -1,8 +1,8 @@
 import FastAverageColor from 'fast-average-color';
+import { ICover } from '../../../utils';
 import {
   IUser,
   IComment,
-  ICover,
   getRequiredTaskData,
   getRequiredCommentData,
 } from '../utils';
@@ -155,4 +155,19 @@ export const addCover = async (file: File, taskId: string, users: IUser[]) => {
   ).json();
 
   return getRequiredTaskData({ ...taskData, users });
+};
+
+export const deleteCover = async (id: string, users: IUser[]) => {
+  const coverData = await (
+    await fetch(`https://tamalo.herokuapp.com/upload/files/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+  ).json();
+
+  const taskId = coverData.related[0].id;
+  const taskData = await getTaskById(taskId, users);
+  return taskData;
 };

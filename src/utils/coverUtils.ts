@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ICover } from './types';
 
-enum CoverImageSizes {
+export enum CoverImageSizes {
   thumbnail = 'thumbnail',
   large = 'large',
   medium = 'medium',
@@ -18,10 +18,22 @@ export const getRequiredSizeCoverImg = (
   return cover.formats.small.url;
 };
 
+export const getRequiredCoverHeight = (cover: ICover, key: CoverImageSizes) => {
+  let { height } = cover.formats.small;
+  if (cover.formats[key].url) {
+    height = cover.formats[key].height;
+  }
+  // eslint-disable-next-line radix
+  if (parseInt(height) > 260) return '260';
+  return height;
+};
+
 const getPlaceholderDataIfUndefined = (obj: any) => {
   if (!obj) {
     return {
       name: '',
+      width: '',
+      height: '',
       url: '',
     };
   }
@@ -47,18 +59,26 @@ export const getRequiredCoverData = (data: any) => {
       formats: {
         thumbnail: {
           name: thumbnail.name,
+          width: thumbnail.width,
+          height: thumbnail.height,
           url: thumbnail.url,
         },
         large: {
           name: large.name,
+          width: large.width,
+          height: large.height,
           url: large.url,
         },
         medium: {
           name: medium.name,
+          width: medium.width,
+          height: medium.height,
           url: medium.url,
         },
         small: {
           name: small.name,
+          width: small.width,
+          height: small.height,
           url: small.url,
         },
       },

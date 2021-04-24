@@ -1,6 +1,10 @@
+import { ICover } from '../../../utils';
+
 export interface ITask {
   id: string;
   title: string;
+  cover: ICover | null;
+  dueDate?: string;
 }
 
 export interface IList {
@@ -35,37 +39,10 @@ export interface IComment {
   author: IUser;
 }
 
-export interface ICover {
-  id: string;
-  name: string;
-  url: string;
-  coverBg: {
-    color: string;
-    isDark: boolean;
-  };
-  formats: {
-    thumbnail: {
-      name: string;
-      url: string;
-    };
-    large: {
-      name: string;
-      url: string;
-    };
-    medium: {
-      name: string;
-      url: string;
-    };
-    small: {
-      name: string;
-      url: string;
-    };
-  };
-}
-
 export interface ITaskDetails {
   id: string;
   title: string;
+  dueDate?: string;
   cover: ICover | null;
   comments: IComment[];
 }

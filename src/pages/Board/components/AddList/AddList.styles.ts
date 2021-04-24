@@ -7,6 +7,7 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledOpenFormBtn = styled.div`
+  margin-right: 8px;
   height: 32px;
   z-index: 1000;
   display: flex;

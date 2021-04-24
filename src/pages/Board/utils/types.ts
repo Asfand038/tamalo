@@ -1,6 +1,10 @@
+import { ICover } from '../../../utils';
+
 export interface ITask {
   id: string;
   title: string;
+  cover: ICover | null;
+  dueDate?: string;
 }
 
 export interface IList {

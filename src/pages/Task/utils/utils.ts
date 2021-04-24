@@ -1,24 +1,5 @@
 import { ITaskDetails, IUser, IComment } from './types';
-import { getRequiredCoverData } from './coverUtils';
-
-const getDesiredDateFormat = (dateString: string) => {
-  const dateDetails = new Date(dateString);
-
-  const month = dateDetails.toLocaleString('default', { month: 'short' });
-  const date = dateDetails.getDate();
-  let hours = dateDetails.getUTCHours();
-  let minutes = dateDetails.getUTCMinutes().toString();
-  if (minutes.length === 1) {
-    minutes = `0${minutes}`;
-  }
-  let ampm = 'AM';
-  if (hours > 12) {
-    hours %= 12;
-    ampm = 'PM';
-  }
-  const time = `${hours}:${minutes} ${ampm}`;
-  return `${month} ${date} at ${time}`;
-};
+import { getRequiredCoverData, getDesiredDateFormat } from '../../../utils';
 
 interface ICommentLessDetails {
   authorId: string;
@@ -98,6 +79,10 @@ export const getRequiredTaskData = (data: any) => {
     cover: getRequiredCoverData(data),
     comments: commentsDetailedList,
   };
+
+  if (data.dueDate) {
+    taskData.dueDate = getDesiredDateFormat(data.dueDate);
+  }
 
   return taskData;
 };

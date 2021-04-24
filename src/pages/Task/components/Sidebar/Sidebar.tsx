@@ -5,7 +5,6 @@ import {
   PersonOutlineRounded as PersonOutlineRoundedIcon,
   LabelOutlined as LabelOutlinedIcon,
   CheckBoxOutlined as CheckBoxOutlinedIcon,
-  WatchLaterOutlined as WatchLaterOutlinedIcon,
   AttachmentOutlined as AttachmentOutlinedIcon,
   ArrowForward as ArrowForwardIcon,
   FileCopyOutlined as FileCopyOutlinedIcon,
@@ -15,8 +14,9 @@ import {
   ShareOutlined as ShareOutlinedIcon,
 } from '@material-ui/icons';
 
-import { ICover } from '../../utils';
+import { ICover } from '../../../../utils';
 import { CoverUploadButton } from './CoverUploadButton';
+import { DueDateButton } from './DueDateButton';
 import {
   StyledSidebar,
   StyledList,
@@ -38,14 +38,6 @@ const addToCardBtns = [
   {
     text: 'Checklist',
     startIcon: <CheckBoxOutlinedIcon />,
-  },
-  {
-    text: 'Due date',
-    startIcon: <WatchLaterOutlinedIcon />,
-  },
-  {
-    text: 'Attachment',
-    startIcon: <AttachmentOutlinedIcon />,
   },
 ];
 
@@ -86,6 +78,13 @@ const Sidebar: React.FC<IProps> = ({ cover }) => {
             {text}
           </StyledListButton>
         ))}
+        <DueDateButton />
+        <StyledListButton
+          variant="contained"
+          startIcon={<AttachmentOutlinedIcon />}
+        >
+          Attachment
+        </StyledListButton>
         {!cover && <CoverUploadButton />}
       </StyledList>
       <StyledTitle>POWER-UPS</StyledTitle>

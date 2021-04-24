@@ -7,15 +7,9 @@ import { TaskLayout } from '../../layouts';
 import { TaskTitle, Sidebar, MainContent, TaskCover } from './components';
 import { Loader } from '../../components';
 import { getTaskById } from './api';
-import { IList, IBoard, getRequiredSizeCoverImg } from './utils';
+import { IList, IBoard } from './utils';
+import { getRequiredSizeCoverImg, CoverImageSizes } from '../../utils';
 import { StyledCloseIcon, StyledBody } from './Task.styles';
-
-enum CoverImageSizes {
-  thumbnail = 'thumbnail',
-  large = 'large',
-  medium = 'medium',
-  small = 'small',
-}
 
 interface IRouteParams {
   boardId: string;
@@ -45,7 +39,7 @@ const TaskModal: React.FC = () => {
 
   if (error) return <div>Something went wrong...</div>;
 
-  const { title, comments, cover } = data!;
+  const { title, comments, cover, dueDate } = data!;
 
   const targetList: IList = lists.find((list) =>
     list.tasksOrder.includes(taskId)
@@ -60,13 +54,14 @@ const TaskModal: React.FC = () => {
       )}
       {cover && (
         <TaskCover
+          coverId={cover.id}
           imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.medium)}
           coverBg={cover.coverBg}
         />
       )}
       <TaskTitle taskTitle={title} listTitle={targetList.title} />
       <StyledBody>
-        <MainContent comments={comments} />
+        <MainContent comments={comments} dueDate={dueDate} />
         <Sidebar cover={cover} />
       </StyledBody>
     </TaskLayout>

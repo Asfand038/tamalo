@@ -69,3 +69,13 @@ export const StyledButton = styled(Button)`
     }
   }
 `;
+
+export const StyledDueDate = styled.div`
+  margin: 8px 0 0 40px;
+  & > div {
+    color: #5e6c84;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+`;

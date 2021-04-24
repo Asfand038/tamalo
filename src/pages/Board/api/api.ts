@@ -19,9 +19,12 @@ export const getBoardById = async (
     })
   ).json();
 
-  data.userId = userId;
-  data.profileImg = profileImg;
-  const requiredBoardData = await getRequiredBoardData(data);
+  const requiredBoardData = await getRequiredBoardData({
+    ...data,
+    userId,
+    profileImg,
+  });
+
   return requiredBoardData;
 };
 
