@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
   Add as AddIcon,
@@ -7,7 +7,6 @@ import {
   CheckBoxOutlined as CheckBoxOutlinedIcon,
   WatchLaterOutlined as WatchLaterOutlinedIcon,
   AttachmentOutlined as AttachmentOutlinedIcon,
-  VideoLabel as VideoLabelIcon,
   ArrowForward as ArrowForwardIcon,
   FileCopyOutlined as FileCopyOutlinedIcon,
   AssignmentOutlined as AssignmentOutlinedIcon,
@@ -16,7 +15,8 @@ import {
   ShareOutlined as ShareOutlinedIcon,
 } from '@material-ui/icons';
 
-import { PopOver } from '../../../../components';
+import { ICover } from '../../utils';
+import { CoverUploadButton } from './CoverUploadButton';
 import {
   StyledSidebar,
   StyledList,
@@ -24,8 +24,6 @@ import {
   StyledListButton,
   StyledButton,
   StyledDivider,
-  StyledCoverPopOverContent,
-  StyledPopOverButton,
 } from './Sidebar.styles';
 
 const addToCardBtns = [
@@ -70,17 +68,11 @@ const actionBtns = [
   },
 ];
 
-const Sidebar: React.FC = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const fileUploadRef = useRef<HTMLInputElement>(null);
+interface IProps {
+  cover: ICover | null;
+}
 
-  const uploadCoverHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const fileData = new FormData();
-      fileData.append('file', event.target.files[0]);
-    }
-  };
-
+const Sidebar: React.FC<IProps> = ({ cover }) => {
   return (
     <StyledSidebar>
       <StyledList>
@@ -94,35 +86,7 @@ const Sidebar: React.FC = () => {
             {text}
           </StyledListButton>
         ))}
-        <StyledListButton
-          variant="contained"
-          startIcon={<VideoLabelIcon className="small-icon" />}
-          onClick={(e) => setAnchorEl(e.currentTarget)}
-        >
-          Cover
-        </StyledListButton>
-        <PopOver
-          headingText="Cover"
-          anchorEl={anchorEl}
-          setAnchorEl={setAnchorEl}
-        >
-          <StyledCoverPopOverContent>
-            <div>ATTACHMENTS</div>
-            <input
-              type="file"
-              ref={fileUploadRef}
-              style={{ display: 'none' }}
-              onChange={uploadCoverHandler}
-            />
-            <StyledPopOverButton
-              variant="contained"
-              fullWidth
-              onClick={() => fileUploadRef.current?.click()}
-            >
-              Upload a cover image
-            </StyledPopOverButton>
-          </StyledCoverPopOverContent>
-        </PopOver>
+        {!cover && <CoverUploadButton />}
       </StyledList>
       <StyledTitle>POWER-UPS</StyledTitle>
       <StyledButton

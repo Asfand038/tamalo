@@ -39,8 +39,16 @@ export interface ICover {
   id: string;
   name: string;
   url: string;
+  coverBg: {
+    color: string;
+    isDark: boolean;
+  };
   formats: {
     thumbnail: {
+      name: string;
+      url: string;
+    };
+    large: {
       name: string;
       url: string;
     };

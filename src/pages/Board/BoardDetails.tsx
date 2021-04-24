@@ -25,7 +25,7 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
 
   useEffect(() => {
     const boardContainer = document.getElementById(id)! as HTMLDivElement;
-    window.addEventListener('wheel', (e) => {
+    boardContainer.addEventListener('wheel', (e) => {
       if (e.deltaY > 0) boardContainer.scrollLeft += 100;
       else boardContainer.scrollLeft -= 100;
     });

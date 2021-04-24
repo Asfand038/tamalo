@@ -1,3 +1,4 @@
+import FastAverageColor from 'fast-average-color';
 import {
   IUser,
   IComment,
@@ -18,7 +19,11 @@ export const getTaskById = async (id: string, users: IUser[]) => {
   return getRequiredTaskData({ ...data, users });
 };
 
-export const updateOneTask = async (id: string, title: string) => {
+export const updateOneTask = async (
+  id: string,
+  title: string,
+  users: IUser[]
+) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/tasks/${id}`, {
       method: 'PUT',
@@ -30,7 +35,7 @@ export const updateOneTask = async (id: string, title: string) => {
     })
   ).json();
 
-  return getRequiredTaskData(data);
+  return getRequiredTaskData({ ...data, users });
 };
 
 export const addOneComment = async (
@@ -113,16 +118,41 @@ export const deleteOneComment = async (
   });
 };
 
-export const addOneCover = async (file: File) => {
-  const data = await (
+export const addCover = async (file: File, taskId: string, users: IUser[]) => {
+  const fileData = new FormData();
+  fileData.append('files', file);
+  const coverData = await (
     await fetch(`https://tamalo.herokuapp.com/upload`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      body: file,
+      body: fileData,
     })
   ).json();
 
-  return data;
+  const coverId = coverData[0].id;
+  const coverImageUrl = coverData[0].formats.thumbnail.url;
+  const fac = new FastAverageColor();
+
+  const bgColorDetails = await fac.getColorAsync(
+    `https://tamalo.herokuapp.com${coverImageUrl}`
+  );
+  const coverBg = {
+    color: bgColorDetails.rgb,
+    isDark: bgColorDetails.isDark,
+  };
+
+  const taskData = await (
+    await fetch(`https://tamalo.herokuapp.com/tasks/${taskId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cover: coverId, metaData: { coverBg } }),
+    })
+  ).json();
+
+  return getRequiredTaskData({ ...taskData, users });
 };

@@ -13,7 +13,8 @@ import { updateOneComment, deleteOneComment } from '../../../../api';
 import {
   ITaskDetails,
   IComment,
-  commentMutationConfig,
+  taskMutationConfig,
+  taskMutationKeys,
 } from '../../../../utils';
 import { getAvatarFallbackName } from '../../../../../../utils';
 import { ButtonContainer, Loader, PopOver } from '../../../../../../components';
@@ -61,12 +62,16 @@ const Comment: React.FC<IProps> = ({ comment }) => {
   const { mutate: updateComment } = useMutation(
     () =>
       updateOneComment(commentId, commentTextState, author, comments, cover),
-    commentMutationConfig(taskId, queryClient)
+    taskMutationConfig(taskId, queryClient, {
+      key: taskMutationKeys.editComment,
+    })
   );
 
   const { mutate: deleteComment } = useMutation(
     () => deleteOneComment(commentId, author, comments, cover),
-    commentMutationConfig(taskId, queryClient)
+    taskMutationConfig(taskId, queryClient, {
+      key: taskMutationKeys.deleteComment,
+    })
   );
 
   const editCommentHandler = (event: React.FormEvent) => {

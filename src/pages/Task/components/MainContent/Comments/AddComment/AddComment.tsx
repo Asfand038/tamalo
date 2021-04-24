@@ -17,7 +17,8 @@ import { addOneComment } from '../../../../api';
 import {
   IComment,
   ITaskDetails,
-  commentMutationConfig,
+  taskMutationConfig,
+  taskMutationKeys,
 } from '../../../../utils';
 import {
   StyledAccordion,
@@ -58,7 +59,9 @@ const AddComment: React.FC = () => {
 
   const { mutate: addComment } = useMutation(
     () => addOneComment(newCommentText, user, taskId, comments, cover),
-    commentMutationConfig(taskId, queryClient)
+    taskMutationConfig(taskId, queryClient, {
+      key: taskMutationKeys.addComment,
+    })
   );
 
   const addCommentHandler = (event: React.FormEvent) => {

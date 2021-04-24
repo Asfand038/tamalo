@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import FastAverageColor from 'fast-average-color';
 import { MenuItem } from '@material-ui/core';
 import {
   Close as CloseIcon,
@@ -9,44 +8,31 @@ import {
 
 import {
   StyledCloseIcon,
-  StyledWrapper,
+  StyledCoverWrapper,
   StyledButton,
   StyledMenu,
 } from './TaskCover.styles';
 
 interface IProps {
   imgSrc: string;
+  coverBg: {
+    color: string;
+    isDark: boolean;
+  };
 }
 
-const TaskCover: React.FC<IProps> = ({ imgSrc }) => {
-  const [bgIsDark, setBgIsDark] = useState(false);
+const TaskCover: React.FC<IProps> = ({ imgSrc, coverBg }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const coverRef = useRef<HTMLDivElement>(null);
   const history = useHistory();
-
-  useEffect(() => {
-    const coverContainer = coverRef.current;
-
-    const fac = new FastAverageColor();
-    fac
-      .getColorAsync(`https://tamalo.herokuapp.com${imgSrc}`)
-      .then((color) => {
-        coverContainer!.style.backgroundColor = color.rgba;
-        setBgIsDark(color.isDark);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [imgSrc]);
 
   return (
     <>
-      <StyledCloseIcon isDark={bgIsDark}>
+      <StyledCloseIcon dark={+coverBg.isDark}>
         <CloseIcon onClick={() => history.goBack()} />
       </StyledCloseIcon>
-      <StyledWrapper imgSrc={imgSrc} ref={coverRef}>
+      <StyledCoverWrapper imgSrc={imgSrc} bgColor={coverBg.color}>
         <StyledButton
-          isDark={bgIsDark}
+          dark={+coverBg.isDark}
           variant="contained"
           aria-controls="cover-menu"
           startIcon={<VideoLabelIcon />}
@@ -73,7 +59,7 @@ const TaskCover: React.FC<IProps> = ({ imgSrc }) => {
           <MenuItem>Change Cover</MenuItem>
           <MenuItem>Remove Cover</MenuItem>
         </StyledMenu>
-      </StyledWrapper>
+      </StyledCoverWrapper>
     </>
   );
 };

@@ -12,6 +12,7 @@ import { StyledCloseIcon, StyledBody } from './Task.styles';
 
 enum CoverImageSizes {
   thumbnail = 'thumbnail',
+  large = 'large',
   medium = 'medium',
   small = 'small',
 }
@@ -59,13 +60,14 @@ const TaskModal: React.FC = () => {
       )}
       {cover && (
         <TaskCover
-          imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.small)}
+          imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.medium)}
+          coverBg={cover.coverBg}
         />
       )}
       <TaskTitle taskTitle={title} listTitle={targetList.title} />
       <StyledBody>
         <MainContent comments={comments} />
-        <Sidebar />
+        <Sidebar cover={cover} />
       </StyledBody>
     </TaskLayout>
   );

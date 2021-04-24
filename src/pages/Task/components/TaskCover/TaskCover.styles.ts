@@ -1,7 +1,11 @@
 import { Button, Menu } from '@material-ui/core';
 import styled from 'styled-components';
 
-export const StyledWrapper = styled.div<{ imgSrc: string }>`
+export const StyledCoverWrapper = styled.div<{
+  imgSrc: string;
+  bgColor: string;
+}>`
+  background-color: ${({ bgColor }) => bgColor};
   background-image: ${({ imgSrc }) =>
     `url('https://tamalo.herokuapp.com${imgSrc}')`};
   height: 160px;
@@ -17,11 +21,11 @@ export const StyledWrapper = styled.div<{ imgSrc: string }>`
   }
 `;
 
-export const StyledCloseIcon = styled.span<{ isDark: boolean }>`
-  color: ${({ theme, isDark }) =>
-    isDark ? theme.colors.neutral[100] : theme.colors.blue[300]};
-  background-color: ${({ theme, isDark }) =>
-    isDark ? theme.colors.transparency[200] : theme.colors.darkness[50]};
+export const StyledCloseIcon = styled.span<{ dark: number }>`
+  color: ${({ theme, dark }) =>
+    dark ? theme.colors.neutral[100] : theme.colors.blue[300]};
+  background-color: ${({ theme, dark }) =>
+    dark ? theme.colors.transparency[200] : theme.colors.darkness[50]};
   z-index: 1;
   border-radius: 50%;
   position: absolute;
@@ -33,8 +37,8 @@ export const StyledCloseIcon = styled.span<{ isDark: boolean }>`
   width: 32px;
   transition: background-color 85ms;
   &:hover {
-    background-color: ${({ theme, isDark }) =>
-      isDark ? theme.colors.transparency[400] : theme.colors.darkness[200]};
+    background-color: ${({ theme, dark }) =>
+      dark ? theme.colors.transparency[400] : theme.colors.darkness[200]};
     cursor: pointer;
   }
   & svg {
@@ -42,7 +46,7 @@ export const StyledCloseIcon = styled.span<{ isDark: boolean }>`
   }
 `;
 
-export const StyledButton = styled(Button)<{ isDark: boolean }>`
+export const StyledButton = styled(Button)<{ dark: number }>`
   && {
     position: absolute;
     bottom: 8px;
@@ -51,18 +55,18 @@ export const StyledButton = styled(Button)<{ isDark: boolean }>`
     padding: 6px 10px 6px 14px;
     text-transform: none;
     box-shadow: none;
-    color: ${({ theme, isDark }) =>
-      isDark ? theme.colors.neutral[100] : theme.colors.blue[400]};
-    background-color: ${({ theme, isDark }) =>
-      isDark ? theme.colors.transparency[200] : theme.colors.darkness[50]};
+    color: ${({ theme, dark }) =>
+      dark ? theme.colors.neutral[100] : theme.colors.blue[400]};
+    background-color: ${({ theme, dark }) =>
+      dark ? theme.colors.transparency[200] : theme.colors.darkness[50]};
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     font-weight: 400;
     & svg {
       font-size: ${({ theme }) => theme.typeScale.paragraph};
     }
     &:hover {
-      background-color: ${({ theme, isDark }) =>
-        isDark ? theme.colors.transparency[400] : theme.colors.darkness[200]};
+      background-color: ${({ theme, dark }) =>
+        dark ? theme.colors.transparency[400] : theme.colors.darkness[200]};
       box-shadow: none;
     }
   }

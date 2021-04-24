@@ -1,33 +1,5 @@
 import { ITaskDetails, IUser, IComment } from './types';
-
-const getRequiredCoverData = (coverObj: any) => {
-  let coverData = null;
-  if (coverObj) {
-    const { id, name, url, formats } = coverObj;
-    const { thumbnail, medium, small } = formats;
-
-    coverData = {
-      id,
-      name,
-      url,
-      formats: {
-        thumbnail: {
-          name: thumbnail.name,
-          url: thumbnail.url,
-        },
-        medium: {
-          name: medium.name,
-          url: medium.url,
-        },
-        small: {
-          name: small.name,
-          url: small.url,
-        },
-      },
-    };
-  }
-  return coverData;
-};
+import { getRequiredCoverData } from './coverUtils';
 
 const getDesiredDateFormat = (dateString: string) => {
   const dateDetails = new Date(dateString);
@@ -123,7 +95,7 @@ export const getRequiredTaskData = (data: any) => {
   const taskData: ITaskDetails = {
     id: data.id,
     title: data.title,
-    cover: getRequiredCoverData(data.cover),
+    cover: getRequiredCoverData(data),
     comments: commentsDetailedList,
   };
 
