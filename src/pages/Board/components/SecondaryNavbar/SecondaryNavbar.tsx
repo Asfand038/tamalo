@@ -78,7 +78,7 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
           <span>Team visible</span>
         </StyledIconOnLeftBtn>
         <StyledDivider orientation="vertical" flexItem />
-        <StyledAvatarGroup spacing={2}>
+        <StyledAvatarGroup spacing={1}>
           {avatarGroupData.map(({ img, owner, avatarFallbackText }) => {
             if (owner) {
               return (

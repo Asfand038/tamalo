@@ -7,23 +7,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Avatar,
 } from '@material-ui/core';
-
-// Styles for both Add Comment and Edit Comment
-
-export const StyledAvatar = styled(Avatar)`
-  && {
-    height: 28px;
-    width: 28px;
-    display: inline-flex;
-    background-color: ${({ theme }) => theme.colors.red[200]};
-    font-size: ${({ theme }) => theme.typeScale.paragraph};
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
 
 export const StyledAccordion = styled(Accordion)`
   &&& {

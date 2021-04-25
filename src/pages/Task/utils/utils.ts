@@ -10,6 +10,22 @@ interface ICommentLessDetails {
   commentText: string;
 }
 
+const getDesiredMembersData = (members: string[], users: IUser[]) => {
+  if (!members.length) {
+    return [];
+  }
+  const membersArray: IUser[] = members.map((memberId: string) => {
+    const user = users.find((el) => el.id === memberId)!;
+    return {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      profileImg: user.profileImg,
+    };
+  });
+  return membersArray;
+};
+
 const getCommentsWithDetails = (
   comments: ICommentLessDetails[],
   users: IUser[]
@@ -67,17 +83,31 @@ export const getRequiredTaskData = (data: any) => {
   const sortedCommentsArray: ICommentLessDetails[] = commentsArray.sort(
     sortCommentsFromLatestToFirst
   );
-
   const commentsDetailedList: IComment[] = getCommentsWithDetails(
     sortedCommentsArray,
     data.users
   );
+
+  const boolArray: boolean[] = data.members.map((member: string | object) => {
+    if (typeof member === 'string') {
+      return true;
+    }
+    return false;
+  });
+  const isStringArray = boolArray.every((el) => el);
+  let members = [...data.members];
+  if (!isStringArray) {
+    members = data.members.map((member: any) => member.id);
+  }
+
+  const membersArray = getDesiredMembersData(members, data.users);
 
   const taskData: ITaskDetails = {
     id: data.id,
     title: data.title,
     cover: getRequiredCoverData(data),
     comments: commentsDetailedList,
+    members: membersArray,
   };
 
   if (data.dueDate) {
@@ -106,12 +136,14 @@ export const getRequiredCommentData = (data: any) => {
   };
 
   const commentsArray = [newComment, ...data.comments];
+  const membersArray = getDesiredMembersData(data.members, data.users);
 
   const taskData: ITaskDetails = {
     id: data.id,
     title: data.title,
     cover: data.cover,
     comments: commentsArray,
+    members: membersArray,
   };
 
   return taskData;

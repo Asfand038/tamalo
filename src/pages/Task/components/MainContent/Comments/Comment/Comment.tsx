@@ -31,11 +31,11 @@ import {
   StyledPopOverContent,
 } from './Comment.styles';
 import {
-  StyledAvatar,
   StyledTextField,
   StyledIconButton,
   StyledIconBtnContainer,
 } from '../Comments.styles';
+import { StyledAvatar } from '../../../../Task.styles';
 
 const iconBtnList = [
   { icon: <AttachmentIcon className="md-icon" /> },

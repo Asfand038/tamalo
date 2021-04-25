@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 
-import { updateOneTask } from '../../api';
+import { updateTaskTitle } from '../../api';
 import {
   ITaskDetails,
   taskMutationConfig,
@@ -39,8 +39,8 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
   const { owners, members } = boardData;
   const users = [...owners, ...members];
 
-  const { mutate: updateTaskTitle } = useMutation(
-    () => updateOneTask(taskId, title, users),
+  const { mutate: updateTitle } = useMutation(
+    () => updateTaskTitle(taskId, title, users),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.updateTitle,
       boardId,
@@ -50,7 +50,7 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
 
   const updateTaskTitleHandler = () => {
     if (title && title.length) {
-      updateTaskTitle({ ...taskData, title });
+      updateTitle({ ...taskData, title });
     } else {
       setTitle(taskTitle);
     }

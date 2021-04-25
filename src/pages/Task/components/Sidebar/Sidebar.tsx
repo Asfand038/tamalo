@@ -1,8 +1,6 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Add as AddIcon,
-  PersonOutlineRounded as PersonOutlineRoundedIcon,
   LabelOutlined as LabelOutlinedIcon,
   CheckBoxOutlined as CheckBoxOutlinedIcon,
   AttachmentOutlined as AttachmentOutlinedIcon,
@@ -14,7 +12,8 @@ import {
   ShareOutlined as ShareOutlinedIcon,
 } from '@material-ui/icons';
 
-import { ICover } from '../../../../utils';
+import { ICover, IUser } from '../../../../utils';
+import { AddMemberButton } from './AddMemberButton';
 import { CoverUploadButton } from './CoverUploadButton';
 import { DueDateButton } from './DueDateButton';
 import {
@@ -25,21 +24,6 @@ import {
   StyledButton,
   StyledDivider,
 } from './Sidebar.styles';
-
-const addToCardBtns = [
-  {
-    text: 'Members',
-    startIcon: <PersonOutlineRoundedIcon />,
-  },
-  {
-    text: 'Labels',
-    startIcon: <LabelOutlinedIcon />,
-  },
-  {
-    text: 'Checklist',
-    startIcon: <CheckBoxOutlinedIcon />,
-  },
-];
 
 const actionBtns = [
   {
@@ -62,22 +46,28 @@ const actionBtns = [
 
 interface IProps {
   cover: ICover | null;
+  taskMembers: IUser[] | [];
+  boardMembers: IUser[];
 }
 
-const Sidebar: React.FC<IProps> = ({ cover }) => {
+const Sidebar: React.FC<IProps> = ({ cover, taskMembers, boardMembers }) => {
   return (
     <StyledSidebar>
       <StyledList>
         <StyledTitle>ADD TO CARD</StyledTitle>
-        {addToCardBtns.map(({ text, startIcon }) => (
-          <StyledListButton
-            key={uuidv4()}
-            variant="contained"
-            startIcon={startIcon}
-          >
-            {text}
-          </StyledListButton>
-        ))}
+        <AddMemberButton
+          taskMembers={taskMembers}
+          boardMembers={boardMembers}
+        />
+        <StyledListButton variant="contained" startIcon={<LabelOutlinedIcon />}>
+          Labels
+        </StyledListButton>
+        <StyledListButton
+          variant="contained"
+          startIcon={<CheckBoxOutlinedIcon />}
+        >
+          Checklist
+        </StyledListButton>
         <DueDateButton />
         <StyledListButton
           variant="contained"

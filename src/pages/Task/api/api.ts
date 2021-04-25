@@ -19,7 +19,7 @@ export const getTaskById = async (id: string, users: IUser[]) => {
   return getRequiredTaskData({ ...data, users });
 };
 
-export const updateOneTask = async (
+export const updateTaskTitle = async (
   id: string,
   title: string,
   users: IUser[]
@@ -170,4 +170,32 @@ export const deleteCover = async (id: string, users: IUser[]) => {
   const taskId = coverData.related[0].id;
   const taskData = await getTaskById(taskId, users);
   return taskData;
+};
+
+export const updateTaskMembers = async (
+  userId: string,
+  taskId: string,
+  taskMembers: IUser[] | [],
+  users: IUser[]
+) => {
+  const memberIds = taskMembers.map((member: IUser) => member.id);
+  const member = taskMembers.find((member: IUser) => member.id === userId);
+  let updatedMemberIds: string[];
+  if (member) {
+    updatedMemberIds = memberIds.filter((memberId) => memberId !== userId);
+  } else {
+    updatedMemberIds = [...memberIds, userId];
+  }
+  const data = await (
+    await fetch(`https://tamalo.herokuapp.com/tasks/${taskId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ members: updatedMemberIds }),
+    })
+  ).json();
+  console.log('request completed[raw data]', { ...data, users });
+  return getRequiredTaskData({ ...data, users });
 };

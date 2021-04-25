@@ -47,6 +47,7 @@ export const StyledAvatar = styled(Avatar)`
   && {
     height: 28px;
     width: 28px;
+    font-weight: 500;
     background-color: ${({ theme }) => theme.colors.red[200]};
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     border: none;
@@ -64,12 +65,12 @@ export const StyledBadge = styled(Badge)<BadgeProps>`
       bottom: 3px;
       right: 3px;
       min-width: 0;
-      height: 10px;
+      height: 8px;
       background-color: white;
       padding: 1px;
       border-radius: 7px 7px 0 0;
       & svg {
-        width: 8px;
+        width: 6px;
       }
     }
   }

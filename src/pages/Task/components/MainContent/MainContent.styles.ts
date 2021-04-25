@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 
 export const StyledContainer = styled.div`
   overflow-x: hidden;
@@ -44,6 +44,28 @@ export const StyledIcon = styled(({ component, ...props }) =>
   }
 `;
 
+export const StyledTasksDetailsContainer = styled.div`
+  margin: 8px 0 0 40px;
+  display: flex;
+`;
+
+export const StyledTaskDetailItem = styled.div`
+  margin: 0 8px 8px 0;
+  & > div:first-child {
+    color: #5e6c84;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  & > div:nth-of-type(2) {
+    display: flex;
+    & div {
+      margin-right: 4px;
+    }
+  }
+`;
+
 export const StyledButton = styled(Button)`
   && {
     font-size: 14px;
@@ -70,12 +92,15 @@ export const StyledButton = styled(Button)`
   }
 `;
 
-export const StyledDueDate = styled.div`
-  margin: 8px 0 0 40px;
-  & > div {
-    color: #5e6c84;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 6px;
+export const StyledAddMemberButton = styled(IconButton)`
+  && {
+    padding: 0;
+    background-color: ${({ theme }) => theme.colors.darkness[40]};
+    width: 32px;
+    height: 32px;
+    & svg {
+      color: ${({ theme }) => theme.colors.blue[300]};
+      margin: 0 1px 0.5px 0;
+    }
   }
 `;

@@ -45,4 +45,5 @@ export interface ITaskDetails {
   dueDate?: string;
   cover: ICover | null;
   comments: IComment[];
+  members: [] | IUser[];
 }

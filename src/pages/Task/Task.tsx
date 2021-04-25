@@ -39,7 +39,7 @@ const TaskModal: React.FC = () => {
 
   if (error) return <div>Something went wrong...</div>;
 
-  const { title, comments, cover, dueDate } = data!;
+  const { title, comments, cover, dueDate, members: taskMembers } = data!;
 
   const targetList: IList = lists.find((list) =>
     list.tasksOrder.includes(taskId)
@@ -61,8 +61,12 @@ const TaskModal: React.FC = () => {
       )}
       <TaskTitle taskTitle={title} listTitle={targetList.title} />
       <StyledBody>
-        <MainContent comments={comments} dueDate={dueDate} />
-        <Sidebar cover={cover} />
+        <MainContent
+          comments={comments}
+          dueDate={dueDate}
+          taskMembers={taskMembers}
+        />
+        <Sidebar cover={cover} taskMembers={taskMembers} boardMembers={users} />
       </StyledBody>
     </TaskLayout>
   );

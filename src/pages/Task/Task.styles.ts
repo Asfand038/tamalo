@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Avatar } from '@material-ui/core';
 
 export const StyledCloseIcon = styled.span`
   color: ${({ theme }) => theme.colors.blue[300]};
@@ -23,4 +24,18 @@ export const StyledCloseIcon = styled.span`
 export const StyledBody = styled.div`
   display: flex;
   margin-top: 16px;
+`;
+
+export const StyledAvatar = styled(Avatar)`
+  && {
+    height: 32px;
+    width: 32px;
+    font-weight: 500;
+    display: inline-flex;
+    background-color: ${({ theme }) => theme.colors.red[200]};
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;

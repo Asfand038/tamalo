@@ -6,6 +6,7 @@ export const taskMutationKeys = {
   addComment: 'ADD_COMMENT',
   editComment: 'EDIT_COMMENT',
   deleteComment: 'DELETE_COMMENT',
+  updateMembers: 'UPDATE_MEMBERS',
 };
 
 interface IConfig {

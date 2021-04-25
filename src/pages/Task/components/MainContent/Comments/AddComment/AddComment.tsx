@@ -20,6 +20,7 @@ import {
   taskMutationConfig,
   taskMutationKeys,
 } from '../../../../utils';
+import { StyledAvatar } from '../../../../Task.styles';
 import {
   StyledAccordion,
   StyledAccordionDetails,
@@ -28,7 +29,6 @@ import {
   StyledIconButton,
   StyledSaveButton,
   StyledTextField,
-  StyledAvatar,
 } from '../Comments.styles';
 
 const StyledWrapper = styled.div`

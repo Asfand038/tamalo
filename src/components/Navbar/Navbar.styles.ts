@@ -134,6 +134,7 @@ export const StyledAvatar = styled(Avatar)`
   && {
     height: 32px;
     width: 32px;
+    font-weight: 500;
     background-color: ${({ theme }) => theme.colors.red[200]};
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     &:hover {
