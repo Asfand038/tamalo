@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { WatchLaterOutlined as WatchLaterOutlinedIcon } from '@material-ui/icons';
 
 import { PopOver } from '../../../../../components';
-import { StyledDueDateButton } from './DueDateButton.styles';
+import { StyledListButton } from '../Sidebar.styles';
 
 const DueDateButton: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   return (
     <>
-      <StyledDueDateButton
+      <StyledListButton
         variant="contained"
         startIcon={<WatchLaterOutlinedIcon />}
         onClick={(e) => setAnchorEl(e.currentTarget)}
       >
         Due date
-      </StyledDueDateButton>
+      </StyledListButton>
       <PopOver
         headingText="Change due date"
         anchorEl={anchorEl}

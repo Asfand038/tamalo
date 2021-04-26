@@ -27,15 +27,17 @@ import {
   StyledBtnContainer,
   StyledCommentUpdateBtns,
   StyledLoaderWrapper,
-  StyledDeleteButton,
-  StyledPopOverContent,
 } from './Comment.styles';
 import {
   StyledTextField,
   StyledIconButton,
   StyledIconBtnContainer,
 } from '../Comments.styles';
-import { StyledAvatar } from '../../../../Task.styles';
+import {
+  StyledAvatar,
+  StyledDeleteButton,
+  StyledDeletePopOverContent,
+} from '../../../../Task.styles';
 
 const iconBtnList = [
   { icon: <AttachmentIcon className="md-icon" /> },
@@ -135,7 +137,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
                   anchorEl={anchorEl}
                   setAnchorEl={setAnchorEl}
                 >
-                  <StyledPopOverContent>
+                  <StyledDeletePopOverContent>
                     <p>Deleting a comment is forever. There is no undo.</p>
                     <StyledDeleteButton
                       variant="contained"
@@ -144,7 +146,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
                     >
                       Delete comment
                     </StyledDeleteButton>
-                  </StyledPopOverContent>
+                  </StyledDeletePopOverContent>
                 </PopOver>
               </div>
             </StyledCommentUpdateBtns>

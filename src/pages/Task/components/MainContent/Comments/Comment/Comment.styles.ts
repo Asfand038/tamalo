@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -119,29 +118,5 @@ export const StyledLoaderWrapper = styled.div`
       color: #6b778c;
       margin: 8px 0 0 30px;
     }
-  }
-`;
-
-export const StyledDeleteButton = styled(Button)`
-  && {
-    font-size: ${({ theme }) => theme.typeScale.paragraph};
-    font-weight: 400;
-    background-color: ${({ theme }) => theme.colors.red[200]};
-    color: ${({ theme }) => theme.colors.neutral[100]};
-    text-transform: none;
-    margin: 8px 4px 0 0;
-    box-shadow: none;
-    &:hover {
-      box-shadow: none;
-      background-color: ${({ theme }) => theme.colors.red[100]};
-    }
-  }
-`;
-
-export const StyledPopOverContent = styled.div`
-  padding: 0 12px 12px;
-  & p {
-    margin-bottom: 8px;
-    color: #172b4d;
   }
 `;

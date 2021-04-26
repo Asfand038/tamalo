@@ -39,6 +39,14 @@ export interface IComment {
   author: IUser;
 }
 
+export interface IAttachment {
+  id: string;
+  name: string;
+  ext: string;
+  url: string;
+  createdAt: string;
+}
+
 export interface ITaskDetails {
   id: string;
   title: string;
@@ -46,4 +54,5 @@ export interface ITaskDetails {
   cover: ICover | null;
   comments: IComment[];
   members: [] | IUser[];
+  attachments: [] | IAttachment[];
 }

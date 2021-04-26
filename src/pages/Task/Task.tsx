@@ -26,8 +26,12 @@ const TaskModal: React.FC = () => {
   const { owners, members, lists } = boardData;
   const users = [...owners, ...members];
 
-  const { data, isLoading, error } = useQuery(['task', taskId], () =>
-    getTaskById(taskId, users)
+  const { data, isLoading, error } = useQuery(
+    ['task', taskId],
+    () => getTaskById(taskId, users),
+    {
+      refetchOnWindowFocus: false,
+    }
   );
 
   if (isLoading)
@@ -39,7 +43,14 @@ const TaskModal: React.FC = () => {
 
   if (error) return <div>Something went wrong...</div>;
 
-  const { title, comments, cover, dueDate, members: taskMembers } = data!;
+  const {
+    title,
+    comments,
+    cover,
+    dueDate,
+    members: taskMembers,
+    attachments,
+  } = data!;
 
   const targetList: IList = lists.find((list) =>
     list.tasksOrder.includes(taskId)
@@ -65,6 +76,7 @@ const TaskModal: React.FC = () => {
           comments={comments}
           dueDate={dueDate}
           taskMembers={taskMembers}
+          attachments={attachments}
         />
         <Sidebar cover={cover} taskMembers={taskMembers} boardMembers={users} />
       </StyledBody>

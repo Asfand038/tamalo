@@ -7,7 +7,7 @@ import {
   VideoLabel as VideoLabelIcon,
 } from '@material-ui/icons';
 
-import { Loader } from '../../../../components';
+import { Loader, PopOver } from '../../../../components';
 import { CoverImageSizes, getRequiredSizeCoverImg } from '../../../../utils';
 import { addCover, deleteCover } from '../../api';
 import { IBoard, ITaskDetails, ITask } from '../../utils';
@@ -17,6 +17,10 @@ import {
   StyledButton,
   StyledMenu,
 } from './TaskCover.styles';
+import {
+  StyledDeleteButton,
+  StyledDeletePopOverContent,
+} from '../../Task.styles';
 
 interface IRouteParams {
   boardId: string;
@@ -33,7 +37,8 @@ interface IProps {
 }
 
 const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
+  const [delAnchorEl, setDelAnchorEl] = useState<HTMLElement | null>(null);
   const [isUpdatingCover, setIsUpdatingCover] = useState(false);
   const [imgUrl, setImgUrl] = useState(imgSrc);
   const [bgColor, setBgColor] = useState(coverBg);
@@ -84,7 +89,8 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
   };
 
   const deleteCoverHandler = async () => {
-    setAnchorEl(null);
+    setMenuAnchorEl(null);
+    setDelAnchorEl(null);
     updateBtnRef.current!.style.display = 'none';
     setImgUrl('');
     const taskData = await deleteCover(coverId, users);
@@ -117,17 +123,17 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
               variant="contained"
               aria-controls="cover-menu"
               startIcon={<VideoLabelIcon />}
-              onClick={(e) => setAnchorEl(e.currentTarget)}
+              onClick={(e) => setMenuAnchorEl(e.currentTarget)}
             >
               Cover
             </StyledButton>
             <StyledMenu
               id="cover-menu"
-              anchorEl={anchorEl}
+              anchorEl={menuAnchorEl}
               getContentAnchorEl={null}
               keepMounted
-              open={Boolean(anchorEl)}
-              onClose={() => setAnchorEl(null)}
+              open={Boolean(menuAnchorEl)}
+              onClose={() => setMenuAnchorEl(null)}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -146,12 +152,30 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
               <MenuItem
                 onClick={() => {
                   fileUploadRef.current?.click();
-                  setAnchorEl(null);
+                  setMenuAnchorEl(null);
                 }}
               >
                 Change Cover
               </MenuItem>
-              <MenuItem onClick={deleteCoverHandler}>Remove Cover</MenuItem>
+              <MenuItem onClick={(e) => setDelAnchorEl(e.currentTarget)}>
+                Remove Cover
+              </MenuItem>
+              <PopOver
+                headingText="Delete cover?"
+                anchorEl={delAnchorEl}
+                setAnchorEl={setDelAnchorEl}
+              >
+                <StyledDeletePopOverContent>
+                  <p>Deleting a cover is permanent. There is no undo.</p>
+                  <StyledDeleteButton
+                    variant="contained"
+                    fullWidth
+                    onClick={deleteCoverHandler}
+                  >
+                    Delete comment
+                  </StyledDeleteButton>
+                </StyledDeletePopOverContent>
+              </PopOver>
             </StyledMenu>
           </>
         )}

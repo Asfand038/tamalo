@@ -1,4 +1,4 @@
-import { ITaskDetails, IUser, IComment } from './types';
+import { ITaskDetails, IUser, IComment, IAttachment } from './types';
 import { getRequiredCoverData, getDesiredDateFormat } from '../../../utils';
 
 interface ICommentLessDetails {
@@ -9,6 +9,20 @@ interface ICommentLessDetails {
   updatedAt: string;
   commentText: string;
 }
+
+const getDesiredAttachmentsData = (attachments: any[]) => {
+  const attachmentsArray: IAttachment[] = attachments.map((att) => {
+    const { id, name, ext, url, createdAt } = att;
+    return {
+      id,
+      name,
+      ext,
+      url,
+      createdAt: getDesiredDateFormat(createdAt),
+    };
+  });
+  return attachmentsArray;
+};
 
 const getDesiredMembersData = (members: string[], users: IUser[]) => {
   if (!members.length) {
@@ -100,14 +114,13 @@ export const getRequiredTaskData = (data: any) => {
     members = data.members.map((member: any) => member.id);
   }
 
-  const membersArray = getDesiredMembersData(members, data.users);
-
   const taskData: ITaskDetails = {
     id: data.id,
     title: data.title,
     cover: getRequiredCoverData(data),
     comments: commentsDetailedList,
-    members: membersArray,
+    members: getDesiredMembersData(members, data.users),
+    attachments: getDesiredAttachmentsData(data.attachments),
   };
 
   if (data.dueDate) {
@@ -135,15 +148,13 @@ export const getRequiredCommentData = (data: any) => {
     author,
   };
 
-  const commentsArray = [newComment, ...data.comments];
-  const membersArray = getDesiredMembersData(data.members, data.users);
-
   const taskData: ITaskDetails = {
     id: data.id,
     title: data.title,
     cover: data.cover,
-    comments: commentsArray,
-    members: membersArray,
+    comments: [newComment, ...data.comments],
+    members: getDesiredMembersData(data.members, data.users),
+    attachments: getDesiredAttachmentsData(data.attachments),
   };
 
   return taskData;

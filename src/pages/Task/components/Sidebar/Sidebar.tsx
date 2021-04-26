@@ -3,7 +3,6 @@ import {
   Add as AddIcon,
   LabelOutlined as LabelOutlinedIcon,
   CheckBoxOutlined as CheckBoxOutlinedIcon,
-  AttachmentOutlined as AttachmentOutlinedIcon,
   ArrowForward as ArrowForwardIcon,
   FileCopyOutlined as FileCopyOutlinedIcon,
   AssignmentOutlined as AssignmentOutlinedIcon,
@@ -13,9 +12,13 @@ import {
 } from '@material-ui/icons';
 
 import { ICover, IUser } from '../../../../utils';
-import { AddMemberButton } from './AddMemberButton';
-import { CoverUploadButton } from './CoverUploadButton';
-import { DueDateButton } from './DueDateButton';
+import {
+  AddMemberButton,
+  AttachmentsButton,
+  DueDateButton,
+  CoverUploadButton,
+} from './SidebarButtons';
+
 import {
   StyledSidebar,
   StyledList,
@@ -69,12 +72,7 @@ const Sidebar: React.FC<IProps> = ({ cover, taskMembers, boardMembers }) => {
           Checklist
         </StyledListButton>
         <DueDateButton />
-        <StyledListButton
-          variant="contained"
-          startIcon={<AttachmentOutlinedIcon />}
-        >
-          Attachment
-        </StyledListButton>
+        <AttachmentsButton />
         {!cover && <CoverUploadButton />}
       </StyledList>
       <StyledTitle>POWER-UPS</StyledTitle>

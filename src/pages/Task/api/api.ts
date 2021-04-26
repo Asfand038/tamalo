@@ -196,6 +196,40 @@ export const updateTaskMembers = async (
       body: JSON.stringify({ members: updatedMemberIds }),
     })
   ).json();
-  console.log('request completed[raw data]', { ...data, users });
+
   return getRequiredTaskData({ ...data, users });
+};
+
+export const addAttachment = async (
+  file: File,
+  attachmentIds: [] | string[],
+  taskId: string,
+  users: IUser[]
+) => {
+  const fileData = new FormData();
+  fileData.append('files', file);
+  const attachmentData = await (
+    await fetch(`https://tamalo.herokuapp.com/upload`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: fileData,
+    })
+  ).json();
+
+  const newId = attachmentData[0].id;
+
+  const taskData = await (
+    await fetch(`https://tamalo.herokuapp.com/tasks/${taskId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ attachments: [...attachmentIds, newId] }),
+    })
+  ).json();
+
+  return getRequiredTaskData({ ...taskData, users });
 };

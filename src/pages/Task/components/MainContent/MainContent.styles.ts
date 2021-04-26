@@ -11,7 +11,7 @@ export const StyledContainer = styled.div`
   width: 552px;
 `;
 
-export const StyledActivityContainer = styled.div`
+export const StyledWrapper = styled.div`
   margin-top: 24px;
 `;
 
@@ -29,6 +29,72 @@ export const StyledTitle = styled.div`
   color: ${({ theme }) => theme.colors.blue[400]};
   font-weight: 600;
   margin-top: 6px;
+`;
+
+export const StyledDeleteLink = styled.div`
+  color: ${({ theme }) => theme.colors.blue[300]};
+  margin: 8px 0 8px 4px;
+  display: inline-block;
+  text-decoration: underline;
+  &:hover {
+    color: ${({ theme }) => theme.colors.blue[400]};
+  }
+`;
+
+export const StyledAttachment = styled.div`
+  margin-left: 40px;
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 8px;
+  border-radius: 3px;
+  ${StyledDeleteLink}:hover {
+    pointer-events: none;
+  }
+  & a {
+    display: none;
+  }
+  & > div:last-child {
+    flex: 1;
+    padding: 8px 8px 8px 16px;
+    & > div:first-child {
+      color: ${({ theme }) => theme.colors.blue[400]};
+      font-weight: 700;
+      word-break: break-word;
+    }
+    & > div:nth-of-type(2) {
+      color: ${({ theme }) => theme.colors.blue[300]};
+      margin: 8px 0;
+      display: inline-block;
+    }
+  }
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.darkness[40]};
+  }
+`;
+
+interface IAttachmentImg {
+  imgSrc: string;
+  isImg: boolean;
+}
+export const StyledAttachmentImg = styled.div<IAttachmentImg>`
+  background-position: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  height: 80px;
+  text-align: center;
+  width: 112px;
+  background-image: ${({ imgSrc, isImg }) =>
+    isImg ? `url('https://tamalo.herokuapp.com${imgSrc}')` : 'none'};
+  background-color: ${({ theme }) => theme.colors.darkness[40]};
+  margin: auto 0;
+  color: ${({ theme }) => theme.colors.neutral[550]};
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StyledIcon = styled(({ component, ...props }) =>

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '@material-ui/core';
 import {
   PersonOutlineRounded as PersonOutlineRoundedIcon,
   Done as DoneIcon,
@@ -16,12 +18,46 @@ import {
 } from '../../../utils';
 import { updateTaskMembers } from '../../../api';
 import { getAvatarFallbackName } from '../../../../../utils';
-import {
-  StyledAddMemberButton,
-  StyledPopOverButton,
-  StyledPopOverContent,
-} from './AddMemberButton.styles';
 import { StyledAvatar } from '../../../Task.styles';
+import { StyledListButton } from '../Sidebar.styles';
+
+const StyledPopOverContent = styled.div`
+  padding: 0 12px 12px;
+  & > div:first-child {
+    color: ${({ theme }) => theme.colors.neutral[550]};
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    word-spacing: 2px;
+  }
+`;
+
+const StyledPopOverButton = styled(Button)`
+  && {
+    box-shadow: none;
+    margin-bottom: 8px;
+    padding: 4px;
+    height: 40px;
+    justify-content: flex-start;
+    text-transform: none;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.blue[400]};
+    & div {
+      margin: 4px 8px 4px 0;
+    }
+    & > span {
+      position: relative;
+    }
+    & svg {
+      position: absolute;
+      right: 11px;
+      font-size: 14px;
+      color: ${({ theme }) => theme.colors.blue[300]};
+    }
+  }
+`;
 
 interface IRouteParams {
   boardId: string;
@@ -105,13 +141,13 @@ const AddMemberButton: React.FC<IProps> = ({ taskMembers, boardMembers }) => {
 
   return (
     <>
-      <StyledAddMemberButton
+      <StyledListButton
         variant="contained"
         startIcon={<PersonOutlineRoundedIcon />}
         onClick={(e) => setAnchorEl(e.currentTarget)}
       >
         Members
-      </StyledAddMemberButton>
+      </StyledListButton>
       <PopOver
         headingText="Members"
         anchorEl={anchorEl}
