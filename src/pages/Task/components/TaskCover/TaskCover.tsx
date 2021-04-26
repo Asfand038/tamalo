@@ -49,6 +49,7 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
   const { boardId, taskId } = useParams<IRouteParams>();
 
   const queryClient = useQueryClient();
+  const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
   const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
   const { owners, members } = boardData;
   const users = [...owners, ...members];
@@ -89,12 +90,10 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
   };
 
   const deleteCoverHandler = async () => {
-    setMenuAnchorEl(null);
-    setDelAnchorEl(null);
-    updateBtnRef.current!.style.display = 'none';
-    setImgUrl('');
-    const taskData = await deleteCover(coverId, users);
-    queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+    queryClient.setQueryData<ITaskDetails>(['task', taskId], {
+      ...taskData,
+      cover: null,
+    });
     const updatedTasks = boardData.tasks.map((task) => {
       if (task.id === taskId) {
         const updatedTask: ITask = { ...task, cover: null };
@@ -106,6 +105,14 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
       ...boardData,
       tasks: updatedTasks,
     });
+
+    try {
+      const data = await deleteCover(coverId, users);
+      queryClient.setQueryData<ITaskDetails>(['task', taskId], data);
+    } catch (err) {
+      queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+      queryClient.setQueryData<IBoard>(['board', boardId], boardData);
+    }
   };
 
   return (
@@ -172,7 +179,7 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
                     fullWidth
                     onClick={deleteCoverHandler}
                   >
-                    Delete comment
+                    Delete cover
                   </StyledDeleteButton>
                 </StyledDeletePopOverContent>
               </PopOver>

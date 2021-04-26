@@ -47,13 +47,10 @@ export const StyledAttachment = styled.div`
   display: flex;
   margin-bottom: 8px;
   border-radius: 3px;
-  ${StyledDeleteLink}:hover {
-    pointer-events: none;
-  }
   & a {
     display: none;
   }
-  & > div:last-child {
+  & > div:nth-of-type(2) {
     flex: 1;
     padding: 8px 8px 8px 16px;
     & > div:first-child {

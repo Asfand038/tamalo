@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import FastAverageColor from 'fast-average-color';
 import {
@@ -10,7 +12,14 @@ import {
 import { PopOver } from '../../../../components';
 import { Comments } from './Comments';
 import { AddDescription } from './AddDescription';
-import { IComment, IUser, IAttachment } from '../../utils';
+import { deleteAttachment } from '../../api';
+import {
+  IComment,
+  IUser,
+  IAttachment,
+  IBoard,
+  ITaskDetails,
+} from '../../utils';
 import { getAvatarFallbackName } from '../../../../utils';
 
 import {
@@ -33,13 +42,27 @@ import {
   StyledDeletePopOverContent,
 } from '../../Task.styles';
 
+interface IRouteParams {
+  boardId: string;
+  taskId: string;
+}
+
 const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
-  const { url, ext, name, createdAt } = attachment;
+  const { url, ext, name, createdAt, id } = attachment;
   const imgExtensions = ['.png', '.jpg'];
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [isOverLink, setIsOverLink] = useState(false);
+
+  const { boardId, taskId } = useParams<IRouteParams>();
   const downloadBtnRef = useRef<HTMLAnchorElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+
+  const queryClient = useQueryClient();
+  const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
+  const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+  const { owners, members } = boardData;
+  const users = [...owners, ...members];
 
   useEffect(() => {
     if (['.png', '.jpg'].includes(ext)) {
@@ -53,51 +76,75 @@ const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
     }
   }, [ext, url]);
 
-  const deleteAttachmentHandler = () => {};
+  const deleteAttachmentHandler = async () => {
+    const updatedAttachments = taskData.attachments.filter(
+      (att) => att.id !== id
+    );
+    queryClient.setQueryData<ITaskDetails>(['task', taskId], {
+      ...taskData,
+      attachments: updatedAttachments,
+    });
+    try {
+      const data = await deleteAttachment(id, users);
+      queryClient.setQueryData<ITaskDetails>(['task', taskId], data);
+    } catch (err) {
+      queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+    }
+  };
 
   return (
-    <StyledAttachment onClick={() => downloadBtnRef.current?.click()}>
-      <a
-        href={`https://tamalo.herokuapp.com${url}`}
-        ref={downloadBtnRef}
-        download={name}
+    <>
+      <StyledAttachment
+        onClick={() => {
+          if (!isOverLink) {
+            downloadBtnRef.current?.click();
+          }
+        }}
       >
-        Download
-      </a>
-      <StyledAttachmentImg
-        ref={imageRef}
-        imgSrc={url}
-        isImg={imgExtensions.includes(ext)}
+        <a
+          href={`https://tamalo.herokuapp.com${url}`}
+          ref={downloadBtnRef}
+          download={name}
+        >
+          Download
+        </a>
+        <StyledAttachmentImg
+          ref={imageRef}
+          imgSrc={url}
+          isImg={imgExtensions.includes(ext)}
+        >
+          {!imgExtensions.includes(ext) && ext.slice(1)}
+        </StyledAttachmentImg>
+        <div>
+          <div>{name}</div>
+          <div>Added {createdAt} - </div>
+          <StyledDeleteLink
+            onClick={(e) => setAnchorEl(e.currentTarget)}
+            onMouseEnter={() => setIsOverLink(true)}
+            onMouseLeave={() => setIsOverLink(false)}
+            aria-hidden="true"
+          >
+            Delete
+          </StyledDeleteLink>
+        </div>
+      </StyledAttachment>
+      <PopOver
+        headingText="Delete attachment?"
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
       >
-        {!imgExtensions.includes(ext) && ext.slice(1)}
-      </StyledAttachmentImg>
-      <div>
-        <div>{name}</div>
-        <div>Added {createdAt} - </div>
-        <StyledDeleteLink
-          onClick={(e) => setAnchorEl(e.currentTarget)}
-          aria-hidden="true"
-        >
-          Delete
-        </StyledDeleteLink>
-        <PopOver
-          headingText="Delete attachment?"
-          anchorEl={anchorEl}
-          setAnchorEl={setAnchorEl}
-        >
-          <StyledDeletePopOverContent>
-            <p>Deleting an attachment is permanent. There is no undo.</p>
-            <StyledDeleteButton
-              variant="contained"
-              fullWidth
-              onClick={deleteAttachmentHandler}
-            >
-              Delete
-            </StyledDeleteButton>
-          </StyledDeletePopOverContent>
-        </PopOver>
-      </div>
-    </StyledAttachment>
+        <StyledDeletePopOverContent>
+          <p>Deleting an attachment is permanent. There is no undo.</p>
+          <StyledDeleteButton
+            variant="contained"
+            fullWidth
+            onClick={deleteAttachmentHandler}
+          >
+            Delete
+          </StyledDeleteButton>
+        </StyledDeletePopOverContent>
+      </PopOver>
+    </>
   );
 };
 

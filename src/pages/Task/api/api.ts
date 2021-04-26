@@ -43,7 +43,8 @@ export const addOneComment = async (
   author: IUser,
   taskId: string,
   comments: IComment[],
-  cover: ICover | null
+  cover: ICover | null,
+  users: IUser[]
 ) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/comments`, {
@@ -65,6 +66,7 @@ export const addOneComment = async (
     comments,
     author: { ...data.author, profileImg: author.profileImg },
     cover,
+    users,
   });
 };
 
@@ -73,7 +75,8 @@ export const updateOneComment = async (
   commentText: string,
   author: IUser,
   comments: IComment[],
-  cover: ICover | null
+  cover: ICover | null,
+  users: IUser[]
 ) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
@@ -91,7 +94,9 @@ export const updateOneComment = async (
   return getRequiredCommentData({
     ...data,
     comments,
-    author: { ...data.author, profileImg: author.profileImg, cover },
+    author: { ...data.author, profileImg: author.profileImg },
+    cover,
+    users,
   });
 };
 
@@ -99,7 +104,8 @@ export const deleteOneComment = async (
   commentId: string,
   author: IUser,
   comments: IComment[],
-  cover: ICover | null
+  cover: ICover | null,
+  users: IUser[]
 ) => {
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
@@ -114,7 +120,9 @@ export const deleteOneComment = async (
   return getRequiredCommentData({
     ...data,
     comments,
-    author: { ...data.author, profileImg: author.profileImg, cover },
+    author: { ...data.author, profileImg: author.profileImg },
+    cover,
+    users,
   });
 };
 
@@ -232,4 +240,19 @@ export const addAttachment = async (
   ).json();
 
   return getRequiredTaskData({ ...taskData, users });
+};
+
+export const deleteAttachment = async (id: string, users: IUser[]) => {
+  const attachmentData = await (
+    await fetch(`https://tamalo.herokuapp.com/upload/files/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+  ).json();
+
+  const taskId = attachmentData.related[0].id;
+  const taskData = await getTaskById(taskId, users);
+  return taskData;
 };

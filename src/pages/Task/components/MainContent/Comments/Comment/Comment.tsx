@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import {
   Attachment as AttachmentIcon,
@@ -11,6 +12,7 @@ import {
 
 import { updateOneComment, deleteOneComment } from '../../../../api';
 import {
+  IBoard,
   ITaskDetails,
   IComment,
   taskMutationConfig,
@@ -46,6 +48,10 @@ const iconBtnList = [
   { icon: <VideoLabelIcon className="sm-icon" /> },
 ];
 
+interface IRouteParams {
+  boardId: string;
+}
+
 interface IProps {
   comment: IComment;
 }
@@ -56,21 +62,32 @@ const Comment: React.FC<IProps> = ({ comment }) => {
   const [isEditingComment, setIsEditingComment] = useState(false);
   const [commentTextState, setCommentTextState] = useState(commentText);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const { boardId } = useParams<IRouteParams>();
 
   const queryClient = useQueryClient();
+  const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+  const { owners, members } = boardData;
+  const users = [...owners, ...members];
   const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
   const { comments, cover } = taskData;
 
   const { mutate: updateComment } = useMutation(
     () =>
-      updateOneComment(commentId, commentTextState, author, comments, cover),
+      updateOneComment(
+        commentId,
+        commentTextState,
+        author,
+        comments,
+        cover,
+        users
+      ),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.editComment,
     })
   );
 
   const { mutate: deleteComment } = useMutation(
-    () => deleteOneComment(commentId, author, comments, cover),
+    () => deleteOneComment(commentId, author, comments, cover, users),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.deleteComment,
     })

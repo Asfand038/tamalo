@@ -153,8 +153,8 @@ export const getRequiredCommentData = (data: any) => {
     title: data.title,
     cover: data.cover,
     comments: [newComment, ...data.comments],
-    members: getDesiredMembersData(data.members, data.users),
-    attachments: getDesiredAttachmentsData(data.attachments),
+    members: getDesiredMembersData(data.task.members, data.users),
+    attachments: getDesiredAttachmentsData(data.task.attachments),
   };
 
   return taskData;

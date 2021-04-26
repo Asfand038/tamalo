@@ -15,6 +15,7 @@ import { useAuth } from '../../../../../../contexts';
 import { getAvatarFallbackName } from '../../../../../../utils';
 import { addOneComment } from '../../../../api';
 import {
+  IBoard,
   IComment,
   ITaskDetails,
   taskMutationConfig,
@@ -44,21 +45,25 @@ const iconBtnList = [
 ];
 
 interface IRouteParams {
+  boardId: string;
   taskId: string;
 }
 
 const AddComment: React.FC = () => {
   const [isWritingComment, setIsWritingComment] = useState(false);
   const [newCommentText, setNewCommentText] = useState('');
-
-  const { user } = useAuth();
-  const { taskId } = useParams<IRouteParams>();
   const queryClient = useQueryClient();
+  const { user } = useAuth();
+  const { taskId, boardId } = useParams<IRouteParams>();
+
   const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
+  const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+  const { owners, members } = boardData;
+  const users = [...owners, ...members];
   const { comments, cover } = taskData;
 
   const { mutate: addComment } = useMutation(
-    () => addOneComment(newCommentText, user, taskId, comments, cover),
+    () => addOneComment(newCommentText, user, taskId, comments, cover, users),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.addComment,
     })
