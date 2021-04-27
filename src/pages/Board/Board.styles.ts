@@ -5,7 +5,10 @@ export const StyledBoardContainer = styled.div`
   height: 86.5vh;
   overflow-y: hidden;
   overflow-x: auto;
+  transition: margin 0.1s ease-in;
   &::-webkit-scrollbar-track {
+    margin-left: 8px;
+    margin-right: 8px;
     border-radius: 3px;
     background-color: ${({ theme }) => theme.colors.darkness[200]};
   }

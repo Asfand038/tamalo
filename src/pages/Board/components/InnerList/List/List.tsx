@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { ClosedForm, OpenedForm } from './AddCard';
@@ -20,6 +20,16 @@ interface IProps {
 
 const List: React.FC<IProps> = ({ list, tasks, index }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
+
+  useEffect(() => {
+    const listContainer = document.getElementById(list.id)! as HTMLDivElement;
+    listContainer.addEventListener('wheel', (e) => {
+      e.stopPropagation();
+    });
+    return listContainer.removeEventListener('wheel', (e) => {
+      e.stopPropagation();
+    });
+  }, [list.id]);
 
   return (
     <Draggable
@@ -43,6 +53,7 @@ const List: React.FC<IProps> = ({ list, tasks, index }) => {
           <Droppable droppableId={list.id} type="task">
             {(provided) => (
               <StyledTaskList
+                id={list.id}
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >

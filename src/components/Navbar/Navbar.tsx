@@ -15,7 +15,7 @@ import {
 
 import { useAuth } from '../../contexts';
 import { getAvatarFallbackName } from '../../utils';
-import PopOver from '../PopOver';
+import { PopOver } from '../PopOver';
 import {
   StyledNavbar,
   StyledSearchField,
@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
         <StyledNavBtn size="small">
           <AppsSharpIcon />
         </StyledNavBtn>
-        <StyledNavBtn>
+        <StyledNavBtn onClick={() => history.push('/boards')}>
           <HomeOutlinedIcon />
         </StyledNavBtn>
         <StyledBoardBtn

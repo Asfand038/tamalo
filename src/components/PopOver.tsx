@@ -46,7 +46,7 @@ interface IProps {
   setAnchorEl: Function;
 }
 
-const PopOver: React.FC<IProps> = ({
+export const PopOver: React.FC<IProps> = ({
   children,
   headingText,
   anchorEl,
@@ -82,5 +82,3 @@ const PopOver: React.FC<IProps> = ({
     </Paper>
   );
 };
-
-export default PopOver;

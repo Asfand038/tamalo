@@ -24,10 +24,12 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
 
   useEffect(() => {
     const boardContainer = document.getElementById(id)! as HTMLDivElement;
-    boardContainer.addEventListener('wheel', (e) => {
+    const handleScroll = (e: WheelEvent) => {
       if (e.deltaY > 0) boardContainer.scrollLeft += 30;
       else boardContainer.scrollLeft -= 30;
-    });
+    };
+    boardContainer.addEventListener('wheel', handleScroll);
+    return boardContainer.removeEventListener('wheel', handleScroll, true);
   }, [id]);
 
   const onDragEnd = (result: DropResult) => {

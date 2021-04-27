@@ -6,23 +6,29 @@ import {
   Avatar,
   Badge,
   BadgeProps,
+  Drawer,
+  IconButton,
 } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
 
 export const StyledNavbar = styled(Toolbar)`
   && {
-    width: 100%;
     box-sizing: border-box;
     background-color: inherit;
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 0;
-    max-height: 40px;
-    height: 40px;
+    flex-wrap: wrap;
+    margin-top: -6px;
     padding: 0 4px 0 8px;
-    & .d-flex {
+    transition: margin 0.1s ease-in;
+    & .flex-container {
       display: flex;
+      margin-top: 6px;
+    }
+    & .flex-container:last-of-type {
+      margin-left: auto;
     }
     & * {
       box-sizing: border-box;
@@ -143,8 +149,50 @@ export const StyledIconOnLeftBtn = styled(StyledNavBtn)`
   }
 `;
 
-export const StyledInviteBtn = styled(StyledNavBtn)`
+export const StyledDrawer = styled(Drawer)`
   && {
-    width: auto;
+    & > div {
+      top: 40px;
+      width: 339px;
+    }
+  }
+`;
+
+export const StyledMenuPopupContent = styled.div`
+  box-sizing: border-box;
+  & > div:first-child {
+    position: relative;
+    width: 100%;
+    padding: 0 6px 0 12px;
+    margin-bottom: 8px;
+    color: ${({ theme }) => theme.colors.blue[400]};
+    & > span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 48px;
+      border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+`;
+
+export const StyledCloseIconButton = styled(IconButton)`
+  && {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    padding: 0;
+    & svg {
+      font-size: 20px;
+      color: #42526e;
+    }
+    &:hover {
+      background-color: inherit;
+      & svg {
+        color: #091e42;
+      }
+    }
   }
 `;
