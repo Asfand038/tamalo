@@ -16,6 +16,8 @@ interface IProps {
   updateBoard: Function;
 }
 
+const boardBgColor = '#0079bf';
+
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
   const { listsOrder, lists, tasks, title, id, members, owners } = data;
 
@@ -96,6 +98,7 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
       <BoardLayout
         profileImg={user.profileImg}
         avatarFallbackName={getAvatarFallbackName(user.username)}
+        bgColor={boardBgColor}
       >
         <SecondaryNavbar boardTitle={title} members={members} owners={owners} />
         <DragDropContext onDragEnd={onDragEnd}>

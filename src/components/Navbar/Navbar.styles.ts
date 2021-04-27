@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Toolbar, Button, Avatar } from '@material-ui/core';
+import { Toolbar, Button } from '@material-ui/core';
 
 export const StyledNavbar = styled(Toolbar)`
   && {
@@ -105,8 +105,8 @@ export const StyledBoardBtn = styled(StyledNavBtn)`
 
 export const AppLogo = styled(Button)`
   && {
+    left: 46%;
     position: absolute;
-    margin: 0 50%;
     color: ${({ theme }) => theme.colors.transparency[400]};
     font-size: ${({ theme }) => theme.typeScale.header3};
     letter-spacing: 0;
@@ -126,19 +126,6 @@ export const AppLogo = styled(Button)`
     }
     & .MuiButton-startIcon {
       margin-right: 5px;
-    }
-  }
-`;
-
-export const StyledAvatar = styled(Avatar)`
-  && {
-    height: 32px;
-    width: 32px;
-    font-weight: 500;
-    background-color: ${({ theme }) => theme.colors.red[200]};
-    font-size: ${({ theme }) => theme.typeScale.paragraph};
-    &:hover {
-      cursor: pointer;
     }
   }
 `;

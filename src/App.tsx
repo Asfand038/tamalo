@@ -4,7 +4,13 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { GlobalStyle, defaultTheme } from './theme';
 import { AuthenticatedRoute } from './contexts';
-import { LoginPage, SignupPage, DashboardPage, BoardPage } from './pages';
+import {
+  LoginPage,
+  SignupPage,
+  DashboardPage,
+  BoardPage,
+  AccountsPage,
+} from './pages';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +22,7 @@ const App: React.FC = () => {
         <AuthenticatedRoute>
           <Route path="/boards" exact component={DashboardPage} />
           <Route path="/boards/:id" component={BoardPage} />
+          <Route path="/accounts" component={AccountsPage} />
         </AuthenticatedRoute>
         <Redirect from="/" to="/login" />
       </Switch>

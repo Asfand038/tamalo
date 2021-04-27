@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-
 import { InputBase } from '@material-ui/core';
 import {
   HomeOutlined as HomeOutlinedIcon,
@@ -13,13 +12,13 @@ import {
   TableChartOutlined as TableChartOutlinedIcon,
 } from '@material-ui/icons';
 
+import UserAvatar from '../Avatar';
 import {
   StyledNavbar,
   StyledSearchField,
   AppLogo,
   StyledNavBtn,
   StyledBoardBtn,
-  StyledAvatar,
 } from './Navbar.styles';
 
 interface IProps {
@@ -83,7 +82,13 @@ const Navbar: React.FC<IProps> = ({ profileImg, avatarFallbackName }) => {
         <StyledNavBtn color="inherit">
           <NotificationsNoneOutlinedIcon />
         </StyledNavBtn>
-        <StyledAvatar src={profileImg}>{avatarFallbackName}</StyledAvatar>
+        <UserAvatar
+          profileImg={profileImg}
+          avatarFallbackName={avatarFallbackName}
+          width="32px"
+          height="32px"
+          onClick={() => console.log('hi')}
+        />
       </div>
     </StyledNavbar>
   );
