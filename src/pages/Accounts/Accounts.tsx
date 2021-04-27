@@ -6,7 +6,6 @@ import { getAvatarFallbackName } from '../../utils';
 import { useAuth } from '../../contexts';
 import { BoardLayout } from '../../layouts';
 
-import { Avatar } from '../../components';
 import {
   StyledHeader,
   StyledUsername,
@@ -18,6 +17,7 @@ import {
   StyledInputField,
   StyledPublicLabel,
   StyledSubmitButton,
+  StyledAvatar,
 } from './Accounts.styles';
 
 const AccountsPage: React.FC = () => {
@@ -29,19 +29,10 @@ const AccountsPage: React.FC = () => {
   const [bio, setBio] = useState('');
 
   return (
-    <BoardLayout
-      profileImg={profileImg}
-      avatarFallbackName={avatarFallbackName}
-      bgColor="#fff"
-    >
+    <BoardLayout bgColor="#fff">
       <StyledHeader>
         <div>
-          <Avatar
-            profileImg={profileImg}
-            avatarFallbackName={avatarFallbackName}
-            height="48px"
-            width="48px"
-          />
+          <StyledAvatar src={profileImg}>{avatarFallbackName}</StyledAvatar>
           <StyledUsername>
             <div>{username}</div>
             <div>@{username}</div>

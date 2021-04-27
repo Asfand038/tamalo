@@ -3,13 +3,11 @@ import { useQueryClient } from 'react-query';
 import { Route } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
-import { useAuth } from '../../contexts';
 import { TaskPage } from '../Task';
 import { BoardLayout } from '../../layouts';
 import { SecondaryNavbar, AddList, InnerList } from './components';
 import { StyledBoardContainer } from './Board.styles';
 import { IBoard } from './utils';
-import { getAvatarFallbackName } from '../../utils';
 
 interface IProps {
   data: IBoard;
@@ -21,7 +19,6 @@ const boardBgColor = '#0079bf';
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
   const { listsOrder, lists, tasks, title, id, members, owners } = data;
 
-  const { user } = useAuth();
   const queryClient = useQueryClient();
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
 
@@ -95,11 +92,7 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
 
   return (
     <>
-      <BoardLayout
-        profileImg={user.profileImg}
-        avatarFallbackName={getAvatarFallbackName(user.username)}
-        bgColor={boardBgColor}
-      >
+      <BoardLayout bgColor={boardBgColor}>
         <SecondaryNavbar boardTitle={title} members={members} owners={owners} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-lists" direction="horizontal" type="list">

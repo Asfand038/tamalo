@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { InputBase } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Divider, InputBase } from '@material-ui/core';
 import {
   HomeOutlined as HomeOutlinedIcon,
   AppsSharp as AppsSharpIcon,
@@ -12,25 +13,30 @@ import {
   TableChartOutlined as TableChartOutlinedIcon,
 } from '@material-ui/icons';
 
-import UserAvatar from '../Avatar';
+import { useAuth } from '../../contexts';
+import { getAvatarFallbackName } from '../../utils';
+import PopOver from '../PopOver';
 import {
   StyledNavbar,
   StyledSearchField,
   AppLogo,
   StyledNavBtn,
   StyledBoardBtn,
+  StyledAvatar,
+  StyledPopOverContent,
+  StyledUserInfo,
+  StyledPopOverButton,
 } from './Navbar.styles';
 
-interface IProps {
-  profileImg: string;
-  avatarFallbackName: string;
-}
+const Navbar: React.FC = () => {
+  const { logout, user } = useAuth();
+  const { username, profileImg, email } = user;
+  const avatarFallbackName = getAvatarFallbackName(username);
 
-const Navbar: React.FC<IProps> = ({ profileImg, avatarFallbackName }) => {
-  // State for focus on SeachField so that it can be passed
-  // to other components to change their styles.
   const [searchFocus, setSearchFocus] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const history = useHistory();
 
   return (
     <StyledNavbar disableGutters>
@@ -82,13 +88,48 @@ const Navbar: React.FC<IProps> = ({ profileImg, avatarFallbackName }) => {
         <StyledNavBtn color="inherit">
           <NotificationsNoneOutlinedIcon />
         </StyledNavBtn>
-        <UserAvatar
-          profileImg={profileImg}
-          avatarFallbackName={avatarFallbackName}
+        <StyledAvatar
+          src={profileImg}
           width="32px"
           height="32px"
-          onClick={() => console.log('hi')}
-        />
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+        >
+          {avatarFallbackName}
+        </StyledAvatar>
+        <PopOver
+          headingText="Account"
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+        >
+          <StyledPopOverContent>
+            <StyledUserInfo>
+              <StyledAvatar src={profileImg} width="40px" height="40px">
+                {avatarFallbackName}
+              </StyledAvatar>
+              <div>
+                <div>{username}</div>
+                <div>{email}</div>
+              </div>
+            </StyledUserInfo>
+            <Divider />
+            <StyledPopOverButton
+              onClick={() => {
+                history.push('/accounts');
+                setAnchorEl(null);
+              }}
+            >
+              Settings
+            </StyledPopOverButton>
+            <StyledPopOverButton
+              onClick={() => {
+                logout();
+                history.push('/login');
+              }}
+            >
+              Log out
+            </StyledPopOverButton>
+          </StyledPopOverContent>
+        </PopOver>
       </div>
     </StyledNavbar>
   );

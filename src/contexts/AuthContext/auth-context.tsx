@@ -8,6 +8,7 @@ interface IAuthContext {
   error: string;
   user: IUser;
   login: Function;
+  logout: Function;
   getUserInformation: Function;
 }
 
@@ -25,6 +26,7 @@ const initialContext = {
   user: initialUserData,
   login: () => {},
   getUserInformation: () => {},
+  logout: () => {},
 };
 
 const AuthContext = createContext<IAuthContext>(initialContext);
@@ -82,6 +84,12 @@ export const AuthProvider: React.FC = (children) => {
     setIsLoading(false);
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setUser(initialUserData);
+  };
+
   const authContextValue = {
     user,
     isLoading,
@@ -89,6 +97,7 @@ export const AuthProvider: React.FC = (children) => {
     error,
     login,
     getUserInformation,
+    logout,
   };
 
   return <AuthContext.Provider value={authContextValue} {...children} />;

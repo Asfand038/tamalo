@@ -13,7 +13,6 @@ import { DashboardCard } from './components';
 import { useAuth } from '../../contexts';
 import { getBoards } from './api';
 import { BoardSchema } from './utils';
-import { getAvatarFallbackName } from '../../utils';
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
@@ -41,10 +40,7 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <DashboardLayout
-      profileImg={user.profileImg}
-      avatarFallbackName={getAvatarFallbackName(user.username)}
-    >
+    <DashboardLayout>
       {boardCategories.map(({ title, boardCategory, icon }) => (
         <StyledBoardsCategory key={title}>
           <StyledTitle>

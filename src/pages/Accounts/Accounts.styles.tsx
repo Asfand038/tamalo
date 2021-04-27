@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, TextField, TextFieldProps } from '@material-ui/core';
+import { Button, TextField, TextFieldProps, Avatar } from '@material-ui/core';
 
 export const StyledHeader = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral[200]};
@@ -155,6 +155,19 @@ export const StyledSubmitButton = styled(Button)`
     &:hover {
       background-color: ${({ theme }) => theme.colors.green[200]};
       box-shadow: none;
+    }
+  }
+`;
+
+export const StyledAvatar = styled(Avatar)`
+  && {
+    height: 48px;
+    width: 48px;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.red[200]};
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    &:hover {
+      cursor: pointer;
     }
   }
 `;
