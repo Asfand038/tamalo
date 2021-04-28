@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import { Divider } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 
+import { Loader } from '../../components';
 import { getAvatarFallbackName } from '../../utils';
 import { useAuth } from '../../contexts';
 import { BoardLayout } from '../../layouts';
+import { getBoards } from '../Dashboard/api';
 
 import {
   StyledHeader,
@@ -27,6 +30,11 @@ const AccountsPage: React.FC = () => {
 
   const [name, setName] = useState(username);
   const [bio, setBio] = useState('');
+
+  const { isLoading, isError } = useQuery(['boards'], () => getBoards(user.id));
+
+  if (isLoading) return <Loader color="#e1e1e1" />;
+  if (isError) return <div>Something went wrong...</div>;
 
   return (
     <BoardLayout bgColor="#fff">

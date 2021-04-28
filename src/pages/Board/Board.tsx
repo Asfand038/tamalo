@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts';
 import BoardDetails from './BoardDetails';
 import { Loader } from '../../components';
 import { getBoardById, updateOneBoard } from './api';
+import { getBoards } from '../Dashboard/api';
 import { mutationConfig } from './utils';
 
 interface IRouteParams {
@@ -22,12 +23,21 @@ const BoardPage: React.FC = () => {
     mutationConfig(id, queryClient)
   );
 
-  const { data, isLoading, error } = useQuery(['board', id], () =>
-    getBoardById(id, user.id, user.profileImg)
-  );
+  const {
+    isLoading: loadingBoardsData,
+    isError: errorLoadingBoardsData,
+  } = useQuery(['boards'], () => getBoards(user.id));
 
-  if (isLoading) return <Loader color="#e1e1e1" />;
-  if (error) return <div>Something went wrong...</div>;
+  const {
+    data,
+    isLoading: loadingBoardData,
+    isError: errorLoadingBoardData,
+  } = useQuery(['board', id], () => getBoardById(id, user.id, user.profileImg));
+
+  if (loadingBoardsData || loadingBoardData) return <Loader color="#e1e1e1" />;
+  if (errorLoadingBoardsData || errorLoadingBoardData)
+    return <div>Something went wrong...</div>;
+
   return <BoardDetails data={data!} updateBoard={updateBoard} />;
 };
 

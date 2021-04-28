@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Grid } from '@material-ui/core';
 import {
@@ -20,12 +20,10 @@ import { IBoardLessDetails } from './utils';
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
-  const [isAddBoardModalOpen, setIsAddBoardModalOpen] = React.useState(false);
+  const [isAddBoardModalOpen, setIsAddBoardModalOpen] = useState(false);
 
-  const { data, isLoading, error } = useQuery(
-    ['boards'],
-    () => getBoards(user.id),
-    { refetchOnWindowFocus: false }
+  const { data, isLoading, error } = useQuery(['boards'], () =>
+    getBoards(user.id)
   );
 
   if (isLoading) return <Loader color="#e1e1e1" />;
