@@ -149,7 +149,7 @@ export const StyledAccordionListItem = styled(ListItem)`
       margin-right: 10px;
       transform: translateX(200%);
       opacity: 0;
-      transition: transform 100ms ease, opacity 100ms ease;
+      transition: transform 85ms ease, opacity 85ms ease;
       svg {
         height: 12px;
         width: 12px;

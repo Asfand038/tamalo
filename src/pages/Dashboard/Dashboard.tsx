@@ -16,14 +16,16 @@ import { Loader } from '../../components';
 import { DashboardCard, AddBoardModal } from './components';
 import { useAuth } from '../../contexts';
 import { getBoards } from './api';
-import { BoardSchema } from './utils';
+import { IBoardLessDetails } from './utils';
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [isAddBoardModalOpen, setIsAddBoardModalOpen] = React.useState(false);
 
-  const { data, isLoading, error } = useQuery(['boards'], () =>
-    getBoards(user.id)
+  const { data, isLoading, error } = useQuery(
+    ['boards'],
+    () => getBoards(user.id),
+    { refetchOnWindowFocus: false }
   );
 
   if (isLoading) return <Loader color="#e1e1e1" />;
@@ -55,7 +57,7 @@ const DashboardPage: React.FC = () => {
             <span>{title}</span>
           </StyledTitle>
           <Grid container spacing={2}>
-            {boardCategory.map((boardDetails: BoardSchema) => (
+            {boardCategory.map((boardDetails: IBoardLessDetails) => (
               <DashboardCard key={boardDetails.id} details={boardDetails} />
             ))}
             {key === 'PERSONAL' && (

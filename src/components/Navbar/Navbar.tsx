@@ -16,6 +16,7 @@ import {
 import { useAuth } from '../../contexts';
 import { getAvatarFallbackName } from '../../utils';
 import { PopOver } from '../PopOver';
+import { BoardSearch } from '../BoardSearch';
 import {
   StyledNavbar,
   StyledSearchField,
@@ -34,7 +35,13 @@ const Navbar: React.FC = () => {
   const avatarFallbackName = getAvatarFallbackName(username);
 
   const [searchFocus, setSearchFocus] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [avatarAnchorEl, setAvatarAnchorEl] = useState<HTMLElement | null>(
+    null
+  );
+  const [
+    boardSearchAnchorEl,
+    setBoardSearchAnchorEl,
+  ] = useState<HTMLElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
@@ -50,9 +57,14 @@ const Navbar: React.FC = () => {
         <StyledBoardBtn
           variant="contained"
           startIcon={<TableChartOutlinedIcon />}
+          onClick={(e) => setBoardSearchAnchorEl(e.currentTarget)}
         >
           <span>Boards</span>
         </StyledBoardBtn>
+        <BoardSearch
+          anchorEl={boardSearchAnchorEl}
+          setAnchorEl={setBoardSearchAnchorEl}
+        />
         <StyledSearchField searchFocus={searchFocus}>
           <InputBase
             onFocus={() => setSearchFocus(true)}
@@ -92,14 +104,14 @@ const Navbar: React.FC = () => {
           src={profileImg}
           width="32px"
           height="32px"
-          onClick={(e) => setAnchorEl(e.currentTarget)}
+          onClick={(e) => setAvatarAnchorEl(e.currentTarget)}
         >
           {avatarFallbackName}
         </StyledAvatar>
         <PopOver
           headingText="Account"
-          anchorEl={anchorEl}
-          setAnchorEl={setAnchorEl}
+          anchorEl={avatarAnchorEl}
+          setAnchorEl={setAvatarAnchorEl}
         >
           <StyledPopOverContent>
             <StyledUserInfo>
@@ -115,7 +127,7 @@ const Navbar: React.FC = () => {
             <StyledPopOverButton
               onClick={() => {
                 history.push('/accounts');
-                setAnchorEl(null);
+                setAvatarAnchorEl(null);
               }}
             >
               Settings

@@ -58,4 +58,5 @@ export const StyledTitle = styled.div`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.neutral[100]};
   font-weight: 700;
+  word-break: break-word;
 `;

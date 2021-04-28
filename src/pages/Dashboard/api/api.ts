@@ -1,4 +1,4 @@
-import { BoardSchema } from '../utils';
+import { IBoardLessDetails, IDashboardData } from '../utils';
 
 export const getBoards = async (userId: string) => {
   const data = await (
@@ -9,13 +9,14 @@ export const getBoards = async (userId: string) => {
     })
   ).json();
 
-  const ownedBoards = data.filter((board: BoardSchema) =>
+  const ownedBoards = data.filter((board: IBoardLessDetails) =>
     board.owners.includes(userId)
   );
 
-  const memberOfBoards = data.filter((board: BoardSchema) =>
+  const memberOfBoards = data.filter((board: IBoardLessDetails) =>
     board.members.includes(userId)
   );
 
-  return { ownedBoards, memberOfBoards };
+  const requiredData: IDashboardData = { ownedBoards, memberOfBoards };
+  return requiredData;
 };

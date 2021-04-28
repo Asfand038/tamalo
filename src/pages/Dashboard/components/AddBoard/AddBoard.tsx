@@ -42,10 +42,10 @@ const AddBoardModal: React.FC<IProps> = ({ open, setOpen }) => {
   );
 
   const handleCloseModal = () => {
+    setOpen(false);
     setBoardBgColor(null);
     setBoardBgImage(boardBgImages[0]);
     setTitle('');
-    setOpen(false);
   };
 
   return (
@@ -77,17 +77,14 @@ const AddBoardModal: React.FC<IProps> = ({ open, setOpen }) => {
           </Grid>
           <StyledBgOptionsGrid container item spacing={2} xs={4}>
             {boardBgImages.map((imgSrc) => (
-              <StyledGridItem
-                item
-                xs={4}
-                imgsrc={imgSrc}
-                key={uuidv4()}
-                onClick={() => {
-                  setBoardBgColor(null);
-                  setBoardBgImage(imgSrc);
-                }}
-              >
-                <div />
+              <StyledGridItem item xs={4} imgsrc={imgSrc} key={uuidv4()}>
+                <div
+                  aria-hidden
+                  onClick={() => {
+                    setBoardBgColor(null);
+                    setBoardBgImage(imgSrc);
+                  }}
+                />
                 {imgSrc === boardBgImage && (
                   <StyledSelectedIcon>
                     <DoneIcon />
@@ -96,17 +93,14 @@ const AddBoardModal: React.FC<IProps> = ({ open, setOpen }) => {
               </StyledGridItem>
             ))}
             {boardBgColors.map((bgColor) => (
-              <StyledGridItem
-                item
-                key={uuidv4()}
-                xs={4}
-                bgcolor={bgColor}
-                onClick={() => {
-                  setBoardBgImage(null);
-                  setBoardBgColor(bgColor);
-                }}
-              >
-                <div />
+              <StyledGridItem item key={uuidv4()} xs={4} bgcolor={bgColor}>
+                <div
+                  aria-hidden
+                  onClick={() => {
+                    setBoardBgImage(null);
+                    setBoardBgColor(bgColor);
+                  }}
+                />
                 {bgColor === boardBgColor && (
                   <StyledSelectedIcon>
                     <DoneIcon />
