@@ -9,8 +9,9 @@ import {
 
 import { StyledInputField } from '../../pages/Accounts/Accounts.styles';
 
-export const StyledPopover = styled(Popover)`
+export const StyledPopover = styled(Popover)<{ visible: number }>`
   && {
+    display: ${({ visible }) => (visible ? 'block' : 'none')};
     inset: 6px 0 0 0 !important;
     & > div:nth-of-type(3) {
       overflow: hidden;
@@ -200,6 +201,8 @@ export const StyledBoardCard = styled.div`
     .animate-icon {
       margin-right: 6px;
       color: ${({ theme }) => theme.colors.blue[400]};
+      height: 16px;
+      width: 16px;
       transition: transform 85ms ease, height 150ms ease, width 150ms ease;
       transform: translateX(200%);
       &:hover {

@@ -17,7 +17,6 @@ import { useAuth } from '../../contexts';
 import { getAvatarFallbackName } from '../../utils';
 import { PopOver } from '../PopOver';
 import { BoardSearch } from '../BoardSearch';
-import { AddBoardModal } from '../AddBoard';
 import {
   StyledNavbar,
   StyledSearchField,
@@ -43,8 +42,6 @@ const Navbar: React.FC = () => {
     boardSearchAnchorEl,
     setBoardSearchAnchorEl,
   ] = useState<HTMLElement | null>(null);
-  const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
-  const [createBoardModalText, setCreateBoardModalText] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
@@ -69,15 +66,6 @@ const Navbar: React.FC = () => {
           <BoardSearch
             anchorEl={boardSearchAnchorEl}
             setAnchorEl={setBoardSearchAnchorEl}
-            setShowCreateBoardModal={setShowCreateBoardModal}
-            setCreateBoardModalText={setCreateBoardModalText}
-          />
-        )}
-        {showCreateBoardModal && (
-          <AddBoardModal
-            open={showCreateBoardModal}
-            setOpen={setShowCreateBoardModal}
-            initialInputValue={createBoardModalText}
           />
         )}
         <StyledSearchField searchFocus={searchFocus}>

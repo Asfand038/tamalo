@@ -9,6 +9,7 @@ import {
   StarBorderRounded as StarBorderRoundedIcon,
 } from '@material-ui/icons';
 
+import { AddBoardModal } from '../AddBoard';
 import { IDashboardData, IBoardLessDetails } from '../../utils';
 import BoardCategoryList from './BoardCategoryList';
 import {
@@ -23,17 +24,11 @@ import {
 interface IProps {
   anchorEl: HTMLElement | null;
   setAnchorEl: Function;
-  setShowCreateBoardModal: Function;
-  setCreateBoardModalText: Function;
 }
 
-const BoardSearch: React.FC<IProps> = ({
-  anchorEl,
-  setAnchorEl,
-  setShowCreateBoardModal,
-  setCreateBoardModalText,
-}) => {
+const BoardSearch: React.FC<IProps> = ({ anchorEl, setAnchorEl }) => {
   const [searchInput, setSearchInput] = useState('');
+  const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
   const history = useHistory();
   const queryClient = useQueryClient();
@@ -60,12 +55,6 @@ const BoardSearch: React.FC<IProps> = ({
     },
   ];
 
-  const openCreateBoardModalHandler = () => {
-    setCreateBoardModalText(searchInput);
-    setShowCreateBoardModal(true);
-    setAnchorEl(null);
-  };
-
   return (
     <>
       <StyledPopover
@@ -82,6 +71,7 @@ const BoardSearch: React.FC<IProps> = ({
         }}
         marginThreshold={0}
         elevation={5}
+        visible={+!showCreateBoardModal}
       >
         <StyledPopoverContent>
           <div>
@@ -112,7 +102,7 @@ const BoardSearch: React.FC<IProps> = ({
               <StyledCreateNewBoardButton
                 variant="text"
                 disableRipple
-                onClick={openCreateBoardModalHandler}
+                onClick={() => setShowCreateBoardModal(true)}
               >
                 Create new board...
               </StyledCreateNewBoardButton>
@@ -138,13 +128,21 @@ const BoardSearch: React.FC<IProps> = ({
             <StyledCreateNewBoardButton
               variant="text"
               disableRipple
-              onClick={openCreateBoardModalHandler}
+              onClick={() => setShowCreateBoardModal(true)}
             >
               Create board named &quot;{searchInput}&quot;
             </StyledCreateNewBoardButton>
           )}
         </StyledPopoverContent>
       </StyledPopover>
+      {showCreateBoardModal && (
+        <AddBoardModal
+          open={showCreateBoardModal}
+          setOpen={setShowCreateBoardModal}
+          initialInputValue={searchInput}
+          setPopoverAnchorEl={setAnchorEl}
+        />
+      )}
     </>
   );
 };

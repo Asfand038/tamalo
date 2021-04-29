@@ -17,6 +17,7 @@ import {
 interface IProps {
   open: boolean;
   setOpen: Function;
+  setPopoverAnchorEl?: Function;
   initialInputValue: string;
 }
 
@@ -38,6 +39,7 @@ const boardBgImages = [
 const AddBoardModal: React.FC<IProps> = ({
   open,
   setOpen,
+  setPopoverAnchorEl,
   initialInputValue,
 }) => {
   const [title, setTitle] = useState(initialInputValue);
@@ -47,6 +49,7 @@ const AddBoardModal: React.FC<IProps> = ({
   );
 
   const handleCloseModal = () => {
+    setPopoverAnchorEl!(null);
     setOpen(false);
     setBoardBgColor(null);
     setBoardBgImage(boardBgImages[0]);
