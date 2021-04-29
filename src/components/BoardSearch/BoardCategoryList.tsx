@@ -1,4 +1,5 @@
 import React, { useState, ReactElement } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AccordionDetails } from '@material-ui/core';
 import {
   Add as AddIcon,
@@ -29,6 +30,8 @@ const BoardCategoryList: React.FC<IProps> = ({
 }) => {
   const [expandAccordion, setExpandAccordion] = useState(true);
 
+  const history = useHistory();
+
   return (
     <StyledAccordion
       expanded={expandAccordion}
@@ -44,7 +47,10 @@ const BoardCategoryList: React.FC<IProps> = ({
       </StyledAccordionSummary>
       <AccordionDetails>
         {boardCategory.map(({ id, title }) => (
-          <StyledBoardCard key={id}>
+          <StyledBoardCard
+            key={id}
+            onClick={() => history.push(`/boards/${id}`)}
+          >
             <div />
             <div>
               <div>{title}</div>

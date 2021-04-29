@@ -17,6 +17,7 @@ import {
 interface IProps {
   open: boolean;
   setOpen: Function;
+  initialInputValue: string;
 }
 
 const boardBgColors = [
@@ -34,8 +35,12 @@ const boardBgImages = [
   'https://images.unsplash.com/photo-1619256267591-25a069f9b55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDR8MzE3MDk5fHx8fHwyfHwxNjE5NDkzMzI3&ixlib=rb-1.2.1&q=80&w=400',
 ];
 
-const AddBoardModal: React.FC<IProps> = ({ open, setOpen }) => {
-  const [title, setTitle] = useState('');
+const AddBoardModal: React.FC<IProps> = ({
+  open,
+  setOpen,
+  initialInputValue,
+}) => {
+  const [title, setTitle] = useState(initialInputValue);
   const [boardBgColor, setBoardBgColor] = useState<string | null>(null);
   const [boardBgImage, setBoardBgImage] = useState<string | null>(
     boardBgImages[0]

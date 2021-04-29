@@ -4,6 +4,7 @@ import {
   Accordion,
   AccordionSummary,
   Popover,
+  Button,
 } from '@material-ui/core';
 
 import { StyledInputField } from '../../pages/Accounts/Accounts.styles';
@@ -221,6 +222,23 @@ export const StyledBoardCard = styled.div`
 `;
 
 export const StyledPlaceholderText = styled.div`
-  padding: 24px 30px 14px 31px;
+  padding: 16px 30px 14px 31px;
   color: #7a869a;
+`;
+
+export const StyledCreateNewBoardButton = styled(Button)`
+  && {
+    text-transform: none;
+    color: ${({ theme }) => theme.colors.neutral[550]};
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    text-decoration: underline;
+    font-weight: 400;
+    justify-content: flex-start;
+    padding: 1px 12px;
+    &:hover {
+      background-color: inherit;
+      color: ${({ theme }) => theme.colors.blue[400]};
+      text-decoration: underline;
+    }
+  }
 `;

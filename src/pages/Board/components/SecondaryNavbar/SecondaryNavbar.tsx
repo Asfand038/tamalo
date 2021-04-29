@@ -16,6 +16,7 @@ import { getAvatarFallbackName } from '../../../../utils';
 import { OwnerIcon } from '../../../../assets';
 import { IUser } from '../../utils';
 import { BoardTitle } from './BoardTitle';
+import { RealTimeSearchField } from './RealTimeSearchField';
 import { PopOver } from '../../../../components';
 import {
   StyledNavbar,
@@ -47,7 +48,6 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { id } = useParams<IParams>();
-  const boardContainer = document.getElementById(id)! as HTMLDivElement;
 
   const ownerDetails = owners.map(({ profileImg, username }) => {
     return {
@@ -120,7 +120,7 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
           anchorEl={inviteAnchorEl}
           setAnchorEl={setInviteAnchorEl}
         >
-          <div>To be updated</div>
+          <RealTimeSearchField />
         </PopOver>
       </div>
       <div className="flex-container">
@@ -135,6 +135,9 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
           startIcon={<MoreHorizIcon />}
           onClick={() => {
             setIsMenuOpen(true);
+            const boardContainer = document.getElementById(
+              id
+            )! as HTMLDivElement;
             boardContainer.style.marginRight = '339px';
           }}
         >
@@ -152,6 +155,9 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
               <StyledCloseIconButton
                 onClick={() => {
                   setIsMenuOpen(false);
+                  const boardContainer = document.getElementById(
+                    id
+                  )! as HTMLDivElement;
                   boardContainer.style.marginRight = '0';
                 }}
               >

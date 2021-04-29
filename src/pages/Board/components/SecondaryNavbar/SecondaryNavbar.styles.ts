@@ -19,7 +19,6 @@ export const StyledNavbar = styled(Toolbar)`
     justify-content: space-between;
     align-items: center;
     min-height: 0;
-    flex-wrap: wrap;
     margin-top: -6px;
     padding: 0 4px 0 8px;
     transition: margin 0.1s ease-in;

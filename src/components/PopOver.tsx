@@ -68,6 +68,7 @@ export const PopOver: React.FC<IProps> = ({
           horizontal: 'left',
         }}
         elevation={2}
+        style={{ inset: '6px 0 0 0' }}
       >
         <StyledPopupContent>
           <div>

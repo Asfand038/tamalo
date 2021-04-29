@@ -12,8 +12,8 @@ import {
   StyledAddBoard,
 } from './Dashboard.styles';
 import { DashboardLayout } from '../../layouts';
-import { Loader } from '../../components';
-import { DashboardCard, AddBoardModal } from './components';
+import { Loader, AddBoardModal } from '../../components';
+import { DashboardCard } from './components';
 import { useAuth } from '../../contexts';
 import { getBoards } from './api';
 import { IBoardLessDetails } from './utils';
@@ -68,10 +68,13 @@ const DashboardPage: React.FC = () => {
                 >
                   <div>Create new board</div>
                 </StyledAddBoard>
-                <AddBoardModal
-                  open={isAddBoardModalOpen}
-                  setOpen={setIsAddBoardModalOpen}
-                />
+                {isAddBoardModalOpen && (
+                  <AddBoardModal
+                    initialInputValue=""
+                    open={isAddBoardModalOpen}
+                    setOpen={setIsAddBoardModalOpen}
+                  />
+                )}
               </>
             )}
             {key === 'MEMBER' && !boardCategory.length && (

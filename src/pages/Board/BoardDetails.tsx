@@ -28,8 +28,8 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
       if (e.deltaY > 0) boardContainer.scrollLeft += 30;
       else boardContainer.scrollLeft -= 30;
     };
-    boardContainer.addEventListener('wheel', handleScroll, false);
-    return boardContainer.removeEventListener('wheel', handleScroll, false);
+    boardContainer.addEventListener('wheel', handleScroll);
+    return boardContainer.removeEventListener('wheel', handleScroll, true);
   }, [id]);
 
   const onDragEnd = (result: DropResult) => {
