@@ -18,7 +18,6 @@ export const getBoardById = async (
       },
     })
   ).json();
-
   const requiredBoardData = await getRequiredBoardData({
     ...data,
     userId,
@@ -35,6 +34,7 @@ export const updateOneBoard = async ({
   title,
 }: IBoard) => {
   const tasksOrder = getTasksOrder(lists);
+
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
       method: 'PUT',

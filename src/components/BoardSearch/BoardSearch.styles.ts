@@ -37,7 +37,7 @@ export const StyledPopoverContent = styled.div`
   }
   &::-webkit-scrollbar {
     width: 8px;
-    background-color: ${({ theme }) => theme.colors.neutral[200]};
+    background-color: inherit;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;

@@ -46,6 +46,10 @@ const DashboardPage: React.FC = () => {
     },
   ];
 
+  if (isAddBoardModalOpen) {
+    throw new Error();
+  }
+
   return (
     <DashboardLayout>
       {boardCategories.map(({ title, boardCategory, icon, key }) => (

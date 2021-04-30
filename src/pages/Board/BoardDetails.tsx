@@ -16,7 +16,7 @@ interface IProps {
 
 const boardBgColor = '#0079bf';
 
-const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
+const BoardDetails: React.FC<IProps> = ({ data, updateBoard, children }) => {
   const { listsOrder, lists, tasks, title, id, members, owners } = data;
 
   const queryClient = useQueryClient();
@@ -95,6 +95,7 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard }) => {
   return (
     <>
       <BoardLayout bgColor={boardBgColor}>
+        {children}
         <SecondaryNavbar boardTitle={title} members={members} owners={owners} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-lists" direction="horizontal" type="list">

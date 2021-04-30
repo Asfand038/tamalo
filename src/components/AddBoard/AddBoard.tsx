@@ -49,7 +49,9 @@ const AddBoardModal: React.FC<IProps> = ({
   );
 
   const handleCloseModal = () => {
-    setPopoverAnchorEl!(null);
+    if (setPopoverAnchorEl) {
+      setPopoverAnchorEl(null);
+    }
     setOpen(false);
     setBoardBgColor(null);
     setBoardBgImage(boardBgImages[0]);
