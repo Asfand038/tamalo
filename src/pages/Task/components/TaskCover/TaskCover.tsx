@@ -7,8 +7,12 @@ import {
   VideoLabel as VideoLabelIcon,
 } from '@material-ui/icons';
 
-import { Loader, PopOver } from '../../../../components';
-import { CoverImageSizes, getRequiredSizeCoverImg } from '../../../../utils';
+import { Loader, PopOver, ErrorAlert } from '../../../../components';
+import {
+  CoverImageSizes,
+  getRequiredSizeCoverImg,
+  errorMessages,
+} from '../../../../utils';
 import { addCover, deleteCover } from '../../api';
 import { IBoard, ITaskDetails, ITask } from '../../utils';
 import {
@@ -42,6 +46,7 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
   const [isUpdatingCover, setIsUpdatingCover] = useState(false);
   const [imgUrl, setImgUrl] = useState(imgSrc);
   const [bgColor, setBgColor] = useState(coverBg);
+  const [error, setError] = useState('');
 
   const history = useHistory();
   const fileUploadRef = useRef<HTMLInputElement>(null);
@@ -61,35 +66,41 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
       setIsUpdatingCover(true);
       setImgUrl('');
       setBgColor({ color: '#fff', isDark: false });
-
+      setError('');
       const coverFile = event.target.files![0];
-      const taskData = await addCover(coverFile, taskId, users);
 
-      queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
-      const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
-      const updatedTasks = boardData.tasks.map((task) => {
-        if (task.id === taskId) {
-          const updatedTask: ITask = { ...task, cover: taskData.cover };
-          return updatedTask;
+      try {
+        const taskData = await addCover(coverFile, taskId, users);
+        queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+        const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+        const updatedTasks = boardData.tasks.map((task) => {
+          if (task.id === taskId) {
+            const updatedTask: ITask = { ...task, cover: taskData.cover };
+            return updatedTask;
+          }
+          return task;
+        });
+        queryClient.setQueryData<IBoard>(['board', boardId], {
+          ...boardData,
+          tasks: updatedTasks,
+        });
+        setImgUrl(
+          getRequiredSizeCoverImg(taskData.cover!, CoverImageSizes.medium)
+        );
+        if (taskData.cover) {
+          setBgColor(taskData.cover.coverBg);
         }
-        return task;
-      });
-      queryClient.setQueryData<IBoard>(['board', boardId], {
-        ...boardData,
-        tasks: updatedTasks,
-      });
-
-      setIsUpdatingCover(false);
-      setImgUrl(
-        getRequiredSizeCoverImg(taskData.cover!, CoverImageSizes.medium)
-      );
-      if (taskData.cover) {
-        setBgColor(taskData.cover.coverBg);
+      } catch (err) {
+        setImgUrl(imgSrc);
+        setBgColor(coverBg);
+        setError(errorMessages.updateCover);
       }
+      setIsUpdatingCover(false);
     }
   };
 
   const deleteCoverHandler = async () => {
+    setError('');
     queryClient.setQueryData<ITaskDetails>(['task', taskId], {
       ...taskData,
       cover: null,
@@ -110,6 +121,7 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
       const data = await deleteCover(coverId, users);
       queryClient.setQueryData<ITaskDetails>(['task', taskId], data);
     } catch (err) {
+      setError(errorMessages.deleteCover);
       queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
       queryClient.setQueryData<IBoard>(['board', boardId], boardData);
     }
@@ -117,6 +129,7 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
 
   return (
     <>
+      {error && <ErrorAlert message={error} />}
       <StyledCloseIcon dark={+bgColor.isDark}>
         <CloseIcon onClick={() => history.goBack()} />
       </StyledCloseIcon>

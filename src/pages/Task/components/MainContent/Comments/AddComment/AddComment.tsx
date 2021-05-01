@@ -11,8 +11,9 @@ import {
   VideoLabel as VideoLabelIcon,
 } from '@material-ui/icons';
 
+import { ErrorAlert } from '../../../../../../components';
 import { useAuth } from '../../../../../../contexts';
-import { getAvatarFallbackName } from '../../../../../../utils';
+import { getAvatarFallbackName, errorMessages } from '../../../../../../utils';
 import { addOneComment } from '../../../../api';
 import {
   IBoard,
@@ -62,7 +63,7 @@ const AddComment: React.FC = () => {
   const users = [...owners, ...members];
   const { comments, cover } = taskData;
 
-  const { mutate: addComment } = useMutation(
+  const { mutate: addComment, error } = useMutation(
     () => addOneComment(newCommentText, user, taskId, comments, cover, users),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.addComment,
@@ -98,6 +99,7 @@ const AddComment: React.FC = () => {
 
   return (
     <StyledWrapper>
+      {error && <ErrorAlert message={errorMessages.addComment} />}
       <StyledAvatar src={user.profileImg}>
         {getAvatarFallbackName(user.username)}
       </StyledAvatar>

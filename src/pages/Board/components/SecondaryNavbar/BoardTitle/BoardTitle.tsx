@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 
+import { ErrorAlert } from '../../../../../components';
+import { errorMessages } from '../../../../../utils';
 import { mutationConfig, IBoard } from '../../../utils';
 import { updateOneBoard } from '../../../api';
 import { StyledAutoSizeInput } from './BoardTitle.styles';
@@ -22,7 +24,7 @@ const BoardTitle: React.FC<IProps> = ({ title }) => {
   const queryClient = useQueryClient();
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
 
-  const { mutate: updateBoardTitle } = useMutation(
+  const { mutate: updateBoardTitle, error } = useMutation(
     updateOneBoard,
     mutationConfig(id, queryClient)
   );
@@ -36,22 +38,25 @@ const BoardTitle: React.FC<IProps> = ({ title }) => {
   };
 
   return (
-    <StyledAutoSizeInput
-      id={`title-${id}`}
-      value={boardTitle}
-      onChange={(e) => setBoardTitle(e.target.value)}
-      onFocus={(e) => e.target.select()}
-      onBlur={updateBoardTitleHandler}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          updateBoardTitleHandler();
-          const input = document.getElementById(
-            `title-${id}`
-          )! as HTMLInputElement;
-          input.blur();
-        }
-      }}
-    />
+    <>
+      {error && <ErrorAlert message={errorMessages.updateBoard} />}
+      <StyledAutoSizeInput
+        id={`title-${id}`}
+        value={boardTitle}
+        onChange={(e) => setBoardTitle(e.target.value)}
+        onFocus={(e) => e.target.select()}
+        onBlur={updateBoardTitleHandler}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            updateBoardTitleHandler();
+            const input = document.getElementById(
+              `title-${id}`
+            )! as HTMLInputElement;
+            input.blur();
+          }
+        }}
+      />
+    </>
   );
 };
 

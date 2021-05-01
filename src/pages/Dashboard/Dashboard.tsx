@@ -12,22 +12,24 @@ import {
   StyledAddBoard,
 } from './Dashboard.styles';
 import { DashboardLayout } from '../../layouts';
-import { Loader, AddBoardModal } from '../../components';
+import { Loader, AddBoardModal, ErrorContainer } from '../../components';
 import { DashboardCard } from './components';
 import { useAuth } from '../../contexts';
 import { getBoards } from './api';
+import { IDashboardData, IError, errorMessages } from '../../utils';
 import { IBoardLessDetails } from './utils';
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [isAddBoardModalOpen, setIsAddBoardModalOpen] = useState(false);
 
-  const { data, isLoading, error } = useQuery(['boards'], () =>
-    getBoards(user.id)
+  const { data, isLoading, error } = useQuery<IDashboardData, IError>(
+    ['boards'],
+    () => getBoards(user.id)
   );
 
   if (isLoading) return <Loader color="#e1e1e1" />;
-  if (error) return <div>Something went wrong...</div>;
+  if (error) return <ErrorContainer message={errorMessages.getBoards} />;
 
   const { ownedBoards, memberOfBoards } = data!;
 
@@ -45,10 +47,6 @@ const DashboardPage: React.FC = () => {
       icon: <PeopleOutlineOutlinedIcon />,
     },
   ];
-
-  if (isAddBoardModalOpen) {
-    throw new Error();
-  }
 
   return (
     <DashboardLayout>

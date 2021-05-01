@@ -53,3 +53,7 @@ export interface IDashboardData {
   ownedBoards: IBoardLessDetails[];
   memberOfBoards: IBoardLessDetails[];
 }
+
+export interface IError {
+  message: string;
+}

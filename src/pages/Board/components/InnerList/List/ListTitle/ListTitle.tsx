@@ -6,6 +6,8 @@ import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
 import { updateOneList } from '../../../../api';
 import { mutationConfig, IBoard } from '../../../../utils';
+import { ErrorAlert } from '../../../../../../components';
+import { errorMessages } from '../../../../../../utils';
 import {
   StyledListTitle,
   StyledListTitleWrapper,
@@ -32,7 +34,7 @@ const ListTitle: React.FC<IProps> = ({ provided, title, listId }) => {
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
   const { lists, tasks } = boardData;
 
-  const { mutate: updateListTitle } = useMutation(
+  const { mutate: updateListTitle, error } = useMutation(
     () => updateOneList(listId, listTitle, lists, tasks),
     mutationConfig(id, queryClient)
   );
@@ -52,36 +54,39 @@ const ListTitle: React.FC<IProps> = ({ provided, title, listId }) => {
   };
 
   return (
-    <StyledListTitleWrapper>
-      {!isEditingTitle && (
-        <StyledListTitle
-          onClick={() => setIsEditingTitle(true)}
-          {...provided.dragHandleProps}
-        >
-          {listTitle}
-        </StyledListTitle>
-      )}
-      {isEditingTitle && (
-        <StyledListTitleInput
-          variant="outlined"
-          value={listTitle}
-          multiline
-          rowsMax="12"
-          onChange={(e) => setListTitle(e.target.value)}
-          autoFocus
-          onFocus={(e) => e.target.select()}
-          onBlur={updateListTitleHandler}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              updateListTitleHandler();
-            }
-          }}
-        />
-      )}
-      <span>
-        <MoreHorizIcon />
-      </span>
-    </StyledListTitleWrapper>
+    <>
+      {error && <ErrorAlert message={errorMessages.updateList} />}
+      <StyledListTitleWrapper>
+        {!isEditingTitle && (
+          <StyledListTitle
+            onClick={() => setIsEditingTitle(true)}
+            {...provided.dragHandleProps}
+          >
+            {listTitle}
+          </StyledListTitle>
+        )}
+        {isEditingTitle && (
+          <StyledListTitleInput
+            variant="outlined"
+            value={listTitle}
+            multiline
+            rowsMax="12"
+            onChange={(e) => setListTitle(e.target.value)}
+            autoFocus
+            onFocus={(e) => e.target.select()}
+            onBlur={updateListTitleHandler}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                updateListTitleHandler();
+              }
+            }}
+          />
+        )}
+        <span>
+          <MoreHorizIcon />
+        </span>
+      </StyledListTitleWrapper>
+    </>
   );
 };
 

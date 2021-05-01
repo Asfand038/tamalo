@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import FastAverageColor from 'fast-average-color';
-import { ICover } from '../../../utils';
+import { ICover, errorMessages } from '../../../utils';
 import {
   IUser,
   IComment,
@@ -100,6 +101,7 @@ export const updateOneComment = async (
   });
 };
 
+// resolve error
 export const deleteOneComment = async (
   commentId: string,
   author: IUser,
@@ -107,23 +109,27 @@ export const deleteOneComment = async (
   cover: ICover | null,
   users: IUser[]
 ) => {
-  const data = await (
-    await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
-      },
-    })
-  ).json();
+  try {
+    const data = await (
+      await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+      })
+    ).json();
 
-  return getRequiredCommentData({
-    ...data,
-    comments,
-    author: { ...data.author, profileImg: author.profileImg },
-    cover,
-    users,
-  });
+    return getRequiredCommentData({
+      ...data,
+      comments,
+      author: { ...data.author, profileImg: author.profileImg },
+      cover,
+      users,
+    });
+  } catch (err) {
+    return err;
+  }
 };
 
 export const addCover = async (file: File, taskId: string, users: IUser[]) => {
@@ -165,6 +171,7 @@ export const addCover = async (file: File, taskId: string, users: IUser[]) => {
   return getRequiredTaskData({ ...taskData, users });
 };
 
+// resolve error
 export const deleteCover = async (id: string, users: IUser[]) => {
   const coverData = await (
     await fetch(`https://tamalo.herokuapp.com/upload/files/${id}`, {
@@ -180,6 +187,7 @@ export const deleteCover = async (id: string, users: IUser[]) => {
   return taskData;
 };
 
+// resolve error
 export const updateTaskMembers = async (
   userId: string,
   taskId: string,
@@ -194,6 +202,7 @@ export const updateTaskMembers = async (
   } else {
     updatedMemberIds = [...memberIds, userId];
   }
+
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/tasks/${taskId}`, {
       method: 'PUT',
@@ -216,6 +225,7 @@ export const addAttachment = async (
 ) => {
   const fileData = new FormData();
   fileData.append('files', file);
+
   const attachmentData = await (
     await fetch(`https://tamalo.herokuapp.com/upload`, {
       method: 'POST',

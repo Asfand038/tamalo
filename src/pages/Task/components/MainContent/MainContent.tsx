@@ -9,7 +9,7 @@ import {
   Add as AddIcon,
 } from '@material-ui/icons';
 
-import { PopOver } from '../../../../components';
+import { PopOver, ErrorAlert } from '../../../../components';
 import { Comments } from './Comments';
 import { AddDescription } from './AddDescription';
 import { deleteAttachment } from '../../api';
@@ -20,7 +20,7 @@ import {
   IBoard,
   ITaskDetails,
 } from '../../utils';
-import { getAvatarFallbackName } from '../../../../utils';
+import { getAvatarFallbackName, errorMessages } from '../../../../utils';
 
 import {
   StyledContainer,
@@ -53,6 +53,7 @@ const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [isOverLink, setIsOverLink] = useState(false);
+  const [error, setError] = useState('');
 
   const { boardId, taskId } = useParams<IRouteParams>();
   const downloadBtnRef = useRef<HTMLAnchorElement>(null);
@@ -77,6 +78,7 @@ const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
   }, [ext, url]);
 
   const deleteAttachmentHandler = async () => {
+    setError('');
     const updatedAttachments = taskData.attachments.filter(
       (att) => att.id !== id
     );
@@ -89,11 +91,13 @@ const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
       queryClient.setQueryData<ITaskDetails>(['task', taskId], data);
     } catch (err) {
       queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+      setError(errorMessages.deleteAttachment);
     }
   };
 
   return (
     <>
+      {error && <ErrorAlert message={error} />}
       <StyledAttachment
         onClick={() => {
           if (!isOverLink) {

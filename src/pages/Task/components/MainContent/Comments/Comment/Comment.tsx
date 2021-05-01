@@ -18,8 +18,13 @@ import {
   taskMutationConfig,
   taskMutationKeys,
 } from '../../../../utils';
-import { getAvatarFallbackName } from '../../../../../../utils';
-import { ButtonContainer, Loader, PopOver } from '../../../../../../components';
+import { getAvatarFallbackName, errorMessages } from '../../../../../../utils';
+import {
+  ButtonContainer,
+  Loader,
+  PopOver,
+  ErrorAlert,
+} from '../../../../../../components';
 import {
   StyledWrapper,
   StyledComment,
@@ -71,7 +76,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
   const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
   const { comments, cover } = taskData;
 
-  const { mutate: updateComment } = useMutation(
+  const { mutate: updateComment, error: errorUpdatingComment } = useMutation(
     () =>
       updateOneComment(
         commentId,
@@ -86,7 +91,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
     })
   );
 
-  const { mutate: deleteComment } = useMutation(
+  const { mutate: deleteComment, error: errorDeletingComment } = useMutation(
     () => deleteOneComment(commentId, author, comments, cover, users),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.deleteComment,
@@ -115,6 +120,12 @@ const Comment: React.FC<IProps> = ({ comment }) => {
 
   return (
     <StyledWrapper>
+      {errorUpdatingComment && (
+        <ErrorAlert message={errorMessages.updateComment} />
+      )}
+      {errorDeletingComment && (
+        <ErrorAlert message={errorMessages.deleteComment} />
+      )}
       <StyledAvatar src={author.profileImg}>
         {getAvatarFallbackName(author.username)}
       </StyledAvatar>

@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import { VideoLabel as VideoLabelIcon } from '@material-ui/icons';
 
-import { PopOver, Loader } from '../../../../../components';
+import { PopOver, Loader, ErrorAlert } from '../../../../../components';
+import { errorMessages } from '../../../../../utils';
 import { addCover } from '../../../api';
 import { IBoard, ITaskDetails, ITask } from '../../../utils';
 import {
@@ -21,6 +22,7 @@ interface IRouteParams {
 const CoverUploadButton: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [isUploadingCover, setIsUploadingCover] = useState(false);
+  const [error, setError] = useState('');
 
   const fileUploadRef = useRef<HTMLInputElement>(null);
   const { boardId, taskId } = useParams<IRouteParams>();
@@ -34,22 +36,27 @@ const CoverUploadButton: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files![0]) {
+      setError('');
       setIsUploadingCover(true);
       const coverFile = event.target.files![0];
-      const taskData = await addCover(coverFile, taskId, users);
-      queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
-      const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
-      const updatedTasks = boardData.tasks.map((task) => {
-        if (task.id === taskId) {
-          const updatedTask: ITask = { ...task, cover: taskData.cover };
-          return updatedTask;
-        }
-        return task;
-      });
-      queryClient.setQueryData<IBoard>(['board', boardId], {
-        ...boardData,
-        tasks: updatedTasks,
-      });
+      try {
+        const taskData = await addCover(coverFile, taskId, users);
+        queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+        const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+        const updatedTasks = boardData.tasks.map((task) => {
+          if (task.id === taskId) {
+            const updatedTask: ITask = { ...task, cover: taskData.cover };
+            return updatedTask;
+          }
+          return task;
+        });
+        queryClient.setQueryData<IBoard>(['board', boardId], {
+          ...boardData,
+          tasks: updatedTasks,
+        });
+      } catch (err) {
+        setError(errorMessages.addCover);
+      }
       setIsUploadingCover(false);
       setAnchorEl(null);
     }
@@ -57,6 +64,7 @@ const CoverUploadButton: React.FC = () => {
 
   return (
     <>
+      {error && <ErrorAlert message={error} />}
       <StyledListButton
         variant="contained"
         startIcon={<VideoLabelIcon className="small-icon" />}

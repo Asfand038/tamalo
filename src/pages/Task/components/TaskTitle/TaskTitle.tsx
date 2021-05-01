@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 
+import { ErrorAlert } from '../../../../components';
+import { errorMessages } from '../../../../utils';
 import { updateTaskTitle } from '../../api';
 import {
   ITaskDetails,
@@ -39,7 +41,7 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
   const { owners, members } = boardData;
   const users = [...owners, ...members];
 
-  const { mutate: updateTitle } = useMutation(
+  const { mutate: updateTitle, error } = useMutation(
     () => updateTaskTitle(taskId, title, users),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.updateTitle,
@@ -58,6 +60,7 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
 
   return (
     <StyledContainer>
+      {error && <ErrorAlert message={errorMessages.updateTaskTitle} />}
       <StyledIcon>
         <VideoLabelIcon />
       </StyledIcon>

@@ -5,10 +5,15 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { TaskLayout } from '../../layouts';
 import { TaskTitle, Sidebar, MainContent, TaskCover } from './components';
-import { Loader } from '../../components';
+import { ErrorContainer, Loader } from '../../components';
 import { getTaskById } from './api';
-import { IList, IBoard } from './utils';
-import { getRequiredSizeCoverImg, CoverImageSizes } from '../../utils';
+import { IList, IBoard, ITaskDetails } from './utils';
+import {
+  getRequiredSizeCoverImg,
+  CoverImageSizes,
+  IError,
+  errorMessages,
+} from '../../utils';
 import { StyledCloseIcon, StyledBody } from './Task.styles';
 
 interface IRouteParams {
@@ -26,12 +31,9 @@ const TaskModal: React.FC = () => {
   const { owners, members, lists } = boardData;
   const users = [...owners, ...members];
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, error } = useQuery<ITaskDetails, IError>(
     ['task', taskId],
-    () => getTaskById(taskId, users),
-    {
-      refetchOnWindowFocus: false,
-    }
+    () => getTaskById(taskId, users)
   );
 
   if (isLoading)
@@ -41,7 +43,12 @@ const TaskModal: React.FC = () => {
       </TaskLayout>
     );
 
-  if (error) return <div>Something went wrong...</div>;
+  if (error)
+    return (
+      <TaskLayout>
+        <ErrorContainer message={errorMessages.getTask} />
+      </TaskLayout>
+    );
 
   const {
     title,

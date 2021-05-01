@@ -51,7 +51,7 @@ export const updateOneBoard = async ({
 
 export const addOneList = async (id: string, title: string) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards/${id}/new/list`, {
+    await fetch(`xhttps://tamalo.herokuapp.com/boards/${id}/new/list`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

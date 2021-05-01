@@ -79,7 +79,7 @@ const sortCommentsFromLatestToFirst = (
   return 0;
 };
 
-export const getRequiredTaskData = (data: any) => {
+export const getRequiredTaskData = (data: any): ITaskDetails => {
   const commentsArray: ICommentLessDetails[] = data.comments.map(
     (comment: any) => {
       const { author, id, text, createdAt, task, updatedAt } = comment;

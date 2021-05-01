@@ -50,6 +50,7 @@ const LoginPage: React.FC = () => {
           variant="outlined"
           placeholder="Enter email"
           fullWidth
+          autoFocus
           required
           disabled={isLoading}
         />

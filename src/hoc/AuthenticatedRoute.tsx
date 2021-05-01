@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
-import { Loader } from '../../components';
+import { Loader } from '../components';
 
-import { useAuth } from './auth-context';
+import { useAuth } from '../contexts';
 
 const AuthenticatedRoute: React.FC = ({ children }) => {
   const { getUserInformation, isLoading, error, isLoggedIn } = useAuth();

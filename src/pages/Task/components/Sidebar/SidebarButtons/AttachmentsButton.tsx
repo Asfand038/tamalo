@@ -3,7 +3,8 @@ import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { AttachmentOutlined as AttachmentOutlinedIcon } from '@material-ui/icons';
 
-import { PopOver, Loader } from '../../../../../components';
+import { PopOver, Loader, ErrorAlert } from '../../../../../components';
+import { errorMessages } from '../../../../../utils';
 import { addAttachment } from '../../../api';
 import { IBoard, ITaskDetails, IAttachment } from '../../../utils';
 import {
@@ -21,6 +22,7 @@ interface IRouteParams {
 const AttachmentsButton: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [isUploadingFile, setIsUploadingFile] = useState(false);
+  const [error, setError] = useState('');
 
   const fileUploadRef = useRef<HTMLInputElement>(null);
   const { boardId, taskId } = useParams<IRouteParams>();
@@ -38,17 +40,22 @@ const AttachmentsButton: React.FC = () => {
     if (event.target.files![0]) {
       const attachmentFile = event.target.files![0];
       setIsUploadingFile(true);
+      setError('');
       let attachmentIds: [] | string[] = [];
       if (attachments.length) {
         attachmentIds = attachments.map((att: IAttachment) => att.id);
       }
-      const taskData = await addAttachment(
-        attachmentFile,
-        attachmentIds,
-        taskId,
-        users
-      );
-      queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+      try {
+        const taskData = await addAttachment(
+          attachmentFile,
+          attachmentIds,
+          taskId,
+          users
+        );
+        queryClient.setQueryData<ITaskDetails>(['task', taskId], taskData);
+      } catch (err) {
+        setError(errorMessages.addAttachment);
+      }
       setIsUploadingFile(false);
       setAnchorEl(null);
     }
@@ -56,6 +63,7 @@ const AttachmentsButton: React.FC = () => {
 
   return (
     <>
+      {error && <ErrorAlert message={error} />}
       <StyledListButton
         variant="contained"
         startIcon={<AttachmentOutlinedIcon />}

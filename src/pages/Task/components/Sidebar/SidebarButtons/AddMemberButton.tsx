@@ -9,7 +9,7 @@ import {
   Done as DoneIcon,
 } from '@material-ui/icons';
 
-import { PopOver } from '../../../../../components';
+import { PopOver, ErrorAlert } from '../../../../../components';
 import {
   ITaskDetails,
   IUser,
@@ -17,7 +17,7 @@ import {
   taskMutationKeys,
 } from '../../../utils';
 import { updateTaskMembers } from '../../../api';
-import { getAvatarFallbackName } from '../../../../../utils';
+import { errorMessages, getAvatarFallbackName } from '../../../../../utils';
 import { StyledAvatar } from '../../../Task.styles';
 import { StyledListButton } from '../Sidebar.styles';
 
@@ -83,7 +83,7 @@ const PopOverButton: React.FC<IPopOverButton> = ({
   const queryClient = useQueryClient();
   const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
 
-  const { mutate: updateMembers } = useMutation(
+  const { mutate: updateMembers, error } = useMutation(
     () => updateTaskMembers(member.id, taskId, taskMembers, boardMembers),
     taskMutationConfig(taskId, queryClient, {
       key: taskMutationKeys.updateMembers,
@@ -103,16 +103,19 @@ const PopOverButton: React.FC<IPopOverButton> = ({
   };
 
   return (
-    <StyledPopOverButton
-      fullWidth
-      onClick={() => updateTaskMembersHandler(member.id, member.isMember)}
-    >
-      <StyledAvatar src={member.profileImg}>
-        {getAvatarFallbackName(member.username)}
-      </StyledAvatar>
-      <span>{member.username}</span>
-      {member.isMember && <DoneIcon />}
-    </StyledPopOverButton>
+    <>
+      {error && <ErrorAlert message={errorMessages.updateTaskMembers} />}
+      <StyledPopOverButton
+        fullWidth
+        onClick={() => updateTaskMembersHandler(member.id, member.isMember)}
+      >
+        <StyledAvatar src={member.profileImg}>
+          {getAvatarFallbackName(member.username)}
+        </StyledAvatar>
+        <span>{member.username}</span>
+        {member.isMember && <DoneIcon />}
+      </StyledPopOverButton>
+    </>
   );
 };
 

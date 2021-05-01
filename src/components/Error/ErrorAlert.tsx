@@ -45,7 +45,11 @@ const ErrorAlert: React.FC<IProps> = ({ message }) => {
 
   return (
     <Slide in={open} direction="right">
-      <Snackbar open anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
+      <Snackbar
+        ClickAwayListenerProps={{ onClickAway: () => setOpen(false) }}
+        open
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+      >
         <Paper elevation={3}>
           <StyledAlert
             severity="error"
