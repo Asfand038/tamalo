@@ -24,7 +24,7 @@ export const StyledTitleContainer = styled.div`
 `;
 
 export const StyledTitle = styled.div`
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.typeScale.header4};
   line-height: 20px;
   color: ${({ theme }) => theme.colors.blue[400]};
   font-weight: 600;
@@ -115,8 +115,8 @@ export const StyledTasksDetailsContainer = styled.div`
 export const StyledTaskDetailItem = styled.div`
   margin: 0 8px 8px 0;
   & > div:first-child {
-    color: #5e6c84;
-    font-size: 12px;
+    color: ${({ theme }) => theme.colors.neutral[550]};
+    font-size: ${({ theme }) => theme.typeScale.subtitle};
     font-weight: 500;
     margin-bottom: 6px;
     letter-spacing: 0.5px;
@@ -131,7 +131,7 @@ export const StyledTaskDetailItem = styled.div`
 
 export const StyledButton = styled(Button)`
   && {
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
     font-weight: 400;
     text-transform: none;
     color: ${({ theme }) => theme.colors.blue[400]};

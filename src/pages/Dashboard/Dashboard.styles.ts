@@ -14,7 +14,7 @@ export const StyledTitle = styled.div`
   }
   & span {
     margin: 4px 0 0 16px;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.typeScale.header5};
     font-weight: 700;
     color: ${({ theme }) => theme.colors.blue[400]};
   }

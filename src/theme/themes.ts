@@ -4,7 +4,7 @@ export const defaultTheme = {
     logo: "'Noto Sans JP', 'Roboto', sans-serif",
   },
   typeScale: {
-    header1: '1.8rem',
+    header1: '1.7rem',
     header2: '1.6rem',
     header3: '1.4rem',
     header4: '1.15rem',
@@ -21,6 +21,7 @@ export const defaultTheme = {
       250: '#ebecf0',
       300: '#e1e1e1',
       350: '#d3d3d3',
+      380: '#7a869a',
       400: '#737581',
       500: '#6b788d',
       550: '#5e6c84',
@@ -65,6 +66,9 @@ export const defaultTheme = {
       700: 'hsla(0, 0%, 0%, 0.7)',
       800: 'hsla(0, 0%, 0%, 0.8)',
     },
-    boxShadow: 'rgb(9 30 66 / 25%)',
+    boxShadow: {
+      100: 'rgb(9 30 66 / 8%)',
+      200: 'rgb(9 30 66 / 25%)',
+    },
   },
 };

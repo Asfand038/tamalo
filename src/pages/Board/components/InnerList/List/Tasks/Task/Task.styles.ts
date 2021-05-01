@@ -18,8 +18,8 @@ export const StyledTaskContainer = styled.div<ITaskContainer>`
     min-height: 22px;
     box-shadow: ${({ isDragging, theme }) =>
       isDragging
-        ? `0 0 3px ${theme.colors.boxShadow}`
-        : `0 1px 0 ${theme.colors.boxShadow}`};
+        ? `0 0 3px ${theme.colors.boxShadow[200]}`
+        : `0 1px 0 ${theme.colors.boxShadow[200]}`};
     font-weight: 400;
     line-height: 20px;
     color: ${({ theme }) => theme.colors.blue[400]};
@@ -104,16 +104,16 @@ export const StyledBadgesContainer = styled.div`
 `;
 
 export const StyledBadge = styled.div`
-  color: #5e6c84;
+  color: ${({ theme }) => theme.colors.neutral[550]};
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.typeScale.subtitle};
   padding-bottom: 8px;
   margin-right: 12px;
   & svg {
-    color: #6b778c;
-    font-size: 14px;
+    color: ${({ theme }) => theme.colors.neutral[500]};
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
   }
   & div {
     margin-left: 4px;

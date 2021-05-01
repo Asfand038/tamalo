@@ -12,7 +12,7 @@ export const StyledCommentEditor = styled.form`
   background-color: white;
   border-radius: 3px;
   box-shadow: ${({ theme }) =>
-    `0 4px 8px -2px ${theme.colors.boxShadow}, 0 0 0 1px rgb(9 30 66 / 8%)`};
+    `0 4px 8px -2px ${theme.colors.boxShadow[200]}, 0 0 0 1px ${theme.colors.boxShadow[100]}`};
 `;
 
 interface IBtnContainer {
@@ -25,16 +25,17 @@ export const StyledBtnContainer = styled.div<IBtnContainer>`
   margin: 12px 12px 8px;
   & button:first-of-type {
     pointer-events: ${({ isTextFieldEmpty }) => isTextFieldEmpty && 'none'};
-    background-color: ${({ isTextFieldEmpty }) =>
-      isTextFieldEmpty && 'rgba(9, 30, 66, 0.04)'};
-    color: ${({ isTextFieldEmpty }) => isTextFieldEmpty && '#a5adba'};
+    background-color: ${({ isTextFieldEmpty, theme }) =>
+      isTextFieldEmpty && theme.colors.darkness[40]};
+    color: ${({ isTextFieldEmpty, theme }) =>
+      isTextFieldEmpty && theme.colors.darkness[300]};
   }
 `;
 
 export const StyledComment = styled.div`
   display: flex;
   flex-direction: column;
-  color: #172b4d;
+  color: ${({ theme }) => theme.colors.blue[400]};
   flex: 1;
   margin-left: 14px;
 `;
@@ -46,21 +47,22 @@ export const StyledCommentDetails = styled.div`
     cursor: pointer;
   }
   & > span:last-child {
-    color: #5e6c84;
-    font-size: 12px;
+    color: ${({ theme }) => theme.colors.neutral[550]};
+    font-size: ${({ theme }) => theme.typeScale.subtitle};
     margin-left: 10px;
     &:hover {
       cursor: pointer;
       text-decoration: underline;
-      color: #172b4d;
+      color: ${({ theme }) => theme.colors.blue[400]};
     }
   }
 `;
 
 export const StyledCommentText = styled.div`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.neutral[100]};
   border-radius: 3px;
-  box-shadow: 0 1px 2px -1px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
+  box-shadow: ${({ theme }) =>
+    `0 1px 2px -1px ${theme.colors.boxShadow[200]}, 0 0 0 1px ${theme.colors.boxShadow[100]}`};
   box-sizing: border-box;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -72,28 +74,28 @@ export const StyledCommentText = styled.div`
 export const StyledCommentUpdateBtns = styled.div`
   display: flex;
   margin-top: 10px;
-  color: #6b778c;
+  color: ${({ theme }) => theme.colors.neutral[500]};
   & svg {
     height: 16px;
     width: 16px;
-    color: #6b778c;
+    color: ${({ theme }) => theme.colors.neutral[500]};
     &:hover {
       cursor: pointer;
-      color: #172b4d;
+      color: ${({ theme }) => theme.colors.blue[400]};
     }
   }
   & > div {
-    font-size: 12px;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
     margin: 2.4px 0 0 3px;
     & button {
       border: none;
       background-color: inherit;
       text-decoration: underline;
-      color: #6b778c;
+      color: ${({ theme }) => theme.colors.neutral[500]};
       cursor: pointer;
       padding: 0 3px;
       &:hover {
-        color: #172b4d;
+        color: ${({ theme }) => theme.colors.blue[400]};
       }
     }
   }
@@ -114,8 +116,8 @@ export const StyledLoaderWrapper = styled.div`
       }
     }
     & > div:last-child {
-      font-size: 12px;
-      color: #6b778c;
+      font-size: ${({ theme }) => theme.typeScale.paragraph};
+      color: ${({ theme }) => theme.colors.neutral[500]};
       margin: 8px 0 0 30px;
     }
   }

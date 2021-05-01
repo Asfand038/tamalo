@@ -122,7 +122,7 @@ export const AppLogo = styled(Button)`
       font-size: ${({ theme }) => theme.typeScale.header3};
     }
     svg {
-      font-size: 24px;
+      font-size: ${({ theme }) => theme.typeScale.header1};
     }
     & .MuiButton-startIcon {
       margin-right: 5px;
@@ -165,11 +165,11 @@ export const StyledUserInfo = styled.div`
     & > div:first-child {
       margin-top: 4px;
       max-width: 230px;
-      color: #172b4d;
+      color: ${({ theme }) => theme.colors.blue[400]};
     }
     & > div:last-child {
-      font-size: 12px;
-      color: #b3bac5;
+      font-size: ${({ theme }) => theme.typeScale.subtitle};
+      color: ${({ theme }) => theme.colors.neutral[380]};
       text-overflow: ellipsis;
       max-width: 230px;
     }

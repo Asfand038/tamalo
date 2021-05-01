@@ -9,13 +9,14 @@ export const StyledPopupContent = styled.div`
   & > div:first-child {
     position: relative;
     margin-bottom: 8px;
-    color: #5e6c84;
+    color: ${({ theme }) => theme.colors.neutral[550]};
     & > span {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 40px;
-      border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+      border-bottom: ${({ theme }) =>
+        `1px solid ${theme.colors.darkness[100]}`};
       margin: 0 12px;
     }
   }
@@ -29,12 +30,12 @@ export const StyledCloseIconButton = styled(IconButton)`
     padding: 0;
     & svg {
       font-size: 17px;
-      color: #6b778c;
+      color: ${({ theme }) => theme.colors.neutral[500]};
     }
     &:hover {
       background-color: inherit;
       & svg {
-        color: #172b4d;
+        color: ${({ theme }) => theme.colors.blue[400]};
       }
     }
   }

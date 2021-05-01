@@ -32,7 +32,7 @@ export const StyledModalContent = styled(Grid)<IModalContent>`
       background-position: 50%;
       border-radius: 3px;
       box-sizing: border-box;
-      color: #fff;
+      color: ${({ theme }) => theme.colors.neutral[100]};
       height: 96px;
       padding: 10px;
       background-image: ${({ bgimage }) =>
@@ -59,7 +59,7 @@ export const StyledModalContent = styled(Grid)<IModalContent>`
 
 export const StyledCloseIcon = styled(IconButton)`
   && {
-    color: #fff;
+    color: ${({ theme }) => theme.colors.neutral[100]};
     position: absolute;
     right: 8px;
     top: 8px;
@@ -80,7 +80,7 @@ export const StyledTextField = styled(TextField)`
         border-bottom: none;
       }
       & input {
-        font-size: 16px;
+        font-size: ${({ theme }) => theme.typeScale.header4};
         font-weight: 700;
         padding: 6px 8px;
         border-radius: 3px;
@@ -137,8 +137,8 @@ export const StyledSelectedIcon = styled.div`
   top: 4px;
   left: 12px;
   & svg {
-    font-size: 20px;
-    color: #fff;
+    font-size: ${({ theme }) => theme.typeScale.header3};
+    color: ${({ theme }) => theme.colors.neutral[100]};
   }
 `;
 
@@ -161,7 +161,7 @@ export const StyledButton = styled(Button)`
     }
     &:disabled {
       background-color: ${({ theme }) => theme.colors.neutral[200]};
-      color: #a5adba;
+      color: ${({ theme }) => theme.colors.darkness[300]};
     }
   }
 `;

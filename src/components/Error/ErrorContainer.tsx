@@ -8,9 +8,9 @@ const StyledErrorContainer = styled.div`
   width: 80%;
   margin: 0 auto;
   color: ${({ theme }) => theme.colors.blue[400]};
-  & h4 {
+  & h3 {
     text-align: center;
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.typeScale.header3};
   }
   & p {
     text-align: center;
@@ -53,7 +53,7 @@ const ErrorContainer: React.FC<IProps> = ({ message }) => (
       <ServerDownImg />
     </ImageWrapper>
 
-    <h4>{message}</h4>
+    <h3>{message}</h3>
     <p>You may want to try reloading the page.</p>
     <StyledButton variant="contained" onClick={() => window.location.reload()}>
       Reload Page
