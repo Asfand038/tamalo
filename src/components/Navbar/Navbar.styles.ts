@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 import { Toolbar, Button, Avatar } from '@material-ui/core';
 
-export const StyledNavbar = styled(Toolbar)`
+interface INavbar {
+  bgcolor?: string;
+}
+
+export const StyledNavbar = styled(Toolbar)<INavbar>`
   && {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     box-sizing: border-box;
-    background-color: ${({ theme }) => theme.colors.blue[200]};
+    background-color: ${({ theme, bgcolor }) =>
+      bgcolor || theme.colors.blue[200]};
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -28,6 +28,7 @@ export interface IBoard {
   listsOrder: string[];
   owners: IUser[];
   members: IUser[];
+  bgImage: string;
 }
 
 export interface IComment {

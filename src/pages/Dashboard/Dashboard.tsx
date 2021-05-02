@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Grid } from '@material-ui/core';
 import {
@@ -27,6 +27,10 @@ const DashboardPage: React.FC = () => {
     ['boards'],
     () => getBoards(user.id)
   );
+
+  useEffect(() => {
+    document.title = 'Tamalo | Boards';
+  }, []);
 
   if (isLoading) return <Loader color="#e1e1e1" />;
   if (error) return <ErrorContainer message={errorMessages.getBoards} />;

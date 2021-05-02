@@ -28,4 +28,6 @@ export interface IBoard {
   listsOrder: string[];
   owners: IUser[];
   members: IUser[];
+  bgImage?: string;
+  bgColor?: string;
 }

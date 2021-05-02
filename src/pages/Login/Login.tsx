@@ -18,11 +18,10 @@ import {
 import { useAuth } from '../../contexts';
 
 const LoginPage: React.FC = () => {
+  const { login, isLoading, error, isLoggedIn } = useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showErrorMessage, setShowErrorMessage] = useState(true);
-
-  const { login, isLoading, error, isLoggedIn } = useAuth();
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -34,7 +33,7 @@ const LoginPage: React.FC = () => {
   return (
     <AuthLayout>
       {isLoggedIn && <Redirect to="/boards" />}
-      {error && showErrorMessage && (
+      {error && (
         <ErrorMessage>
           <p>{error}</p>
         </ErrorMessage>
@@ -45,7 +44,6 @@ const LoginPage: React.FC = () => {
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            setShowErrorMessage(false);
           }}
           variant="outlined"
           placeholder="Enter email"
@@ -58,7 +56,6 @@ const LoginPage: React.FC = () => {
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            setShowErrorMessage(false);
           }}
           variant="outlined"
           placeholder="Enter password"

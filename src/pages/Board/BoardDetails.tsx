@@ -14,13 +14,24 @@ interface IProps {
   updateBoard: Function;
 }
 
-const boardBgColor = '#0079bf';
-
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard, children }) => {
-  const { listsOrder, lists, tasks, title, id, members, owners } = data;
+  const {
+    listsOrder,
+    lists,
+    tasks,
+    title,
+    id,
+    members,
+    owners,
+    bgImage,
+  } = data;
 
   const queryClient = useQueryClient();
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
+
+  useEffect(() => {
+    document.title = `${title} | Tamalo`;
+  }, [title]);
 
   useEffect(() => {
     const boardContainer = document.getElementById(id)! as HTMLDivElement;
@@ -92,9 +103,11 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard, children }) => {
     });
   };
 
+  const imgSrc = bgImage || '';
+
   return (
     <>
-      <BoardLayout bgColor={boardBgColor}>
+      <BoardLayout bgImage={imgSrc}>
         {children}
         <SecondaryNavbar boardTitle={title} members={members} owners={owners} />
         <DragDropContext onDragEnd={onDragEnd}>

@@ -54,6 +54,8 @@ export const getRequiredBoardData = async (data: any) => {
     }
   );
 
+  const { url } = data.backgroundImage;
+
   const boardData: IBoard = {
     id: data.id,
     title: data.title,
@@ -62,6 +64,7 @@ export const getRequiredBoardData = async (data: any) => {
     listsOrder: data.listsOrder,
     owners: ownersArray,
     members: membersArray,
+    bgImage: url,
   };
 
   return boardData;

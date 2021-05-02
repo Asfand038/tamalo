@@ -14,12 +14,11 @@ import { AvatarGroup } from '@material-ui/lab';
 export const StyledNavbar = styled(Toolbar)`
   && {
     box-sizing: border-box;
-    background-color: inherit;
+    background-color: rgba(0, 0, 0, 0.24);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 0;
-    margin-top: -6px;
     padding: 0 4px 0 8px;
     transition: margin 0.1s ease-in;
     & .flex-container {

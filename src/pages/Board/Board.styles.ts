@@ -6,6 +6,13 @@ export const StyledBoardContainer = styled.div`
   overflow-y: hidden;
   overflow-x: auto;
   transition: margin 0.1s ease-in;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.24) 0,
+    rgba(0, 0, 0, 0.24) 48px,
+    transparent 80px,
+    transparent
+  );
   &::-webkit-scrollbar-track {
     margin-left: 8px;
     margin-right: 8px;

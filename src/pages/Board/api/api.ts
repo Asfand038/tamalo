@@ -18,6 +18,7 @@ export const getBoardById = async (
       },
     })
   ).json();
+
   const requiredBoardData = await getRequiredBoardData({
     ...data,
     userId,
@@ -51,7 +52,7 @@ export const updateOneBoard = async ({
 
 export const addOneList = async (id: string, title: string) => {
   const data = await (
-    await fetch(`xhttps://tamalo.herokuapp.com/boards/${id}/new/list`, {
+    await fetch(`https://tamalo.herokuapp.com/boards/${id}/new/list`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

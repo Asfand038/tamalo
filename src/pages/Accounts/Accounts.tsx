@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { Divider } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
@@ -30,6 +30,10 @@ const AccountsPage: React.FC = () => {
 
   const [name, setName] = useState(username);
   const [bio, setBio] = useState('');
+
+  useEffect(() => {
+    document.title = `Settings | Tamalo`;
+  }, []);
 
   const { isLoading, isError } = useQuery(['boards'], () => getBoards(user.id));
 

@@ -41,7 +41,6 @@ export const AuthProvider: React.FC = (children) => {
     setIsLoading(true);
 
     const data = await sendLoginRequest(identifier, password);
-
     if (data.user) {
       const image = await getImgFromMockApi();
       const { jwt, user } = data;
