@@ -70,7 +70,7 @@ const AddBoardModal: React.FC<IProps> = ({
   initialInputValue,
 }) => {
   const [title, setTitle] = useState(initialInputValue);
-  const [isCreatingBoard, setIsCreatingBoard] = useState(true);
+  const [isCreatingBoard, setIsCreatingBoard] = useState(false);
   const [boardBgColor, setBoardBgColor] = useState<string | null>(null);
   const [boardBgImage, setBoardBgImage] = useState<IImageProps | undefined>(
     boardBgImages[0]

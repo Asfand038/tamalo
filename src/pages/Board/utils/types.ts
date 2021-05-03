@@ -29,5 +29,5 @@ export interface IBoard {
   owners: IUser[];
   members: IUser[];
   bgImage?: string;
-  bgColor?: string;
+  bgColor: string;
 }

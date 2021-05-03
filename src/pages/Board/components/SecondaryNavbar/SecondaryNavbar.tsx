@@ -9,7 +9,6 @@ import {
   PeopleOutlineSharp as PeopleOutlineSharpIcon,
   RoomService as RoomServiceIcon,
   MoreHoriz as MoreHorizIcon,
-  Close as CloseIcon,
 } from '@material-ui/icons';
 
 import { getAvatarFallbackName } from '../../../../utils';
@@ -17,6 +16,7 @@ import { OwnerIcon } from '../../../../assets';
 import { IUser } from '../../utils';
 import { BoardTitle } from './BoardTitle';
 import { RealTimeSearchField } from './RealTimeSearchField';
+import { BoardMenu } from './BoardMenu';
 import { PopOver } from '../../../../components';
 import {
   StyledNavbar,
@@ -28,9 +28,6 @@ import {
   StyledAvatar,
   StyledBadge,
   StyledDivider,
-  StyledDrawer,
-  StyledMenuPopupContent,
-  StyledCloseIconButton,
 } from './SecondaryNavbar.styles';
 
 interface IParams {
@@ -143,29 +140,7 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
         >
           <span>Show menu</span>
         </StyledIconOnLeftBtn>
-        <StyledDrawer
-          variant="persistent"
-          anchor="right"
-          open={isMenuOpen}
-          transitionDuration={100}
-        >
-          <StyledMenuPopupContent>
-            <div>
-              <span>Menu</span>
-              <StyledCloseIconButton
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  const boardContainer = document.getElementById(
-                    id
-                  )! as HTMLDivElement;
-                  boardContainer.style.marginRight = '0';
-                }}
-              >
-                <CloseIcon />
-              </StyledCloseIconButton>
-            </div>
-          </StyledMenuPopupContent>
-        </StyledDrawer>
+        {isMenuOpen && <BoardMenu open={isMenuOpen} setOpen={setIsMenuOpen} />}
       </div>
     </StyledNavbar>
   );

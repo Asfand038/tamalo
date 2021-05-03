@@ -6,8 +6,6 @@ import {
   Avatar,
   Badge,
   BadgeProps,
-  Drawer,
-  IconButton,
 } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
 
@@ -142,54 +140,6 @@ export const StyledIconOnLeftBtn = styled(StyledNavBtn)`
     & > span {
       & > span:last-child {
         padding-top: 2px;
-      }
-    }
-  }
-`;
-
-export const StyledDrawer = styled(Drawer)`
-  && {
-    & > div {
-      top: 40px;
-      width: 339px;
-    }
-  }
-`;
-
-export const StyledMenuPopupContent = styled.div`
-  box-sizing: border-box;
-  & > div:first-child {
-    position: relative;
-    width: 100%;
-    padding: 0 6px 0 12px;
-    margin-bottom: 8px;
-    color: ${({ theme }) => theme.colors.blue[400]};
-    & > span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 48px;
-      border-bottom: 1px solid rgba(9, 30, 66, 0.13);
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-`;
-
-export const StyledCloseIconButton = styled(IconButton)`
-  && {
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    padding: 0;
-    & svg {
-      font-size: 20px;
-      color: #42526e;
-    }
-    &:hover {
-      background-color: inherit;
-      & svg {
-        color: #091e42;
       }
     }
   }
