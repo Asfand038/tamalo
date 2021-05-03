@@ -16,7 +16,7 @@ export const StyledBackdrop = styled(Backdrop)`
 interface IModalContent {
   empty: number;
   bgcolor: string | null;
-  bgimage: string | null;
+  bgimage: string | undefined;
 }
 
 export const StyledModalContent = styled(Grid)<IModalContent>`
@@ -109,26 +109,35 @@ export const StyledBgOptionsGrid = styled(Grid)`
 
 interface IGridItem {
   bgcolor?: string;
-  imgsrc?: string;
 }
 
 export const StyledGridItem = styled(Grid)<IGridItem>`
   &&& {
     padding: 0 0 6px 8px;
     position: relative;
+    max-height: 34px;
     & > div:first-child {
       background-color: ${({ bgcolor }) => bgcolor || 'inherit'};
       width: 28px;
       height: 28px;
       border-radius: 3px;
-      background-position: 50%;
-      background-size: cover;
-      background-image: ${({ imgsrc }) => (imgsrc ? `url(${imgsrc})` : 'none')};
       cursor: pointer;
       &:hover {
         opacity: 0.8;
       }
     }
+  }
+`;
+
+export const StyledGridImage = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  object-position: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
