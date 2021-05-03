@@ -164,6 +164,7 @@ export const StyledButton = styled(Button)`
     border-radius: 3px;
     margin-left: -8px;
     width: 96.3%;
+    height: 36px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.green[200]};
       box-shadow: none;
@@ -171,6 +172,24 @@ export const StyledButton = styled(Button)`
     &:disabled {
       background-color: ${({ theme }) => theme.colors.neutral[200]};
       color: ${({ theme }) => theme.colors.darkness[300]};
+    }
+  }
+`;
+
+export const LoaderWrapper = styled.div`
+  && {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    & > div:first-child {
+      font-size: 4px;
+      top: 33%;
+      &::before {
+        left: -6px;
+      }
+      &::after {
+        left: 6px;
+      }
     }
   }
 `;

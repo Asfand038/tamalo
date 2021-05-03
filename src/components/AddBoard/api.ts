@@ -1,9 +1,20 @@
 export const createOneBoard = async (
   title: string,
-  bgImage: string,
   bgColor: string,
-  ownerId: string
+  ownerId: string,
+  bgImage?: string
 ) => {
+  const body = {
+    title,
+    meta: { bgColor },
+    owners: [ownerId],
+  };
+  let reqBody;
+  if (bgImage) {
+    reqBody = { ...body, backgroundImage: bgImage };
+  } else {
+    reqBody = { ...body };
+  }
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/boards`, {
       method: 'POST',
@@ -11,12 +22,7 @@ export const createOneBoard = async (
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        title,
-        backgroundImage: bgImage,
-        meta: { bgColor },
-        owners: [ownerId],
-      }),
+      body: JSON.stringify(reqBody),
     })
   ).json();
 

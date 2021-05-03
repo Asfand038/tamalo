@@ -87,7 +87,7 @@ export const StyledNavBtn = styled(Button)`
     width: 32px;
     height: 32px;
     padding: 0 12px;
-    background-color: ${({ theme }) => theme.colors.transparency[300]};
+    background-color: ${({ theme }) => theme.colors.transparency[200]};
     text-transform: none;
     box-shadow: none;
     border-radius: 3px;
@@ -95,7 +95,7 @@ export const StyledNavBtn = styled(Button)`
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     font-weight: 400;
     &:hover {
-      background-color: ${({ theme }) => theme.colors.transparency[200]};
+      background-color: ${({ theme }) => theme.colors.transparency[300]};
       box-shadow: none;
     }
     svg {

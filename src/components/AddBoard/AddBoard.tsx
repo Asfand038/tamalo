@@ -7,7 +7,9 @@ import { Grid, Modal, Fade } from '@material-ui/core';
 import { Close as CloseIcon, Done as DoneIcon } from '@material-ui/icons';
 
 import { useAuth } from '../../contexts';
+import { IBoardLessDetails, IDashboardData } from '../../utils';
 import { createOneBoard } from './api';
+import Loader from '../Loader';
 import {
   StyledBackdrop,
   StyledModalContent,
@@ -18,8 +20,8 @@ import {
   StyledGridImage,
   StyledGridItem,
   StyledButton,
+  LoaderWrapper,
 } from './AddBoard.styles';
-import { IBoardLessDetails, IDashboardData } from '../../utils';
 
 interface IProps {
   open: boolean;
@@ -68,7 +70,7 @@ const AddBoardModal: React.FC<IProps> = ({
   initialInputValue,
 }) => {
   const [title, setTitle] = useState(initialInputValue);
-  const [isCreatingBoard, setIsCreatingBoard] = useState(false);
+  const [isCreatingBoard, setIsCreatingBoard] = useState(true);
   const [boardBgColor, setBoardBgColor] = useState<string | null>(null);
   const [boardBgImage, setBoardBgImage] = useState<IImageProps | undefined>(
     boardBgImages[0]
@@ -109,6 +111,26 @@ const AddBoardModal: React.FC<IProps> = ({
             imgSrc: backgroundImage.url,
             bgColor: meta.bgColor,
           },
+        };
+        queryClient.setQueryData<IDashboardData>(['boards'], {
+          ...dashboardData,
+          ownedBoards: [...dashboardData.ownedBoards, newBoard],
+        });
+      } catch (err) {
+        setIsCreatingBoard(false);
+      }
+    }
+    if (boardBgColor) {
+      try {
+        const data = await createOneBoard(title, boardBgColor, user.id);
+        setIsCreatingBoard(false);
+        const { id, title: boardTitle, meta } = data;
+        const newBoard: IBoardLessDetails = {
+          title: boardTitle,
+          id,
+          owners: [user.id],
+          members: [],
+          background: { bgColor: meta.bgColor },
         };
         queryClient.setQueryData<IDashboardData>(['boards'], {
           ...dashboardData,
@@ -195,7 +217,12 @@ const AddBoardModal: React.FC<IProps> = ({
                 disabled={Boolean(!title.length)}
                 onClick={createBoardHandler}
               >
-                Create Board
+                {!isCreatingBoard && 'Create Board'}
+                {isCreatingBoard && (
+                  <LoaderWrapper>
+                    <Loader color="#d3d3d3" />
+                  </LoaderWrapper>
+                )}
               </StyledButton>
             </div>
           </Grid>
