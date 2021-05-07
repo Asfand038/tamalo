@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# TRELLO CLONE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**A production grade React App with typescript**
 
 ### Project includes:
 
