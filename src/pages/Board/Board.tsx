@@ -1,15 +1,14 @@
 import React from 'react';
-import { Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
-import { TaskPage } from '../Task';
-import { BoardLayout } from '../../layouts';
-import { Loader } from '../../components';
-import { SecondaryNavbar, AddList, InnerList } from './components';
-import { StyledBoardContainer } from './Board.styles';
+import { useAuth } from '../../contexts';
+import BoardDetails from './BoardDetails';
+import { Loader, ErrorAlert, ErrorContainer } from '../../components';
 import { getBoardById, updateOneBoard } from './api';
+import { getBoards } from '../Dashboard/api';
 import { mutationConfig, IBoard } from './utils';
+import { IError, IDashboardData, errorMessages } from '../../utils';
 
 interface IRouteParams {
   id: string;
@@ -17,116 +16,37 @@ interface IRouteParams {
 
 const BoardPage: React.FC = () => {
   const { id } = useParams<IRouteParams>();
-
+  const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { mutate: updateBoard } = useMutation(
+  const { mutate: updateBoard, error: errorUpdatingBoard } = useMutation(
     updateOneBoard,
     mutationConfig(id, queryClient)
   );
 
-  const { data, isLoading, error } = useQuery(['board', id], () =>
-    getBoardById(id)
+  const {
+    isLoading: loadingBoardsData,
+    error: errorLoadingBoardsData,
+  } = useQuery<IDashboardData, IError>(['boards'], () => getBoards(user.id));
+
+  const {
+    data,
+    isLoading: loadingBoardData,
+    error: errorLoadingBoardData,
+  } = useQuery<IBoard, IError>(['board', id], () =>
+    getBoardById(id, user.id, user.profileImg)
   );
 
-  if (isLoading) return <Loader />;
-  if (error) return <div>Something went wrong...</div>;
-
-  const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
-
-  const { listsOrder, lists, tasks, title } = data!;
-
-  const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId, type } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    if (type === 'list') {
-      const newListsOrder = [...listsOrder];
-      newListsOrder.splice(source.index, 1);
-      newListsOrder.splice(destination.index, 0, draggableId);
-      updateBoard({ ...boardData, listsOrder: newListsOrder });
-      return;
-    }
-
-    const start = lists.find((el) => el.id === source.droppableId)!;
-    const finish = lists.find((el) => el.id === destination.droppableId)!;
-
-    if (start === finish) {
-      const newTasksOrder = [...start.tasksOrder];
-      newTasksOrder.splice(source.index, 1);
-      newTasksOrder.splice(destination.index, 0, draggableId);
-      const newList = {
-        ...start,
-        tasksOrder: newTasksOrder,
-      };
-      const newLists = lists.filter((list) => list.id !== source.droppableId);
-      updateBoard({ ...boardData, lists: [...newLists, newList] });
-      return;
-    }
-
-    const startTasksOrder = [...start.tasksOrder];
-    startTasksOrder.splice(source.index, 1);
-    const newStartList = {
-      ...start,
-      tasksOrder: startTasksOrder,
-    };
-    const finishTasksOrder = [...finish.tasksOrder];
-    finishTasksOrder.splice(destination.index, 0, draggableId);
-    const newFinishList = {
-      ...finish,
-      tasksOrder: finishTasksOrder,
-    };
-    const newLists = lists.filter(
-      (list) =>
-        list.id !== source.droppableId && list.id !== destination.droppableId
-    );
-    updateBoard({
-      ...boardData,
-      lists: [...newLists, newStartList, newFinishList],
-    });
-  };
+  if (loadingBoardsData || loadingBoardData) return <Loader color="#e1e1e1" />;
+  if (errorLoadingBoardsData)
+    return <ErrorContainer message={errorMessages.getBoards} />;
+  if (errorLoadingBoardData)
+    return <ErrorContainer message={errorMessages.getBoard} />;
 
   return (
-    <>
-      <BoardLayout>
-        <SecondaryNavbar boardTitle={title} />
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="all-lists" direction="horizontal" type="list">
-            {(provided) => (
-              <StyledBoardContainer
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {listsOrder.map((listId, index) => {
-                  const list = lists.find((el) => el.id === listId)!;
-                  return (
-                    <InnerList
-                      key={list.id}
-                      list={list}
-                      tasks={tasks}
-                      index={index}
-                    />
-                  );
-                })}
-                {provided.placeholder}
-                <AddList />
-              </StyledBoardContainer>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </BoardLayout>
-      <Route path="/boards/:boardId/tasks/:taskId" component={TaskPage} />
-    </>
+    <BoardDetails data={data!} updateBoard={updateBoard}>
+      {errorUpdatingBoard && <ErrorAlert message={errorMessages.updateBoard} />}
+    </BoardDetails>
   );
 };
 

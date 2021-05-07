@@ -105,8 +105,8 @@ export const StyledBoardBtn = styled(StyledNavBtn)`
 
 export const AppLogo = styled(Button)`
   && {
+    left: 46%;
     position: absolute;
-    margin: 0 50%;
     color: ${({ theme }) => theme.colors.transparency[400]};
     font-size: ${({ theme }) => theme.typeScale.header3};
     letter-spacing: 0;
@@ -130,14 +130,62 @@ export const AppLogo = styled(Button)`
   }
 `;
 
-export const StyledAvatar = styled(Avatar)`
+interface IAvatar {
+  width: string;
+  height: string;
+}
+
+export const StyledAvatar = styled(Avatar)<IAvatar>`
   && {
-    height: 32px;
-    width: 32px;
-    background-color: ${({ theme }) => theme.colors.red[100]};
+    height: ${({ height }) => height};
+    width: ${({ width }) => width};
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.red[200]};
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     &:hover {
       cursor: pointer;
     }
+  }
+`;
+
+export const StyledPopOverContent = styled.div`
+  padding: 0 12px 12px;
+  & hr {
+    margin: 8px 0;
+  }
+`;
+
+export const StyledUserInfo = styled.div`
+  display: flex;
+  & > div:first-child {
+    margin: 4px 8px 4px 0;
+  }
+  & > div:last-child {
+    line-height: 20px;
+    & > div:first-child {
+      margin-top: 4px;
+      max-width: 230px;
+      color: #172b4d;
+    }
+    & > div:last-child {
+      font-size: 12px;
+      color: #b3bac5;
+      text-overflow: ellipsis;
+      max-width: 230px;
+    }
+  }
+`;
+
+export const StyledPopOverButton = styled(Button)`
+  && {
+    text-transform: none;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.blue[400]};
+    padding: 6px 8px 6px 12px;
+    margin: 0 -12px;
+    width: -webkit-fill-available;
+    border-radius: 0;
+    justify-content: start;
   }
 `;

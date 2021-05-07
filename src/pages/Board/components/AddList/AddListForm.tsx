@@ -6,7 +6,8 @@ import { ClickAwayListener } from '@material-ui/core';
 
 import { mutationConfig, IBoard } from '../../utils';
 import { addOneList } from '../../api';
-import { ButtonContainer } from '../../../../components';
+import { ButtonContainer, ErrorAlert } from '../../../../components';
+import { errorMessages } from '../../../../utils';
 import {
   StyledCard,
   StyledAddListContainer,
@@ -32,7 +33,7 @@ const AddListForm: React.FC<IProps> = ({ setFormIsOpen }) => {
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
   const { listsOrder, lists } = boardData;
 
-  const { mutate: addList } = useMutation(
+  const { mutate: addList, error } = useMutation(
     () => addOneList(id, title),
     mutationConfig(id, queryClient)
   );
@@ -52,21 +53,24 @@ const AddListForm: React.FC<IProps> = ({ setFormIsOpen }) => {
   };
 
   return (
-    <ClickAwayListener onClickAway={() => setFormIsOpen(false)}>
-      <StyledAddListContainer onSubmit={addListHandler}>
-        <StyledCard>
-          <StyledListTitleInput
-            inputRef={inputRef}
-            placeholder="Enter list title..."
-            variant="outlined"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            autoFocus
-          />
-        </StyledCard>
-        <ButtonContainer setFormIsOpen={setFormIsOpen} btnText="Add list" />
-      </StyledAddListContainer>
-    </ClickAwayListener>
+    <>
+      {error && <ErrorAlert message={errorMessages.addList} />}
+      <ClickAwayListener onClickAway={() => setFormIsOpen(false)}>
+        <StyledAddListContainer onSubmit={addListHandler}>
+          <StyledCard>
+            <StyledListTitleInput
+              inputRef={inputRef}
+              placeholder="Enter list title..."
+              variant="outlined"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              autoFocus
+            />
+          </StyledCard>
+          <ButtonContainer setFormIsOpen={setFormIsOpen} btnText="Add list" />
+        </StyledAddListContainer>
+      </ClickAwayListener>
+    </>
   );
 };
 

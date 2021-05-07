@@ -1,19 +1,32 @@
 import React, { createContext, useContext, useState } from 'react';
+import { getImgFromMockApi, IUser } from '../../utils';
+import { sendLoginRequest, getUserInformationRequest } from './api';
 
 interface IAuthContext {
   isLoggedIn: boolean;
   isLoading: boolean;
   error: string;
-  userId: string;
+  user: IUser;
   login: Function;
+  logout: Function;
+  getUserInformation: Function;
 }
+
+const initialUserData = {
+  id: '',
+  email: '',
+  username: '',
+  profileImg: '',
+};
 
 const initialContext = {
   isLoggedIn: false,
   isLoading: false,
   error: '',
-  userId: '',
+  user: initialUserData,
   login: () => {},
+  getUserInformation: () => {},
+  logout: () => {},
 };
 
 const AuthContext = createContext<IAuthContext>(initialContext);
@@ -21,24 +34,24 @@ const AuthContext = createContext<IAuthContext>(initialContext);
 export const AuthProvider: React.FC = (children) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState('');
+  const [user, setUser] = useState<IUser>(initialUserData);
   const [error, setError] = useState('');
 
   const login = async (identifier: string, password: string) => {
     setIsLoading(true);
-    const response = await fetch('https://tamalo.herokuapp.com/auth/local', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ identifier, password }),
-    });
-    const data = await response.json();
+
+    const data = await sendLoginRequest(identifier, password);
 
     if (data.user) {
-      localStorage.setItem('token', data.jwt);
-      // eslint-disable-next-line no-underscore-dangle
-      setUserId(data.user._id);
+      const image = await getImgFromMockApi();
+      const { jwt, user } = data;
+      localStorage.setItem('token', jwt);
+      setUser({
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        profileImg: image,
+      });
       setIsLoggedIn(true);
       setIsLoading(false);
     }
@@ -49,12 +62,42 @@ export const AuthProvider: React.FC = (children) => {
     }
   };
 
+  const getUserInformation = async () => {
+    setIsLoading(true);
+    const data = await getUserInformationRequest();
+
+    if (data.statusCode === 401) {
+      setError(data.message);
+      setIsLoggedIn(false);
+      setIsLoading(false);
+      return;
+    }
+
+    const image = await getImgFromMockApi();
+    setUser({
+      id: data.id,
+      email: data.email,
+      username: data.username,
+      profileImg: image,
+    });
+    setIsLoggedIn(true);
+    setIsLoading(false);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setUser(initialUserData);
+  };
+
   const authContextValue = {
-    userId,
+    user,
     isLoading,
     isLoggedIn,
     error,
     login,
+    getUserInformation,
+    logout,
   };
 
   return <AuthContext.Provider value={authContextValue} {...children} />;

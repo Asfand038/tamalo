@@ -3,8 +3,15 @@ import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 
-import { updateOneTask } from '../../api';
-import { ITaskDetails, IBoard } from '../../utils';
+import { ErrorAlert } from '../../../../components';
+import { errorMessages } from '../../../../utils';
+import { updateTaskTitle } from '../../api';
+import {
+  ITaskDetails,
+  taskMutationConfig,
+  taskMutationKeys,
+  IBoard,
+} from '../../utils';
 import {
   StyledContainer,
   StyledIcon,
@@ -29,59 +36,23 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
   const { taskId, boardId } = useParams<IRouteParams>();
 
   const queryClient = useQueryClient();
+  const taskData = queryClient.getQueryData<ITaskDetails>(['task', taskId])!;
+  const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
+  const { owners, members } = boardData;
+  const users = [...owners, ...members];
 
-  const { mutate: updateTaskTitle } = useMutation(
-    () => updateOneTask(taskId, title),
-    {
-      onMutate: async (updatedTask: ITaskDetails) => {
-        await queryClient.cancelQueries(['task', taskId]);
-        const previousTask = queryClient.getQueryData<ITaskDetails>([
-          'task',
-          taskId,
-        ]);
-        queryClient.setQueryData<ITaskDetails>(['task', taskId], updatedTask);
-
-        const boardData = queryClient.getQueryData<IBoard>(['board', boardId])!;
-
-        const newTasks = boardData.tasks.map((task) => {
-          if (task.id === taskId) {
-            return { ...task, title };
-          }
-          return task;
-        });
-
-        queryClient.setQueryData<IBoard>(['board', boardId], {
-          ...boardData,
-          tasks: newTasks,
-        });
-
-        return { previousTask, updatedTask };
-      },
-
-      onError: (
-        error: any,
-        variables: ITaskDetails,
-        context:
-          | {
-              previousTask: ITaskDetails | undefined;
-              updatedTask: ITaskDetails;
-            }
-          | undefined
-      ) => {
-        if (context?.previousTask) {
-          queryClient.setQueryData('task', context.previousTask);
-        }
-      },
-
-      onSettled: () => {
-        queryClient.invalidateQueries(['task', taskId]);
-      },
-    }
+  const { mutate: updateTitle, error } = useMutation(
+    () => updateTaskTitle(taskId, title, users),
+    taskMutationConfig(taskId, queryClient, {
+      key: taskMutationKeys.updateTitle,
+      boardId,
+      title,
+    })
   );
 
   const updateTaskTitleHandler = () => {
     if (title && title.length) {
-      updateTaskTitle({ id: taskId, title });
+      updateTitle({ ...taskData, title });
     } else {
       setTitle(taskTitle);
     }
@@ -89,6 +60,7 @@ const Title: React.FC<IProps> = ({ taskTitle, listTitle }) => {
 
   return (
     <StyledContainer>
+      {error && <ErrorAlert message={errorMessages.updateTaskTitle} />}
       <StyledIcon>
         <VideoLabelIcon />
       </StyledIcon>

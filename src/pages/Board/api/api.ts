@@ -6,16 +6,25 @@ import {
   ITask,
 } from '../utils';
 
-export const getBoardById = async (id: string) => {
+export const getBoardById = async (
+  boardId: string,
+  userId: string,
+  profileImg: string
+) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
+    await fetch(`https://tamalo.herokuapp.com/boards/${boardId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
   ).json();
+  const requiredBoardData = await getRequiredBoardData({
+    ...data,
+    userId,
+    profileImg,
+  });
 
-  return getRequiredBoardData(data);
+  return requiredBoardData;
 };
 
 export const updateOneBoard = async ({
@@ -25,6 +34,7 @@ export const updateOneBoard = async ({
   title,
 }: IBoard) => {
   const tasksOrder = getTasksOrder(lists);
+
   const data = await (
     await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
       method: 'PUT',
@@ -41,7 +51,7 @@ export const updateOneBoard = async ({
 
 export const addOneList = async (id: string, title: string) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards/${id}/new/list`, {
+    await fetch(`xhttps://tamalo.herokuapp.com/boards/${id}/new/list`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

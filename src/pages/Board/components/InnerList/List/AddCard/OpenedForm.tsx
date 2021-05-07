@@ -7,7 +7,8 @@ import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons';
 
 import { mutationConfig, IBoard } from '../../../../utils';
 import { addOneTask } from '../../../../api';
-import { ButtonContainer } from '../../../../../../components';
+import { ButtonContainer, ErrorAlert } from '../../../../../../components';
+import { errorMessages } from '../../../../../../utils';
 import {
   StyledOpenedFormContainer,
   StyledOptionsIcon,
@@ -34,7 +35,7 @@ const OpenedForm: React.FC<IProps> = ({ setFormIsOpen, listId }) => {
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
   const { lists, tasks } = boardData;
 
-  const { mutate: addCard } = useMutation(
+  const { mutate: addCard, error } = useMutation(
     () => addOneTask(id, listId, cardTitle),
     mutationConfig(id, queryClient)
   );
@@ -47,7 +48,7 @@ const OpenedForm: React.FC<IProps> = ({ setFormIsOpen, listId }) => {
       const newLists = lists.filter((el) => el.id !== listId)!;
       newLists.push(targetList);
       const newTasks = [...tasks];
-      newTasks.push({ id: optimisticTaskId, title: cardTitle });
+      newTasks.push({ id: optimisticTaskId, title: cardTitle, cover: null });
       addCard({ ...boardData, lists: newLists, tasks: newTasks });
       setCardTitle('');
     }
@@ -55,37 +56,40 @@ const OpenedForm: React.FC<IProps> = ({ setFormIsOpen, listId }) => {
   };
 
   return (
-    <ClickAwayListener
-      onClickAway={() => {
-        addCardHandler();
-        setFormIsOpen(false);
-      }}
-    >
-      <StyledOpenedFormContainer
-        onSubmit={(event) => {
-          event.preventDefault();
+    <>
+      {error && <ErrorAlert message={errorMessages.addTask} />}
+      <ClickAwayListener
+        onClickAway={() => {
           addCardHandler();
+          setFormIsOpen(false);
         }}
       >
-        <Card>
-          <StyledTextArea
-            inputRef={inputRef}
-            placeholder="Enter a title for this card..."
-            variant="outlined"
-            value={cardTitle}
-            multiline
-            autoFocus
-            rowsMax="8"
-            onChange={(e) => setCardTitle(e.target.value)}
-          />
-        </Card>
-        <ButtonContainer btnText="Add Card" setFormIsOpen={setFormIsOpen}>
-          <StyledOptionsIcon>
-            <MoreHorizIcon />
-          </StyledOptionsIcon>
-        </ButtonContainer>
-      </StyledOpenedFormContainer>
-    </ClickAwayListener>
+        <StyledOpenedFormContainer
+          onSubmit={(event) => {
+            event.preventDefault();
+            addCardHandler();
+          }}
+        >
+          <Card>
+            <StyledTextArea
+              inputRef={inputRef}
+              placeholder="Enter a title for this card..."
+              variant="outlined"
+              value={cardTitle}
+              multiline
+              autoFocus
+              rowsMax="8"
+              onChange={(e) => setCardTitle(e.target.value)}
+            />
+          </Card>
+          <ButtonContainer btnText="Add Card" setFormIsOpen={setFormIsOpen}>
+            <StyledOptionsIcon>
+              <MoreHorizIcon />
+            </StyledOptionsIcon>
+          </ButtonContainer>
+        </StyledOpenedFormContainer>
+      </ClickAwayListener>
+    </>
   );
 };
 

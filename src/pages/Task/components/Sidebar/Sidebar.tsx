@@ -1,12 +1,8 @@
 import React from 'react';
 import {
   Add as AddIcon,
-  PersonOutlineRounded as PersonOutlineRoundedIcon,
   LabelOutlined as LabelOutlinedIcon,
   CheckBoxOutlined as CheckBoxOutlinedIcon,
-  WatchLaterOutlined as WatchLaterOutlinedIcon,
-  AttachmentOutlined as AttachmentOutlinedIcon,
-  VideoLabel as VideoLabelIcon,
   ArrowForward as ArrowForwardIcon,
   FileCopyOutlined as FileCopyOutlinedIcon,
   AssignmentOutlined as AssignmentOutlinedIcon,
@@ -14,6 +10,14 @@ import {
   ArchiveOutlined as ArchiveOutlinedIcon,
   ShareOutlined as ShareOutlinedIcon,
 } from '@material-ui/icons';
+
+import { ICover, IUser } from '../../../../utils';
+import {
+  AddMemberButton,
+  AttachmentsButton,
+  DueDateButton,
+  CoverUploadButton,
+} from './SidebarButtons';
 
 import {
   StyledSidebar,
@@ -24,66 +28,52 @@ import {
   StyledDivider,
 } from './Sidebar.styles';
 
-const Sidebar: React.FC = () => {
-  const addToCardBtns = [
-    {
-      text: 'Members',
-      startIcon: <PersonOutlineRoundedIcon />,
-    },
-    {
-      text: 'Labels',
-      startIcon: <LabelOutlinedIcon />,
-    },
-    {
-      text: 'Checklist',
-      startIcon: <CheckBoxOutlinedIcon />,
-    },
-    {
-      text: 'Due date',
-      startIcon: <WatchLaterOutlinedIcon />,
-    },
-    {
-      text: 'Attachment',
-      startIcon: <AttachmentOutlinedIcon />,
-    },
-    {
-      text: 'Cover',
-      startIcon: <VideoLabelIcon className="small-icon" />,
-    },
-  ];
+const actionBtns = [
+  {
+    text: 'Move',
+    startIcon: <ArrowForwardIcon />,
+  },
+  {
+    text: 'Copy',
+    startIcon: <FileCopyOutlinedIcon />,
+  },
+  {
+    text: 'Make Template',
+    startIcon: <AssignmentOutlinedIcon />,
+  },
+  {
+    text: 'Watch',
+    startIcon: <VisibilityOutlinedIcon />,
+  },
+];
 
-  const actionBtns = [
-    {
-      text: 'Move',
-      startIcon: <ArrowForwardIcon />,
-    },
-    {
-      text: 'Copy',
-      startIcon: <FileCopyOutlinedIcon />,
-    },
-    {
-      text: 'Make Template',
-      startIcon: <AssignmentOutlinedIcon />,
-    },
-    {
-      text: 'Watch',
-      startIcon: <VisibilityOutlinedIcon />,
-    },
-  ];
+interface IProps {
+  cover: ICover | null;
+  taskMembers: IUser[] | [];
+  boardMembers: IUser[];
+}
 
+const Sidebar: React.FC<IProps> = ({ cover, taskMembers, boardMembers }) => {
   return (
     <StyledSidebar>
       <StyledList>
         <StyledTitle>ADD TO CARD</StyledTitle>
-        {addToCardBtns.map(({ text, startIcon }) => (
-          <StyledListButton
-            key={text}
-            variant="contained"
-            startIcon={startIcon}
-          >
-            {text}
-          </StyledListButton>
-        ))}
+        <AddMemberButton
+          taskMembers={taskMembers}
+          boardMembers={boardMembers}
+        />
+        <StyledListButton variant="contained" startIcon={<LabelOutlinedIcon />}>
+          Labels
+        </StyledListButton>
+        <StyledListButton
+          variant="contained"
+          startIcon={<CheckBoxOutlinedIcon />}
+        >
+          Checklist
+        </StyledListButton>
+        <DueDateButton />
+        <AttachmentsButton />
+        {!cover && <CoverUploadButton />}
       </StyledList>
       <StyledTitle>POWER-UPS</StyledTitle>
       <StyledButton

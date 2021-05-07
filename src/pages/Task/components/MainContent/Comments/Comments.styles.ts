@@ -7,35 +7,14 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Avatar,
 } from '@material-ui/core';
-
-export const StyledWrapper = styled.div`
-  margin-top: 24px;
-  & .d-flex {
-    display: flex;
-  }
-`;
-
-export const StyledAvatar = styled(Avatar)`
-  && {
-    height: 28px;
-    width: 28px;
-    display: inline-flex;
-    background-color: ${({ theme }) => theme.colors.red[100]};
-    font-size: ${({ theme }) => theme.typeScale.paragraph};
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
 
 export const StyledAccordion = styled(Accordion)`
   &&& {
     flex: 1;
     border: none;
     transition: none;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.neutral[100]};
     border-radius: 3px;
     margin: 0;
     margin-left: 14px;
@@ -52,14 +31,26 @@ export const StyledAccordion = styled(Accordion)`
   }
 `;
 
-export const StyledAccordionSummary = styled(AccordionSummary)`
+interface IAccordionSummary {
+  iswriting: number;
+}
+export const StyledAccordionSummary = styled(
+  AccordionSummary
+)<IAccordionSummary>`
   &&& {
     min-height: 0;
     transition: none;
     padding: 0;
     background-color: ${({ theme }) => theme.colors.neutral[100]};
+    transition: box-shadow 85ms ease;
     & > div:first-child {
       margin: 2px 0;
+    }
+    &:hover {
+      cursor: ${({ iswriting }) => !iswriting && 'pointer'};
+      box-shadow: ${({ iswriting }) =>
+        !iswriting &&
+        '0 1px 1px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%)'};
     }
   }
 `;
@@ -69,21 +60,29 @@ export const StyledAccordionDetails = styled(AccordionDetails)`
     padding: 0;
     justify-content: space-between;
     margin: 12px 12px 8px;
+    & .not-allowed {
+      cursor: not-allowed;
+    }
   }
 `;
 
-export const StyledTextField = styled(TextField)<TextFieldProps>`
+type ITextFieldProps = TextFieldProps & { iswriting: number };
+
+export const StyledTextField = styled(TextField)<ITextFieldProps>`
   && {
     width: -webkit-fill-available;
+    cursor: ${({ iswriting }) => !iswriting && 'pointer'};
+
     & > div {
       padding: 8px 12px;
+      cursor: ${({ iswriting }) => !iswriting && 'pointer'};
     }
     & fieldset {
       border: none;
     }
     & textarea {
       color: ${({ theme }) => theme.colors.blue[400]};
-
+      cursor: ${({ iswriting }) => !iswriting && 'pointer'};
       &::placeholder {
         color: ${({ theme }) => theme.colors.blue[400]} !important;
         opacity: 0.8 !important;
@@ -131,6 +130,10 @@ export const StyledSaveButton = styled(Button)`
     &:hover {
       box-shadow: none;
       background-color: ${({ theme }) => theme.colors.green[200]};
+    }
+    &:disabled {
+      background-color: rgba(9, 30, 66, 0.04);
+      color: #a5adba;
     }
   }
 `;

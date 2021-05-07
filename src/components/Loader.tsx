@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledLoader = styled.div`
-  color: #e1e1e1;
+interface IProps {
+  color: string;
+}
+
+const StyledLoader = styled.div<IProps>`
+  color: ${({ color }) => color};
   text-indent: -9999em;
   position: absolute;
   left: 50%;
@@ -16,7 +20,7 @@ const StyledLoader = styled.div`
   &,
   &:before,
   &:after {
-    background: #e1e1e1;
+    background: ${({ color }) => color};
     -webkit-animation: load1 1s infinite ease-in-out;
     animation: load1 1s infinite ease-in-out;
     width: 1em;
@@ -62,6 +66,6 @@ const StyledLoader = styled.div`
   }
 `;
 
-const Loader: React.FC = () => <StyledLoader />;
+const Loader: React.FC<IProps> = ({ color }) => <StyledLoader color={color} />;
 
 export default Loader;

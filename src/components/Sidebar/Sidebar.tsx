@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-
-// importing components from material-ui
 import {
   List,
   ListItemIcon,
@@ -10,8 +8,6 @@ import {
   Typography,
   IconButton,
 } from '@material-ui/core';
-
-// importing icons from material-ui
 import {
   Add as AddIcon,
   DeveloperBoard as DeveloperBoardIcon,
@@ -27,7 +23,6 @@ import {
   AssignmentOutlined as AssignmentOutlinedIcon,
 } from '@material-ui/icons';
 
-// importing styled components
 import {
   StyledSidebar,
   StyledSidebarItem,

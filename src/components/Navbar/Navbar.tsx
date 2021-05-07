@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-
-import { InputBase } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Divider, InputBase } from '@material-ui/core';
 import {
   HomeOutlined as HomeOutlinedIcon,
   AppsSharp as AppsSharpIcon,
@@ -13,6 +13,10 @@ import {
   TableChartOutlined as TableChartOutlinedIcon,
 } from '@material-ui/icons';
 
+import { useAuth } from '../../contexts';
+import { getAvatarFallbackName } from '../../utils';
+import { PopOver } from '../PopOver';
+import { BoardSearch } from '../BoardSearch';
 import {
   StyledNavbar,
   StyledSearchField,
@@ -20,13 +24,27 @@ import {
   StyledNavBtn,
   StyledBoardBtn,
   StyledAvatar,
+  StyledPopOverContent,
+  StyledUserInfo,
+  StyledPopOverButton,
 } from './Navbar.styles';
 
 const Navbar: React.FC = () => {
-  // State for focus on SeachField so that it can be passed
-  // to other components to change their styles.
+  const { logout, user } = useAuth();
+  const { username, profileImg, email } = user;
+  const avatarFallbackName = getAvatarFallbackName(username);
+
   const [searchFocus, setSearchFocus] = useState(false);
+  const [avatarAnchorEl, setAvatarAnchorEl] = useState<HTMLElement | null>(
+    null
+  );
+  const [
+    boardSearchAnchorEl,
+    setBoardSearchAnchorEl,
+  ] = useState<HTMLElement | null>(null);
+
   const inputRef = useRef<HTMLInputElement>(null);
+  const history = useHistory();
 
   return (
     <StyledNavbar disableGutters>
@@ -34,15 +52,22 @@ const Navbar: React.FC = () => {
         <StyledNavBtn size="small">
           <AppsSharpIcon />
         </StyledNavBtn>
-        <StyledNavBtn>
+        <StyledNavBtn onClick={() => history.push('/boards')}>
           <HomeOutlinedIcon />
         </StyledNavBtn>
         <StyledBoardBtn
           variant="contained"
           startIcon={<TableChartOutlinedIcon />}
+          onClick={(e) => setBoardSearchAnchorEl(e.currentTarget)}
         >
           <span>Boards</span>
         </StyledBoardBtn>
+        {boardSearchAnchorEl && (
+          <BoardSearch
+            anchorEl={boardSearchAnchorEl}
+            setAnchorEl={setBoardSearchAnchorEl}
+          />
+        )}
         <StyledSearchField searchFocus={searchFocus}>
           <InputBase
             onFocus={() => setSearchFocus(true)}
@@ -78,7 +103,48 @@ const Navbar: React.FC = () => {
         <StyledNavBtn color="inherit">
           <NotificationsNoneOutlinedIcon />
         </StyledNavBtn>
-        <StyledAvatar>AJ</StyledAvatar>
+        <StyledAvatar
+          src={profileImg}
+          width="32px"
+          height="32px"
+          onClick={(e) => setAvatarAnchorEl(e.currentTarget)}
+        >
+          {avatarFallbackName}
+        </StyledAvatar>
+        <PopOver
+          headingText="Account"
+          anchorEl={avatarAnchorEl}
+          setAnchorEl={setAvatarAnchorEl}
+        >
+          <StyledPopOverContent>
+            <StyledUserInfo>
+              <StyledAvatar src={profileImg} width="40px" height="40px">
+                {avatarFallbackName}
+              </StyledAvatar>
+              <div>
+                <div>{username}</div>
+                <div>{email}</div>
+              </div>
+            </StyledUserInfo>
+            <Divider />
+            <StyledPopOverButton
+              onClick={() => {
+                history.push('/accounts');
+                setAvatarAnchorEl(null);
+              }}
+            >
+              Settings
+            </StyledPopOverButton>
+            <StyledPopOverButton
+              onClick={() => {
+                logout();
+                history.push('/login');
+              }}
+            >
+              Log out
+            </StyledPopOverButton>
+          </StyledPopOverContent>
+        </PopOver>
       </div>
     </StyledNavbar>
   );
