@@ -4,11 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Project includes:
 
-1. React hooks including context API for managing state.
-2. Typescript.
-3. Using react-query for fetching, caching, synchronizing and updating server state.
-4. React-beautiful-dnd.
-5. Material-UI and styled-components (including theming).
+1. **React hooks** including **context API** for managing state.
+2. **Typescript**.
+3. Using **react-query** for fetching, caching, synchronizing and updating server state.
+4. **React-beautiful-dnd**.
+5. **Material-UI** and **styled-components** (including **theming**).
 
 ## Available Scripts
 
