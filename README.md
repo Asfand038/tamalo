@@ -2,7 +2,7 @@
 
 **A production grade React App with typescript**
 
-### Project includes:
+## Project includes:
 
 1. **React hooks** including **context API** for managing state.
 2. **Typescript**.
