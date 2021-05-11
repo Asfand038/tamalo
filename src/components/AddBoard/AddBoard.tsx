@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // api issue update this component
 import React, { useState } from 'react';
 import { useQueryClient } from 'react-query';
@@ -7,7 +6,7 @@ import { Grid, Modal, Fade } from '@material-ui/core';
 import { Close as CloseIcon, Done as DoneIcon } from '@material-ui/icons';
 
 import { useAuth } from '../../contexts';
-import { IBoardLessDetails, IDashboardData } from '../../utils';
+import { IBoardLessDetails, IDashboardData, baseUrl } from '../../utils';
 import { createOneBoard } from './api';
 import Loader from '../Loader';
 import {
@@ -29,8 +28,6 @@ interface IProps {
   setPopoverAnchorEl?: Function;
   initialInputValue: string;
 }
-
-const baseUrl = 'https://tamalo.herokuapp.com';
 
 const boardBgColors = ['#0079bf', '#d29034', '#b04632', '#89609e', '#4bbf6b'];
 

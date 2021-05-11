@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import FastAverageColor from 'fast-average-color';
-import { ICover, errorMessages } from '../../../utils';
+import { ICover, baseUrl } from '../../../utils';
 import {
   IUser,
   IComment,
@@ -10,7 +9,7 @@ import {
 
 export const getTaskById = async (id: string, users: IUser[]) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/tasks/${id}`, {
+    await fetch(`${baseUrl}/tasks/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -26,7 +25,7 @@ export const updateTaskTitle = async (
   users: IUser[]
 ) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/tasks/${id}`, {
+    await fetch(`${baseUrl}/tasks/${id}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -48,7 +47,7 @@ export const addOneComment = async (
   users: IUser[]
 ) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/comments`, {
+    await fetch(`${baseUrl}/comments`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -80,7 +79,7 @@ export const updateOneComment = async (
   users: IUser[]
 ) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
+    await fetch(`${baseUrl}/comments/${commentId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -111,7 +110,7 @@ export const deleteOneComment = async (
 ) => {
   try {
     const data = await (
-      await fetch(`https://tamalo.herokuapp.com/comments/${commentId}`, {
+      await fetch(`${baseUrl}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -136,7 +135,7 @@ export const addCover = async (file: File, taskId: string, users: IUser[]) => {
   const fileData = new FormData();
   fileData.append('files', file);
   const coverData = await (
-    await fetch(`https://tamalo.herokuapp.com/upload`, {
+    await fetch(`${baseUrl}/upload`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -149,16 +148,14 @@ export const addCover = async (file: File, taskId: string, users: IUser[]) => {
   const coverImageUrl = coverData[0].formats.thumbnail.url;
   const fac = new FastAverageColor();
 
-  const bgColorDetails = await fac.getColorAsync(
-    `https://tamalo.herokuapp.com${coverImageUrl}`
-  );
+  const bgColorDetails = await fac.getColorAsync(`${baseUrl}${coverImageUrl}`);
   const coverBg = {
     color: bgColorDetails.rgb,
     isDark: bgColorDetails.isDark,
   };
 
   const taskData = await (
-    await fetch(`https://tamalo.herokuapp.com/tasks/${taskId}`, {
+    await fetch(`${baseUrl}/tasks/${taskId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -174,7 +171,7 @@ export const addCover = async (file: File, taskId: string, users: IUser[]) => {
 // resolve error
 export const deleteCover = async (id: string, users: IUser[]) => {
   const coverData = await (
-    await fetch(`https://tamalo.herokuapp.com/upload/files/${id}`, {
+    await fetch(`${baseUrl}/upload/files/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -204,7 +201,7 @@ export const updateTaskMembers = async (
   }
 
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/tasks/${taskId}`, {
+    await fetch(`${baseUrl}/tasks/${taskId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -227,7 +224,7 @@ export const addAttachment = async (
   fileData.append('files', file);
 
   const attachmentData = await (
-    await fetch(`https://tamalo.herokuapp.com/upload`, {
+    await fetch(`${baseUrl}/upload`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -239,7 +236,7 @@ export const addAttachment = async (
   const newId = attachmentData[0].id;
 
   const taskData = await (
-    await fetch(`https://tamalo.herokuapp.com/tasks/${taskId}`, {
+    await fetch(`${baseUrl}/tasks/${taskId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -254,7 +251,7 @@ export const addAttachment = async (
 
 export const deleteAttachment = async (id: string, users: IUser[]) => {
   const attachmentData = await (
-    await fetch(`https://tamalo.herokuapp.com/upload/files/${id}`, {
+    await fetch(`${baseUrl}/upload/files/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

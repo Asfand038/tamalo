@@ -1,8 +1,9 @@
+import { baseUrl } from '../../../utils';
 import { IBoardLessDetails, IDashboardData } from '../utils';
 
 export const getBoards = async (userId: string) => {
   const data = await (
-    await fetch('https://tamalo.herokuapp.com/boards', {
+    await fetch(`${baseUrl}/boards`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },

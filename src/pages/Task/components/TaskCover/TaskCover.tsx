@@ -12,12 +12,14 @@ import {
   CoverImageSizes,
   getRequiredSizeCoverImg,
   errorMessages,
+  baseUrl,
 } from '../../../../utils';
 import { addCover, deleteCover } from '../../api';
 import { IBoard, ITaskDetails, ITask } from '../../utils';
 import {
   StyledCloseIcon,
   StyledCoverWrapper,
+  StyledImage,
   StyledButton,
   StyledMenu,
 } from './TaskCover.styles';
@@ -133,10 +135,11 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
       <StyledCloseIcon dark={+bgColor.isDark}>
         <CloseIcon onClick={() => history.goBack()} />
       </StyledCloseIcon>
-      <StyledCoverWrapper imgSrc={imgUrl} bgColor={bgColor.color}>
+      <StyledCoverWrapper bgColor={bgColor.color}>
         {isUpdatingCover && <Loader color="#737581" />}
         {!isUpdatingCover && (
           <>
+            <StyledImage src={`${baseUrl}${imgUrl}`} />
             <StyledButton
               ref={updateBtnRef}
               dark={+bgColor.isDark}
@@ -165,6 +168,7 @@ const TaskCover: React.FC<IProps> = ({ coverId, imgSrc, coverBg }) => {
             >
               <input
                 type="file"
+                accept="image/*"
                 ref={fileUploadRef}
                 style={{ display: 'none' }}
                 onChange={updateCoverHandler}

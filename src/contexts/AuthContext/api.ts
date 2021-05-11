@@ -1,8 +1,10 @@
+import { baseUrl } from '../../utils';
+
 export const sendLoginRequest = async (
   identifier: string,
   password: string
 ) => {
-  const response = await fetch('https://tamalo.herokuapp.com/auth/local', {
+  const response = await fetch(`${baseUrl}/auth/local`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -14,7 +16,7 @@ export const sendLoginRequest = async (
 };
 
 export const getUserInformationRequest = async () => {
-  const response = await fetch('https://tamalo.herokuapp.com/users/me', {
+  const response = await fetch(`${baseUrl}/users/me`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },

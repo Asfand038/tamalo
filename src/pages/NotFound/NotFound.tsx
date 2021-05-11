@@ -1,7 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
+
+import { getAppIcon } from '../../utils';
 
 const StyledWrapper = styled.div`
   height: 100vh;
@@ -38,14 +41,20 @@ const NotFoundPage: React.FC = () => {
   const history = useHistory();
 
   return (
-    <StyledWrapper>
-      <StyledMessage>
-        <div>404</div>
-        <StyledButton onClick={() => history.goBack()}>
-          Take me back
-        </StyledButton>
-      </StyledMessage>
-    </StyledWrapper>
+    <>
+      <Helmet>
+        <title>Not Found</title>
+        <link rel="icon" href={getAppIcon()} />
+      </Helmet>
+      <StyledWrapper>
+        <StyledMessage>
+          <div>404</div>
+          <StyledButton onClick={() => history.goBack()}>
+            Take me back
+          </StyledButton>
+        </StyledMessage>
+      </StyledWrapper>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import {
 } from '@material-ui/icons';
 
 import { IBoard } from '../../../utils';
+import { baseUrl } from '../../../../../utils';
 import {
   StyledDrawer,
   StyledMenuHeader,
@@ -25,7 +26,7 @@ interface IBgColorIcon {
 const BgColorIcon: React.FC<IBgColorIcon> = ({ bgImage, bgColor }) => {
   return (
     <StyledBoardBgColorIcon
-      src={`https://tamalo.herokuapp.com${bgImage}`}
+      src={`${baseUrl}${bgImage}`}
       alt=""
       bgColor={bgColor}
     />

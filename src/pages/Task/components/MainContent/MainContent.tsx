@@ -20,7 +20,11 @@ import {
   IBoard,
   ITaskDetails,
 } from '../../utils';
-import { getAvatarFallbackName, errorMessages } from '../../../../utils';
+import {
+  getAvatarFallbackName,
+  errorMessages,
+  baseUrl,
+} from '../../../../utils';
 
 import {
   StyledContainer,
@@ -48,7 +52,7 @@ interface IRouteParams {
 }
 
 const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
-  const { url, ext, name, createdAt, id } = attachment;
+  const { url: attachmentUrl, ext, name, createdAt, id } = attachment;
   const imgExtensions = ['.png', '.jpg'];
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -69,13 +73,13 @@ const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
     if (['.png', '.jpg'].includes(ext)) {
       const fac = new FastAverageColor();
       fac
-        .getColorAsync(`https://tamalo.herokuapp.com${url}`)
+        .getColorAsync(`${baseUrl}${attachmentUrl}`)
         .then((color) => {
           imageRef.current!.style.backgroundColor = color.rgba;
         })
         .catch(() => {});
     }
-  }, [ext, url]);
+  }, [attachmentUrl, ext]);
 
   const deleteAttachmentHandler = async () => {
     setError('');
@@ -106,7 +110,7 @@ const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
         }}
       >
         <a
-          href={`https://tamalo.herokuapp.com${url}`}
+          href={`${baseUrl}${attachmentUrl}`}
           ref={downloadBtnRef}
           download={name}
         >
@@ -114,7 +118,7 @@ const Attachment: React.FC<{ attachment: IAttachment }> = ({ attachment }) => {
         </a>
         <StyledAttachmentImg
           ref={imageRef}
-          imgSrc={url}
+          imgSrc={attachmentUrl}
           isImg={imgExtensions.includes(ext)}
         >
           {!imgExtensions.includes(ext) && ext.slice(1)}

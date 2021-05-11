@@ -1,20 +1,27 @@
 import React from 'react';
 
+import { baseUrl } from '../../utils';
 import { Navbar } from '../../components';
 import { Wrapper, StyledImage } from './BoardLayout.styles';
 
 interface IProps {
-  bgColor?: string;
+  bgColor: string;
   bgImage?: string;
+  navbarColor?: string;
 }
 
-const BoardLayout: React.FC<IProps> = ({ children, bgColor, bgImage }) => {
+const BoardLayout: React.FC<IProps> = ({
+  children,
+  bgColor,
+  bgImage,
+  navbarColor,
+}) => {
   return (
-    <Wrapper bgColor={bgColor} bgImage={bgImage}>
+    <Wrapper>
       {bgImage && (
-        <StyledImage src={`https://tamalo.herokuapp.com${bgImage}`} alt="" />
+        <StyledImage src={`${baseUrl}${bgImage}`} alt="" bgColor={bgColor} />
       )}
-      <Navbar bgColor="rgba(0, 0, 0, 0.15)" />
+      <Navbar bgColor={navbarColor || 'rgba(0, 0, 0, 0.15)'} />
       <div>{children}</div>
     </Wrapper>
   );

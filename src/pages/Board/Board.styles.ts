@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const StyledWrapper = styled.div`
+  margin-top: -4px;
+`;
+
 export const StyledBoardContainer = styled.div`
   display: flex;
   height: 86.5vh;

@@ -1,3 +1,5 @@
+import { baseUrl } from '../../utils';
+
 export const createOneBoard = async (
   title: string,
   bgColor: string,
@@ -16,7 +18,7 @@ export const createOneBoard = async (
     reqBody = { ...body };
   }
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards`, {
+    await fetch(`${baseUrl}/boards`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

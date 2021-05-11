@@ -40,7 +40,7 @@ const ListTitle: React.FC<IProps> = ({ provided, title, listId }) => {
   );
 
   const updateListTitleHandler = () => {
-    if (listTitle && listTitle.length) {
+    if (listTitle.length && listTitle !== title) {
       const targetList = lists.find((el) => el.id === listId)!;
       targetList.title = listTitle;
       const newLists = lists.filter((el) => el.id !== listId)!;

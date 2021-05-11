@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet';
 import { Grid } from '@material-ui/core';
 import {
   PersonOutline as PersonOutlineIcon,
@@ -16,7 +17,7 @@ import { Loader, AddBoardModal, ErrorContainer } from '../../components';
 import { DashboardCard } from './components';
 import { useAuth } from '../../contexts';
 import { getBoards } from './api';
-import { IDashboardData, IError, errorMessages } from '../../utils';
+import { IDashboardData, IError, errorMessages, getAppIcon } from '../../utils';
 import { IBoardLessDetails } from './utils';
 
 const DashboardPage: React.FC = () => {
@@ -27,10 +28,6 @@ const DashboardPage: React.FC = () => {
     ['boards'],
     () => getBoards(user.id)
   );
-
-  useEffect(() => {
-    document.title = 'Tamalo | Boards';
-  }, []);
 
   if (isLoading) return <Loader color="#e1e1e1" />;
   if (error) return <ErrorContainer message={errorMessages.getBoards} />;
@@ -53,45 +50,51 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <DashboardLayout>
-      {boardCategories.map(({ title, boardCategory, icon, key }) => (
-        <StyledBoardsCategory key={key}>
-          <StyledTitle>
-            {icon}
-            <span>{title}</span>
-          </StyledTitle>
-          <Grid container spacing={2}>
-            {boardCategory.map((boardDetails: IBoardLessDetails) => (
-              <DashboardCard key={boardDetails.id} details={boardDetails} />
-            ))}
-            {key === 'PERSONAL' && (
-              <>
-                <StyledAddBoard
-                  item
-                  sm={6}
-                  md={3}
-                  onClick={() => setIsAddBoardModalOpen(true)}
-                >
-                  <div>Create new board</div>
+    <>
+      <Helmet>
+        <title>Tamalo | Boards</title>
+        <link rel="icon" href={getAppIcon()} />
+      </Helmet>
+      <DashboardLayout>
+        {boardCategories.map(({ title, boardCategory, icon, key }) => (
+          <StyledBoardsCategory key={key}>
+            <StyledTitle>
+              {icon}
+              <span>{title}</span>
+            </StyledTitle>
+            <Grid container spacing={2}>
+              {boardCategory.map((boardDetails: IBoardLessDetails) => (
+                <DashboardCard key={boardDetails.id} details={boardDetails} />
+              ))}
+              {key === 'PERSONAL' && (
+                <>
+                  <StyledAddBoard
+                    item
+                    sm={6}
+                    md={3}
+                    onClick={() => setIsAddBoardModalOpen(true)}
+                  >
+                    <div>Create new board</div>
+                  </StyledAddBoard>
+                  {isAddBoardModalOpen && (
+                    <AddBoardModal
+                      initialInputValue=""
+                      open={isAddBoardModalOpen}
+                      setOpen={setIsAddBoardModalOpen}
+                    />
+                  )}
+                </>
+              )}
+              {key === 'MEMBER' && !boardCategory.length && (
+                <StyledAddBoard item sm={6} md={3}>
+                  <div>No boards yet</div>
                 </StyledAddBoard>
-                {isAddBoardModalOpen && (
-                  <AddBoardModal
-                    initialInputValue=""
-                    open={isAddBoardModalOpen}
-                    setOpen={setIsAddBoardModalOpen}
-                  />
-                )}
-              </>
-            )}
-            {key === 'MEMBER' && !boardCategory.length && (
-              <StyledAddBoard item sm={6} md={3}>
-                <div>No boards yet</div>
-              </StyledAddBoard>
-            )}
-          </Grid>
-        </StyledBoardsCategory>
-      ))}
-    </DashboardLayout>
+              )}
+            </Grid>
+          </StyledBoardsCategory>
+        ))}
+      </DashboardLayout>
+    </>
   );
 };
 

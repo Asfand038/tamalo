@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { ClosedForm, OpenedForm } from './AddCard';
-import { Tasks } from './Tasks';
+import { ClosedAddTaskForm, OpenedAddTaskForm } from './AddCard';
 import { ListTitle } from './ListTitle';
+import { Task } from './Task';
 import { getTransformValue, IList, ITask } from '../../../utils';
 
 import {
@@ -11,6 +11,19 @@ import {
   StyledTaskList,
   StyledSkeleton,
 } from './List.styles';
+
+interface ITasksProps {
+  tasks: ITask[];
+}
+
+// eslint-disable-next-line react/display-name
+const Tasks: React.FC<ITasksProps> = memo(({ tasks }) => (
+  <>
+    {tasks.map((task, index) => (
+      <Task key={task.id} task={task} index={index} />
+    ))}
+  </>
+));
 
 interface IProps {
   list: IList;
@@ -60,12 +73,15 @@ const List: React.FC<IProps> = ({ list, tasks, index }) => {
                 <Tasks tasks={tasks} />
                 {provided.placeholder}
                 {formIsOpen && (
-                  <OpenedForm setFormIsOpen={setFormIsOpen} listId={list.id} />
+                  <OpenedAddTaskForm
+                    setFormIsOpen={setFormIsOpen}
+                    listId={list.id}
+                  />
                 )}
               </StyledTaskList>
             )}
           </Droppable>
-          {!formIsOpen && <ClosedForm setFormIsOpen={setFormIsOpen} />}
+          {!formIsOpen && <ClosedAddTaskForm setFormIsOpen={setFormIsOpen} />}
         </StyledListContainer>
       )}
     </Draggable>

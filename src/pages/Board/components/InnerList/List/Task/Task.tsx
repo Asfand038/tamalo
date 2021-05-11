@@ -8,16 +8,12 @@ import {
   AttachmentOutlined as AttachmentOutlinedIcon,
 } from '@material-ui/icons';
 
-import {
-  desiredDateFormat,
-  getTransformValue,
-  ITask,
-} from '../../../../../utils';
+import { desiredDateFormat, getTransformValue, ITask } from '../../../../utils';
 import {
   getRequiredSizeCoverImg,
   getRequiredCoverHeight,
   CoverImageSizes,
-} from '../../../../../../../utils';
+} from '../../../../../../utils';
 import {
   StyledTaskContainer,
   StyledEditBtn,
