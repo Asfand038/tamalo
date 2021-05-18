@@ -9,13 +9,9 @@ import {
   StyledAuthCardTitle,
   StyledInputField,
   StyledLink,
+  StyledErrorMessage,
 } from '../../layouts';
-import {
-  LoginButton,
-  StyledIcon,
-  StyledSSOLink,
-  ErrorMessage,
-} from './Login.styles';
+import { LoginButton, StyledIcon, StyledSSOLink } from './Login.styles';
 import { useAuth } from '../../contexts';
 import { getAppIcon } from '../../utils';
 
@@ -41,9 +37,9 @@ const LoginPage: React.FC = () => {
       <AuthLayout>
         {isLoggedIn && <Redirect to="/boards" />}
         {error && (
-          <ErrorMessage>
+          <StyledErrorMessage>
             <p>{error}</p>
-          </ErrorMessage>
+          </StyledErrorMessage>
         )}
         <StyledAuthCardTitle>Log in to Tamalo</StyledAuthCardTitle>
         <form onSubmit={submitHandler}>

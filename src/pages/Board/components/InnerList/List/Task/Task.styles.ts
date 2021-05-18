@@ -44,23 +44,18 @@ export const StyledSkeleton = styled(Skeleton)`
 `;
 
 interface ITaskCover {
-  imgSrc: string;
   bgColor: string;
   height: string;
 }
 
-export const StyledTaskCover = styled.div<ITaskCover>`
+export const StyledTaskCover = styled.img<ITaskCover>`
   width: 100%;
   height: ${({ height }) => `${height}px`};
   border-radius: 3px 3px 0 0;
   background-color: ${({ bgColor }) => bgColor};
-  background-image: ${({ imgSrc }) =>
-    `url('https://tamalo.herokuapp.com${imgSrc}')`};
-  background-size: contain;
-  background-origin: content-box;
+  object-fit: contain;
   box-sizing: border-box;
-  background-position: center center;
-  background-repeat: no-repeat;
+  object-position: center center;
   &:hover {
     cursor: pointer;
   }

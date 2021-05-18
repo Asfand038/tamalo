@@ -1,3 +1,5 @@
+// Hard-coded values in this file
+
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
@@ -13,6 +15,7 @@ import {
   getRequiredSizeCoverImg,
   getRequiredCoverHeight,
   CoverImageSizes,
+  baseUrl,
 } from '../../../../../../utils';
 import {
   StyledTaskContainer,
@@ -60,7 +63,10 @@ const Task: React.FC<IProps> = ({ task, index }) => {
           )}
           {cover && (
             <StyledTaskCover
-              imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.medium)}
+              src={`${baseUrl}${getRequiredSizeCoverImg(
+                cover,
+                CoverImageSizes.medium
+              )}`}
               bgColor={cover.coverBg.color}
               height={getRequiredCoverHeight(cover, CoverImageSizes.medium)}
             />

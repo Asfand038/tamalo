@@ -24,7 +24,7 @@ export const getRequiredCoverHeight = (cover: ICover, key: CoverImageSizes) => {
     height = cover.formats[key].height;
   }
   // eslint-disable-next-line radix
-  if (parseInt(height) > 260) return '260';
+  if (parseInt(height) > 260) return '190';
   return height;
 };
 

@@ -97,3 +97,18 @@ export const ButtonStyle = styled(Button)`
     }
   }
 `;
+
+export const StyledErrorMessage = styled.div`
+  text-align: left;
+  & > p {
+    background-color: ${({ theme }) => theme.colors.red[100]};
+    color: ${({ theme }) => theme.colors.red[50]};
+    font-size: ${({ theme }) => theme.typeScale.heading};
+    line-height: 1.33;
+    border-radius: 4px;
+    border: ${({ theme }) => `1px solid ${theme.colors.red[100]}`};
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-align: left;
+  }
+`;
