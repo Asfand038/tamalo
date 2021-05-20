@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { IUser } from '../../utils';
+import { baseUrl, IUser } from '../../utils';
 import {
   sendLoginRequest,
   getUserInformationRequest,
@@ -58,7 +58,9 @@ export const AuthProvider: React.FC = (children) => {
         username,
         firstName,
         lastName,
-        profileImg: user.profileImg ? user.profileImg : undefined,
+        profileImg: user.profileImage
+          ? `${baseUrl}${user.profileImage.url}`
+          : undefined,
         bio: user.bio ? user.bio : undefined,
       });
       setIsLoggedIn(true);
@@ -89,7 +91,9 @@ export const AuthProvider: React.FC = (children) => {
       username,
       firstName,
       lastName,
-      profileImg: user.profileImg ? user.profileImg : undefined,
+      profileImg: data.profileImage
+        ? `${baseUrl}${data.profileImage.url}`
+        : undefined,
       bio: user.bio ? user.bio : undefined,
     });
     setIsLoggedIn(true);
@@ -122,7 +126,9 @@ export const AuthProvider: React.FC = (children) => {
         username,
         firstName,
         lastName,
-        profileImg: user.profileImg ? user.profileImg : undefined,
+        profileImg: data.profileImage
+          ? `${baseUrl}${data.profileImage.url}`
+          : undefined,
         bio: user.bio ? user.bio : undefined,
       });
       setIsLoggedIn(true);

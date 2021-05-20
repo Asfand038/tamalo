@@ -42,7 +42,11 @@ const TaskModal: React.FC = () => {
       </TaskLayout>
     );
 
-  return <TaskDetails data={data!} />;
+  return (
+    <TaskLayout>
+      <TaskDetails data={data!} />
+    </TaskLayout>
+  );
 };
 
 export default TaskModal;

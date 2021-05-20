@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
+import PasswordStrengthBar from 'react-password-strength-bar';
 import { Divider, InputAdornment, IconButton } from '@material-ui/core';
 import {
   Visibility as VisibilityIcon,
@@ -32,6 +34,7 @@ const SignupPage: React.FC = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [password, setPassword] = useState('');
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -119,6 +122,11 @@ const SignupPage: React.FC = () => {
                   required
                   onFocus={() => setPasswordFocus(true)}
                   onBlur={() => setPasswordFocus(false)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  strengthmetervisible={password.length}
+                  inputProps={{ minLength: 6 }}
+                  // eslint-disable-next-line react/jsx-no-duplicate-props
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -136,6 +144,20 @@ const SignupPage: React.FC = () => {
                     ),
                   }}
                 />
+                {!!password.length && (
+                  <PasswordStrengthBar
+                    style={{ margin: '0 0 1.2em' }}
+                    minLength={6}
+                    password={password}
+                    barColors={[
+                      '#ddd',
+                      '#ef4836',
+                      '#f6b44d',
+                      '#25c281',
+                      '#2b90ef',
+                    ]}
+                  />
+                )}
               </>
             )}
             <StyledConfirmationText>

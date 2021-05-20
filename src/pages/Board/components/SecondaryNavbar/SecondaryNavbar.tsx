@@ -46,9 +46,9 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
   const { id } = useParams<IParams>();
 
   const ownerDetails = owners.map(
-    ({ profileImg, firstName, lastName, username }) => {
+    ({ profileImage, firstName, lastName, username }) => {
       return {
-        img: profileImg,
+        img: profileImage,
         isOwner: true,
         username,
         avatarFallbackText: getAvatarFallbackName(`${firstName} ${lastName}`),
@@ -56,9 +56,9 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
     }
   );
   const memberDetails = members.map(
-    ({ profileImg, firstName, lastName, username }) => {
+    ({ profileImage, firstName, lastName, username }) => {
       return {
-        img: profileImg,
+        img: profileImage,
         isOwner: false,
         username,
         avatarFallbackText: getAvatarFallbackName(`${firstName} ${lastName}`),

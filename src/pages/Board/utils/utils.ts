@@ -1,5 +1,9 @@
 import { QueryClient } from 'react-query';
-import { getDesiredDateFormat, getRequiredCoverData } from '../../../utils';
+import {
+  baseUrl,
+  getDesiredDateFormat,
+  getRequiredCoverData,
+} from '../../../utils';
 
 import { IBoard, IList, ITask, IUser } from './types';
 
@@ -25,27 +29,27 @@ export const getRequiredBoardData = async (data: any) => {
     tasksOrder: data.tasksOrder[list.id],
   }));
 
-  const ownersArray: IUser[] = data.owners.map(
-    ({ id, email, username, firstName, lastName, profileImg }: IUser) => ({
-      id,
-      email,
-      username,
-      profileImg,
-      firstName,
-      lastName,
-    })
-  );
+  const ownersArray: IUser[] = data.owners.map((owner: any) => ({
+    id: owner.id,
+    email: owner.email,
+    username: owner.username,
+    profileImage: owner.profileImage
+      ? `${baseUrl}${owner.profileImage.url}`
+      : undefined,
+    firstName: owner.firstName,
+    lastName: owner.lastName,
+  }));
 
-  const membersArray: IUser[] = data.members.map(
-    ({ id, email, username, firstName, lastName, profileImg }: IUser) => ({
-      id,
-      email,
-      username,
-      profileImg,
-      firstName,
-      lastName,
-    })
-  );
+  const membersArray: IUser[] = data.members.map((member: any) => ({
+    id: member.id,
+    email: member.email,
+    username: member.username,
+    profileImage: member.profileImage
+      ? `${baseUrl}${member.profileImage.url}`
+      : undefined,
+    firstName: member.firstName,
+    lastName: member.lastName,
+  }));
 
   const { bgColor } = data.meta;
 

@@ -19,7 +19,7 @@ export interface IUser {
   username: string;
   firstName: string;
   lastName: string;
-  profileImg?: string;
+  profileImage?: string;
 }
 
 export interface IBoard {

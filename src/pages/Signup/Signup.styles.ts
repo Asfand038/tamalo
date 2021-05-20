@@ -28,7 +28,10 @@ export const StyledContinueButton = styled(ButtonStyle)`
   }
 `;
 
-type IPasswordInput = TextFieldProps & { focused: boolean };
+type IPasswordInput = TextFieldProps & {
+  focused: boolean;
+  strengthmetervisible: number;
+};
 
 export const StyledPasswordInput = styled(TextField)<IPasswordInput>`
   && {
@@ -39,7 +42,8 @@ export const StyledPasswordInput = styled(TextField)<IPasswordInput>`
       ${({ theme, focused }) =>
         focused ? theme.colors.blue[100] : theme.colors.neutral[300]};
     border-radius: 3px;
-    margin: 0 0 1.2em;
+    margin: ${({ strengthmetervisible }) =>
+      strengthmetervisible ? '0' : '0 0 1.2em'};
     width: 98.25%;
     transition: background-color 200ms ease-in-out,
       border-color 200ms ease-in-out;

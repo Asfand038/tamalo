@@ -6,7 +6,6 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { TaskTitle, Sidebar, MainContent, TaskCover } from './components';
 import { ITaskDetails, IList, IBoard } from './utils';
-import { TaskLayout } from '../../layouts';
 import {
   getRequiredSizeCoverImg,
   CoverImageSizes,
@@ -53,34 +52,28 @@ const TaskDetails: React.FC<IProps> = ({ data }) => {
         </title>
         <link rel="icon" href={getAppIcon(bgColor)} />
       </Helmet>
-      <TaskLayout>
-        {!cover && (
-          <StyledCloseIcon>
-            <CloseIcon onClick={() => history.push(`/boards/${boardId}`)} />
-          </StyledCloseIcon>
-        )}
-        {cover && (
-          <TaskCover
-            coverId={cover.id}
-            imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.medium)}
-            coverBg={cover.coverBg}
-          />
-        )}
-        <TaskTitle taskTitle={title} listTitle={targetList.title} />
-        <StyledBody>
-          <MainContent
-            comments={comments}
-            dueDate={dueDate}
-            taskMembers={taskMembers}
-            attachments={attachments}
-          />
-          <Sidebar
-            cover={cover}
-            taskMembers={taskMembers}
-            boardMembers={users}
-          />
-        </StyledBody>
-      </TaskLayout>
+      {!cover && (
+        <StyledCloseIcon>
+          <CloseIcon onClick={() => history.push(`/boards/${boardId}`)} />
+        </StyledCloseIcon>
+      )}
+      {cover && (
+        <TaskCover
+          coverId={cover.id}
+          imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.medium)}
+          coverBg={cover.coverBg}
+        />
+      )}
+      <TaskTitle taskTitle={title} listTitle={targetList.title} />
+      <StyledBody>
+        <MainContent
+          comments={comments}
+          dueDate={dueDate}
+          taskMembers={taskMembers}
+          attachments={attachments}
+        />
+        <Sidebar cover={cover} taskMembers={taskMembers} boardMembers={users} />
+      </StyledBody>
     </>
   );
 };

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
@@ -39,13 +38,12 @@ interface IBgColorIcon {
   bgImage?: string;
   bgColor: string;
 }
-// Review
+
 const BgColorIcon: React.FC<IBgColorIcon> = ({ bgImage, bgColor }) => {
   return (
     <StyledBoardBgColorIcon
-      src={`${baseUrl}${bgImage}`}
-      alt=""
       bgColor={bgColor}
+      bgImage={bgImage ? `${baseUrl}${bgImage}` : undefined}
     />
   );
 };
@@ -138,7 +136,7 @@ const BoardMenu: React.FC<IProps> = ({ open, setOpen }) => {
         <Slide
           in={key !== MenuKeys.main}
           direction="right"
-          timeout={{ enter: 100, exit: 100 }}
+          timeout={{ enter: 100, exit: 400 }}
         >
           <StyledGoBackIconButton onClick={closeSubMenuHandler}>
             <ArrowBackIosIcon />
@@ -188,10 +186,10 @@ const BoardMenu: React.FC<IProps> = ({ open, setOpen }) => {
               <PersonOutlineRoundedIcon />
               <div>Board Admins</div>
             </StyledSubMenuTitle>
-            {owners.map(({ username, email, id, profileImg }: IUser) => (
+            {owners.map(({ username, email, id, profileImage }: IUser) => (
               <StyledUserInfo key={id}>
                 <StyledAvatar
-                  src={profileImg}
+                  src={profileImage}
                   width="50px"
                   height="50px"
                   onClick={(e) => setAvatarAnchorEl(e.currentTarget)}
@@ -207,7 +205,7 @@ const BoardMenu: React.FC<IProps> = ({ open, setOpen }) => {
                   anchorEl={avatarAnchorEl}
                   setAnchorEl={setAvatarAnchorEl}
                 >
-                  <StyledUserImage src={profileImg} alt="" />
+                  <StyledUserImage src={profileImage} alt="" />
                 </PopOver>
               </StyledUserInfo>
             ))}

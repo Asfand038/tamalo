@@ -112,12 +112,19 @@ export const StyledDescriptionBtn = styled.div`
   }
 `;
 
-export const StyledBoardBgColorIcon = styled.img<{ bgColor: string }>`
+interface IBoardBgColorIcon {
+  bgColor: string;
+  bgImage?: string;
+}
+export const StyledBoardBgColorIcon = styled.div<IBoardBgColorIcon>`
   height: 20px;
   width: 20px;
   margin: 0 8px 0 2px;
   border-radius: 3px;
   background-color: ${({ bgColor }) => bgColor};
+  background-image: ${({ bgImage }) => (bgImage ? `url(${bgImage})` : 'none')};
+  background-position: 50%;
+  background-size: cover;
 `;
 
 export const StyledSubMenuTitle = styled.div`
@@ -232,7 +239,7 @@ export const StyledChangeBgContent = styled.div<{ isVisible: boolean }>`
 
 export const StyledUserInfo = styled.div`
   display: flex;
-  margin: 8px 0 8px 4px;
+  margin: 8px 0;
   & > div:first-child {
     margin: 4px 8px 4px 0;
   }
@@ -266,7 +273,7 @@ export const StyledAvatar = styled(Avatar)<IAvatar>`
     width: ${({ width }) => width};
     font-weight: 500;
     background-color: ${({ theme }) => theme.colors.red[200]};
-    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    font-size: ${({ theme }) => theme.typeScale.header1};
     &:hover {
       cursor: pointer;
     }
