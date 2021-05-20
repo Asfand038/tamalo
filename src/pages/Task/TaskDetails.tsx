@@ -56,7 +56,7 @@ const TaskDetails: React.FC<IProps> = ({ data }) => {
       <TaskLayout>
         {!cover && (
           <StyledCloseIcon>
-            <CloseIcon onClick={() => history.goBack()} />
+            <CloseIcon onClick={() => history.push(`/boards/${boardId}`)} />
           </StyledCloseIcon>
         )}
         {cover && (

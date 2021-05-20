@@ -31,22 +31,27 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const StyledInputField = styled(TextField)<TextFieldProps>`
-  & fieldset {
-    border: none;
-  }
-  & input {
-    background-color: ${({ theme }) => theme.colors.neutral[200]};
-    height: 44px;
-    padding: 0 8px 0;
-    margin: 0 0 1.2em;
-    border: 2px solid ${({ theme }) => theme.colors.neutral[300]};
-    border-radius: 3px;
-    transition: background-color 200ms ease-in-out,
-      border-color 200ms ease-in-out;
-    :focus {
-      background-color: ${({ theme }) => theme.colors.neutral[100]};
-      border: 2px solid ${({ theme }) => theme.colors.blue[100]};
+type IInputField = TextFieldProps & { invisible?: number };
+
+export const StyledInputField = styled(TextField)<IInputField>`
+  && {
+    display: ${({ invisible }) => invisible && 'none'};
+    & fieldset {
+      border: none;
+    }
+    & input {
+      background-color: ${({ theme }) => theme.colors.neutral[200]};
+      height: 44px;
+      padding: 0 8px 0;
+      margin: 0 0 1.2em;
+      border: 2px solid ${({ theme }) => theme.colors.neutral[300]};
+      border-radius: 3px;
+      transition: background-color 200ms ease-in-out,
+        border-color 200ms ease-in-out;
+      :focus {
+        background-color: ${({ theme }) => theme.colors.neutral[100]};
+        border: 2px solid ${({ theme }) => theme.colors.blue[100]};
+      }
     }
   }
 `;

@@ -110,9 +110,9 @@ const PopOverButton: React.FC<IPopOverButton> = ({
         onClick={() => updateTaskMembersHandler(member.id, member.isMember)}
       >
         <StyledAvatar src={member.profileImg}>
-          {getAvatarFallbackName(member.username)}
+          {getAvatarFallbackName(`${member.firstName} ${member.lastName}`)}
         </StyledAvatar>
-        <span>{member.username}</span>
+        <span>{`${member.firstName} ${member.lastName} (${member.username})`}</span>
         {member.isMember && <DoneIcon />}
       </StyledPopOverButton>
     </>

@@ -17,7 +17,7 @@ const BoardLayout: React.FC<IProps> = ({
   navbarColor,
 }) => {
   return (
-    <Wrapper>
+    <Wrapper bgColor={bgColor}>
       {bgImage && (
         <StyledImage src={`${baseUrl}${bgImage}`} alt="" bgColor={bgColor} />
       )}

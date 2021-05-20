@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -46,20 +45,26 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { id } = useParams<IParams>();
 
-  const ownerDetails = owners.map(({ profileImg, username }) => {
-    return {
-      img: profileImg,
-      owner: true,
-      avatarFallbackText: getAvatarFallbackName(username),
-    };
-  });
-  const memberDetails = members.map(({ profileImg, username }) => {
-    return {
-      img: profileImg,
-      owner: false,
-      avatarFallbackText: getAvatarFallbackName(username),
-    };
-  });
+  const ownerDetails = owners.map(
+    ({ profileImg, firstName, lastName, username }) => {
+      return {
+        img: profileImg,
+        isOwner: true,
+        username,
+        avatarFallbackText: getAvatarFallbackName(`${firstName} ${lastName}`),
+      };
+    }
+  );
+  const memberDetails = members.map(
+    ({ profileImg, firstName, lastName, username }) => {
+      return {
+        img: profileImg,
+        isOwner: false,
+        username,
+        avatarFallbackText: getAvatarFallbackName(`${firstName} ${lastName}`),
+      };
+    }
+  );
 
   const avatarGroupData = [...ownerDetails, ...memberDetails];
 
@@ -91,20 +96,26 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
         </StyledIconOnLeftBtn>
         <StyledDivider orientation="vertical" flexItem />
         <StyledAvatarGroup spacing={1}>
-          {avatarGroupData.map(({ img, owner, avatarFallbackText }) => {
-            if (owner) {
+          {avatarGroupData.map(
+            ({ img, isOwner, avatarFallbackText, username }) => {
+              if (isOwner) {
+                return (
+                  <StyledBadge
+                    key={username}
+                    badgeContent={<OwnerIcon />}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  >
+                    <StyledAvatar src={img}>{avatarFallbackText}</StyledAvatar>
+                  </StyledBadge>
+                );
+              }
               return (
-                <StyledBadge
-                  key={uuidv4()}
-                  badgeContent={<OwnerIcon />}
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                >
-                  <StyledAvatar src={img}>{avatarFallbackText}</StyledAvatar>
-                </StyledBadge>
+                <StyledAvatar src={img} key={username}>
+                  {avatarFallbackText}
+                </StyledAvatar>
               );
             }
-            return <StyledAvatar src={img} key={uuidv4()} />;
-          })}
+          )}
         </StyledAvatarGroup>
         <StyledNavBtn
           style={{ width: 'auto' }}

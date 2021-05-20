@@ -176,11 +176,13 @@ const MainContent: React.FC<IProps> = ({
           <StyledTaskDetailItem>
             <div>MEMBERS</div>
             <div>
-              {taskMembers.map((member: IUser) => (
-                <StyledAvatar key={uuidv4()} src={member.profileImg}>
-                  {getAvatarFallbackName(member.username)}
-                </StyledAvatar>
-              ))}
+              {taskMembers.map(
+                ({ username, profileImg, firstName, lastName }: IUser) => (
+                  <StyledAvatar key={username} src={profileImg}>
+                    {getAvatarFallbackName(`${firstName} ${lastName}`)}
+                  </StyledAvatar>
+                )
+              )}
               <StyledAddMemberButton>
                 <AddIcon />
               </StyledAddMemberButton>

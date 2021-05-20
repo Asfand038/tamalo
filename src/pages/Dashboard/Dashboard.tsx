@@ -22,6 +22,7 @@ import { IBoardLessDetails } from './utils';
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
+
   const [isAddBoardModalOpen, setIsAddBoardModalOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery<IDashboardData, IError>(

@@ -101,7 +101,7 @@ const AddComment: React.FC = () => {
     <StyledWrapper>
       {error && <ErrorAlert message={errorMessages.addComment} />}
       <StyledAvatar src={user.profileImg}>
-        {getAvatarFallbackName(user.username)}
+        {getAvatarFallbackName(`${user.firstName} ${user.lastName}`)}
       </StyledAvatar>
       <ClickAwayListener onClickAway={() => setIsWritingComment(false)}>
         <StyledAccordion expanded={isWritingComment}>

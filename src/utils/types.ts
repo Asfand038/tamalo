@@ -2,7 +2,10 @@ export interface IUser {
   id: string;
   email: string;
   username: string;
-  profileImg: string;
+  firstName: string;
+  lastName: string;
+  bio?: string;
+  profileImg?: string;
 }
 
 export interface ICover {

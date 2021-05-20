@@ -25,3 +25,22 @@ export const getUserInformationRequest = async () => {
 
   return data;
 };
+
+export const sendSignupRequest = async (
+  email: string,
+  firstName: string,
+  lastName: string,
+  username: string,
+  password: string
+) => {
+  const response = await fetch(`${baseUrl}/auth/local/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, firstName, lastName, username, password }),
+  });
+  const data = await response.json();
+
+  return data;
+};

@@ -1,4 +1,3 @@
-export * from './getImgFromMockApi';
 export * from './getAvatarFallback';
 export * from './types';
 export * from './coverUtils';

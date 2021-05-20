@@ -1,9 +1,5 @@
 import { QueryClient } from 'react-query';
-import {
-  getDesiredDateFormat,
-  getMultipleImgsFromMockApi,
-  getRequiredCoverData,
-} from '../../../utils';
+import { getDesiredDateFormat, getRequiredCoverData } from '../../../utils';
 
 import { IBoard, IList, ITask, IUser } from './types';
 
@@ -29,29 +25,26 @@ export const getRequiredBoardData = async (data: any) => {
     tasksOrder: data.tasksOrder[list.id],
   }));
 
-  const requiredNumOfImgs = [...data.owners, ...data.members].length - 1;
-  const images = await getMultipleImgsFromMockApi(requiredNumOfImgs);
-
   const ownersArray: IUser[] = data.owners.map(
-    ({ id, email, username }: IUser) => {
-      if (data.userId === id) {
-        return { id, email, username, profileImg: data.profileImg };
-      }
-      const image = images[0];
-      images.splice(0, 1);
-      return { id, email, username, profileImg: image };
-    }
+    ({ id, email, username, firstName, lastName, profileImg }: IUser) => ({
+      id,
+      email,
+      username,
+      profileImg,
+      firstName,
+      lastName,
+    })
   );
 
   const membersArray: IUser[] = data.members.map(
-    ({ id, email, username }: IUser) => {
-      if (data.userId === id) {
-        return { id, email, username, profileImg: data.profileImg };
-      }
-      const image = images[0];
-      images.splice(0, 1);
-      return { id, email, username, profileImg: image };
-    }
+    ({ id, email, username, firstName, lastName, profileImg }: IUser) => ({
+      id,
+      email,
+      username,
+      profileImg,
+      firstName,
+      lastName,
+    })
   );
 
   const { bgColor } = data.meta;

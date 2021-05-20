@@ -17,7 +17,9 @@ export interface IUser {
   id: string;
   email: string;
   username: string;
-  profileImg: string;
+  firstName: string;
+  lastName: string;
+  profileImg?: string;
 }
 
 export interface IBoard {

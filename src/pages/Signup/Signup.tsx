@@ -9,7 +9,6 @@ import {
 
 import { AuthProviders, Loader } from '../../components';
 import { getAppIcon } from '../../utils';
-import { userSignupRequest } from './api';
 import { useAuth } from '../../contexts';
 import {
   AuthLayout,
@@ -26,10 +25,7 @@ import {
 } from './Signup.styles';
 
 const SignupPage: React.FC = () => {
-  const { login, isLoggedIn } = useAuth();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { isLoggedIn, isLoading, signup, error } = useAuth();
 
   const [disableContinueBtn, setDisableContinueBtn] = useState(true);
   const [emailConfirmed, setEmailConfirmed] = useState(false);
@@ -54,24 +50,14 @@ const SignupPage: React.FC = () => {
   };
 
   const submitHandler = async (event: React.FormEvent) => {
-    setIsLoading(true);
     event.preventDefault();
-    try {
-      await userSignupRequest(
-        emailRef.current!.value,
-        firstNameRef.current!.value,
-        lastNameRef.current!.value,
-        usernameRef.current!.value,
-        passwordRef.current!.value
-      );
-
-      await login(emailRef.current!.value, passwordRef.current!.value);
-      setIsLoading(false);
-    } catch (err) {
-      setEmailConfirmed(false);
-      setIsLoading(false);
-      setError('Unable to create user');
-    }
+    signup(
+      emailRef.current!.value,
+      firstNameRef.current!.value,
+      lastNameRef.current!.value,
+      usernameRef.current!.value,
+      passwordRef.current!.value
+    );
   };
 
   return (
@@ -90,39 +76,41 @@ const SignupPage: React.FC = () => {
             </StyledErrorMessage>
           )}
           <StyledAuthCardTitle>Sign up for your account</StyledAuthCardTitle>
+          <StyledInputField
+            inputRef={emailRef}
+            variant="outlined"
+            placeholder="Enter email address"
+            fullWidth
+            required
+            onKeyUp={validateEmailHandler}
+            invisible={+emailConfirmed}
+          />
           <form onSubmit={submitHandler}>
-            {!emailConfirmed && (
-              <StyledInputField
-                inputRef={emailRef}
-                variant="outlined"
-                placeholder="Enter email address"
-                fullWidth
-                required
-                onChange={() => setError('')}
-                onKeyUp={validateEmailHandler}
-              />
-            )}
             {emailConfirmed && (
               <>
                 <StyledInputField
+                  inputRef={firstNameRef}
                   variant="outlined"
                   placeholder="Enter first name"
                   fullWidth
                   required
                 />
                 <StyledInputField
+                  inputRef={lastNameRef}
                   variant="outlined"
                   placeholder="Enter last name"
                   fullWidth
                   required
                 />
                 <StyledInputField
+                  inputRef={usernameRef}
                   variant="outlined"
                   placeholder="Enter username"
                   fullWidth
                   required
                 />
                 <StyledPasswordInput
+                  inputRef={passwordRef}
                   focused={passwordFocus}
                   variant="outlined"
                   placeholder="Create password"

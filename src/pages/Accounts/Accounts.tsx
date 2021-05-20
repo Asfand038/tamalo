@@ -26,8 +26,8 @@ import {
 
 const AccountsPage: React.FC = () => {
   const { user } = useAuth();
-  const { profileImg, username } = user;
-  const avatarFallbackName = getAvatarFallbackName(username);
+  const { profileImg, username, firstName, lastName } = user;
+  const avatarFallbackName = getAvatarFallbackName(`${firstName} ${lastName}`);
 
   const [name, setName] = useState(username);
   const [bio, setBio] = useState('');
@@ -48,7 +48,7 @@ const AccountsPage: React.FC = () => {
           <div>
             <StyledAvatar src={profileImg}>{avatarFallbackName}</StyledAvatar>
             <StyledUsername>
-              <div>{username}</div>
+              <div>{`${firstName} ${lastName}`}</div>
               <div>@{username}</div>
             </StyledUsername>
           </div>

@@ -7,11 +7,7 @@ import {
   ITask,
 } from '../utils';
 
-export const getBoardById = async (
-  boardId: string,
-  userId: string,
-  profileImg: string
-) => {
+export const getBoardById = async (boardId: string) => {
   const data = await (
     await fetch(`${baseUrl}/boards/${boardId}`, {
       headers: {
@@ -20,11 +16,7 @@ export const getBoardById = async (
     })
   ).json();
 
-  const requiredBoardData = await getRequiredBoardData({
-    ...data,
-    userId,
-    profileImg,
-  });
+  const requiredBoardData = await getRequiredBoardData(data);
 
   return requiredBoardData;
 };

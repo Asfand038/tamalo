@@ -35,8 +35,8 @@ interface IProps {
 
 const Navbar: React.FC<IProps> = ({ bgColor }) => {
   const { logout, user } = useAuth();
-  const { username, profileImg, email } = user;
-  const avatarFallbackName = getAvatarFallbackName(username);
+  const { profileImg, email, firstName, lastName } = user;
+  const avatarFallbackName = getAvatarFallbackName(`${firstName} ${lastName}`);
 
   const [searchFocus, setSearchFocus] = useState(false);
   const [avatarAnchorEl, setAvatarAnchorEl] = useState<HTMLElement | null>(
@@ -126,7 +126,7 @@ const Navbar: React.FC<IProps> = ({ bgColor }) => {
                 {avatarFallbackName}
               </StyledAvatar>
               <div>
-                <div>{username}</div>
+                <div>{`${firstName} ${lastName}`}</div>
                 <div>{email}</div>
               </div>
             </StyledUserInfo>
