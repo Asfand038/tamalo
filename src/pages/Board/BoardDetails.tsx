@@ -18,7 +18,7 @@ interface IProps {
 
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard, children }) => {
   const {
-    listsOrder,
+    listsOrder = [],
     lists,
     tasks,
     title,

@@ -72,7 +72,7 @@ const accordionList = [
 ];
 
 const Sidebar: React.FC = () => {
-  const [expandAccordion, setExpandAccordion] = useState(false);
+  const [expandAccordion, setExpandAccordion] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
