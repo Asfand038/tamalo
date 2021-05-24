@@ -1,16 +1,27 @@
 import React from 'react';
 
+import { baseUrl } from '../../utils';
 import { Navbar } from '../../components';
-import { Wrapper } from './BoardLayout.styles';
+import { Wrapper, StyledImage } from './BoardLayout.styles';
 
 interface IProps {
   bgColor: string;
+  bgImage?: string;
+  navbarColor?: string;
 }
 
-const BoardLayout: React.FC<IProps> = ({ children, bgColor }) => {
+const BoardLayout: React.FC<IProps> = ({
+  children,
+  bgColor,
+  bgImage,
+  navbarColor,
+}) => {
   return (
     <Wrapper bgColor={bgColor}>
-      <Navbar />
+      {bgImage && (
+        <StyledImage src={`${baseUrl}${bgImage}`} alt="" bgColor={bgColor} />
+      )}
+      <Navbar bgColor={navbarColor || 'rgba(0, 0, 0, 0.15)'} />
       <div>{children}</div>
     </Wrapper>
   );

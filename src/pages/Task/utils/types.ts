@@ -17,7 +17,9 @@ export interface IUser {
   id: string;
   email: string;
   username: string;
-  profileImg: string;
+  firstName: string;
+  lastName: string;
+  profileImg?: string;
 }
 
 export interface IBoard {
@@ -28,6 +30,8 @@ export interface IBoard {
   listsOrder: string[];
   owners: IUser[];
   members: IUser[];
+  bgImage?: string;
+  bgColor: string;
 }
 
 export interface IComment {

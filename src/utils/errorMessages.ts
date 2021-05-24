@@ -1,6 +1,7 @@
 export const errorMessages = {
-  getBoards: 'The dashboard could not be loaded at this time.',
-  getBoard: 'The board could not be loaded at this time.',
+  generalError: `The requested server is unavailable. Please contact your support and describe your issue.`,
+  getBoards: `The dashboard could not be loaded at this time.`,
+  getBoard: `The board could not be loaded at this time.`,
   updateBoard: 'Unable to update board. Please try again...',
   addList: 'Unable to add list. Please try again...',
   addTask: 'Unable to add task. Please try again...',

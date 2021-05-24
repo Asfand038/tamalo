@@ -1,2 +1,2 @@
-export { default as OpenedForm } from './OpenedForm';
-export { default as ClosedForm } from './ClosedForm';
+export { default as OpenedAddTaskForm } from './OpenedForm';
+export { default as ClosedAddTaskForm } from './ClosedForm';

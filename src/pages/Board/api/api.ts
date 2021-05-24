@@ -1,3 +1,4 @@
+import { baseUrl } from '../../../utils';
 import {
   getRequiredBoardData,
   getTasksOrder,
@@ -6,23 +7,16 @@ import {
   ITask,
 } from '../utils';
 
-export const getBoardById = async (
-  boardId: string,
-  userId: string,
-  profileImg: string
-) => {
+export const getBoardById = async (boardId: string) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards/${boardId}`, {
+    await fetch(`${baseUrl}/boards/${boardId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
   ).json();
-  const requiredBoardData = await getRequiredBoardData({
-    ...data,
-    userId,
-    profileImg,
-  });
+
+  const requiredBoardData = await getRequiredBoardData(data);
 
   return requiredBoardData;
 };
@@ -36,7 +30,7 @@ export const updateOneBoard = async ({
   const tasksOrder = getTasksOrder(lists);
 
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/boards/${id}`, {
+    await fetch(`${baseUrl}/boards/${id}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -51,7 +45,7 @@ export const updateOneBoard = async ({
 
 export const addOneList = async (id: string, title: string) => {
   const data = await (
-    await fetch(`xhttps://tamalo.herokuapp.com/boards/${id}/new/list`, {
+    await fetch(`${baseUrl}/boards/${id}/new/list`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -66,17 +60,14 @@ export const addOneList = async (id: string, title: string) => {
 
 export const addOneTask = async (id: string, listId: string, title: string) => {
   const data = await (
-    await fetch(
-      `https://tamalo.herokuapp.com/boards/${id}/lists/${listId}/new/task`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title }),
-      }
-    )
+    await fetch(`${baseUrl}/boards/${id}/lists/${listId}/new/task`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title }),
+    })
   ).json();
 
   return getRequiredBoardData(data);
@@ -89,7 +80,7 @@ export const updateOneList = async (
   tasks: ITask[]
 ) => {
   const data = await (
-    await fetch(`https://tamalo.herokuapp.com/lists/${listId}`, {
+    await fetch(`${baseUrl}/lists/${listId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

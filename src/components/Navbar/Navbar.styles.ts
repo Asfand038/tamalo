@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 import { Toolbar, Button, Avatar } from '@material-ui/core';
 
-export const StyledNavbar = styled(Toolbar)`
+interface INavbar {
+  bgcolor?: string;
+}
+
+export const StyledNavbar = styled(Toolbar)<INavbar>`
   && {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     box-sizing: border-box;
-    background-color: ${({ theme }) => theme.colors.blue[200]};
+    background-color: ${({ theme, bgcolor }) =>
+      bgcolor || theme.colors.blue[200]};
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,7 +127,7 @@ export const AppLogo = styled(Button)`
       font-size: ${({ theme }) => theme.typeScale.header3};
     }
     svg {
-      font-size: 24px;
+      font-size: ${({ theme }) => theme.typeScale.header1};
     }
     & .MuiButton-startIcon {
       margin-right: 5px;
@@ -165,11 +170,11 @@ export const StyledUserInfo = styled.div`
     & > div:first-child {
       margin-top: 4px;
       max-width: 230px;
-      color: #172b4d;
+      color: ${({ theme }) => theme.colors.blue[400]};
     }
     & > div:last-child {
-      font-size: 12px;
-      color: #b3bac5;
+      font-size: ${({ theme }) => theme.typeScale.subtitle};
+      color: ${({ theme }) => theme.colors.neutral[380]};
       text-overflow: ellipsis;
       max-width: 230px;
     }

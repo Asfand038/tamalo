@@ -8,7 +8,7 @@ interface GridItemProps {
 
 export const StyledGridItem = styled(Grid)<GridItemProps>`
   && {
-    background-color: ${({ color }) => color || 'inherit'};
+    background-color: ${({ color }) => color};
     background-clip: content-box;
     border-radius: 12px;
     max-width: 225px;

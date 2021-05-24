@@ -20,8 +20,8 @@ export const StyledAccordion = styled(Accordion)`
     margin-left: 14px;
     box-shadow: ${({ expanded, theme }) =>
       expanded
-        ? `0 4px 8px -2px ${theme.colors.boxShadow}, 0 0 0 1px rgb(9 30 66 / 8%)`
-        : `0 1px 2px -1px ${theme.colors.boxShadow}, 0 0 0 1px rgb(9 30 66 / 8%)`};
+        ? `0 4px 8px -2px ${theme.colors.boxShadow[200]}, 0 0 0 1px ${theme.colors.boxShadow[100]}`
+        : `0 1px 2px -1px ${theme.colors.boxShadow[200]}, 0 0 0 1px ${theme.colors.boxShadow[100]}`};
     &::before {
       content: none;
     }
@@ -48,9 +48,9 @@ export const StyledAccordionSummary = styled(
     }
     &:hover {
       cursor: ${({ iswriting }) => !iswriting && 'pointer'};
-      box-shadow: ${({ iswriting }) =>
+      box-shadow: ${({ iswriting, theme }) =>
         !iswriting &&
-        '0 1px 1px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%)'};
+        `0 1px 1px ${theme.colors.boxShadow[200]}, 0 0 0 1px ${theme.colors.boxShadow[100]}`};
     }
   }
 `;
@@ -132,8 +132,8 @@ export const StyledSaveButton = styled(Button)`
       background-color: ${({ theme }) => theme.colors.green[200]};
     }
     &:disabled {
-      background-color: rgba(9, 30, 66, 0.04);
-      color: #a5adba;
+      background-color: ${({ theme }) => theme.colors.darkness[40]};
+      color: ${({ theme }) => theme.colors.darkness[300]};
     }
   }
 `;

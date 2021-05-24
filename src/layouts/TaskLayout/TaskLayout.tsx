@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Fade from '@material-ui/core/Fade';
 
 import {
@@ -11,12 +11,13 @@ import {
 const TaskLayout: React.FC = ({ children }) => {
   const history = useHistory();
   const modalRef = useRef<HTMLDivElement>(null);
+  const { boardId } = useParams<{ boardId: string }>();
 
   return (
     <StyledModal
       ref={modalRef}
       open
-      onClose={() => history.goBack()}
+      onClose={() => history.push(`/boards/${boardId}`)}
       BackdropComponent={StyledBackdrop}
       BackdropProps={{
         timeout: 500,

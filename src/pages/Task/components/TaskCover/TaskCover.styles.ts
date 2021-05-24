@@ -1,25 +1,24 @@
 import { Button, Menu } from '@material-ui/core';
 import styled from 'styled-components';
 
-export const StyledCoverWrapper = styled.div<{
-  imgSrc: string;
-  bgColor: string;
-}>`
+export const StyledCoverWrapper = styled.div<{ bgColor: string }>`
   background-color: ${({ bgColor }) => bgColor};
-  background-image: ${({ imgSrc }) =>
-    `url('https://tamalo.herokuapp.com${imgSrc}')`};
   height: 160px;
   width: 100%;
-  background-size: contain;
-  background-origin: content-box;
-  box-sizing: border-box;
-  background-position: center center;
-  background-repeat: no-repeat;
   position: relative;
   &:hover {
     opacity: 0.9;
     cursor: pointer;
   }
+`;
+
+export const StyledImage = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center center;
+  box-sizing: border-box;
+  position: relative;
 `;
 
 export const StyledCloseIcon = styled.span<{ dark: number }>`

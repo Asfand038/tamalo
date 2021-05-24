@@ -33,9 +33,7 @@ const BoardPage: React.FC = () => {
     data,
     isLoading: loadingBoardData,
     error: errorLoadingBoardData,
-  } = useQuery<IBoard, IError>(['board', id], () =>
-    getBoardById(id, user.id, user.profileImg)
-  );
+  } = useQuery<IBoard, IError>(['board', id], () => getBoardById(id));
 
   if (loadingBoardsData || loadingBoardData) return <Loader color="#e1e1e1" />;
   if (errorLoadingBoardsData)

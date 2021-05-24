@@ -25,18 +25,3 @@ export const StyledIcon = styled(FiberManualRecordIcon)`
     margin: 0 8px 0;
   }
 `;
-
-export const ErrorMessage = styled.div`
-  text-align: left;
-  & > p {
-    background-color: ${({ theme }) => theme.colors.red[100]};
-    color: ${({ theme }) => theme.colors.red[50]};
-    font-size: ${({ theme }) => theme.typeScale.heading};
-    line-height: 1.33;
-    border-radius: 4px;
-    border: ${({ theme }) => `1px solid ${theme.colors.red[100]}`};
-    display: inline-block;
-    padding: 0.5em 1em;
-    text-align: left;
-  }
-`;

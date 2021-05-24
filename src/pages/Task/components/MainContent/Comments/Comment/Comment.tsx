@@ -127,7 +127,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
         <ErrorAlert message={errorMessages.deleteComment} />
       )}
       <StyledAvatar src={author.profileImg}>
-        {getAvatarFallbackName(author.username)}
+        {getAvatarFallbackName(`${author.firstName} ${author.lastName}`)}
       </StyledAvatar>
       <StyledComment>
         <StyledCommentDetails>

@@ -69,7 +69,7 @@ export const StyledTextArea = styled(TextField)<TextFieldProps>`
   && {
     background-color: ${({ theme }) => theme.colors.neutral[100]};
     border-radius: 3px;
-    box-shadow: ${({ theme }) => `0 1px 0 ${theme.colors.boxShadow}`};
+    box-shadow: ${({ theme }) => `0 1px 0 ${theme.colors.boxShadow[200]}`};
     width: 100%;
     min-height: 20px;
     position: relative;

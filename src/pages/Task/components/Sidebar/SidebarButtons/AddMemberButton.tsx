@@ -25,7 +25,7 @@ const StyledPopOverContent = styled.div`
   padding: 0 12px 12px;
   & > div:first-child {
     color: ${({ theme }) => theme.colors.neutral[550]};
-    font-size: 12px;
+    font-size: ${({ theme }) => theme.typeScale.subtitle};
     font-weight: 500;
     margin-bottom: 10px;
     letter-spacing: 0.5px;
@@ -53,7 +53,7 @@ const StyledPopOverButton = styled(Button)`
     & svg {
       position: absolute;
       right: 11px;
-      font-size: 14px;
+      font-size: ${({ theme }) => theme.typeScale.paragraph};
       color: ${({ theme }) => theme.colors.blue[300]};
     }
   }
@@ -110,9 +110,9 @@ const PopOverButton: React.FC<IPopOverButton> = ({
         onClick={() => updateTaskMembersHandler(member.id, member.isMember)}
       >
         <StyledAvatar src={member.profileImg}>
-          {getAvatarFallbackName(member.username)}
+          {getAvatarFallbackName(`${member.firstName} ${member.lastName}`)}
         </StyledAvatar>
-        <span>{member.username}</span>
+        <span>{`${member.firstName} ${member.lastName} (${member.username})`}</span>
         {member.isMember && <DoneIcon />}
       </StyledPopOverButton>
     </>

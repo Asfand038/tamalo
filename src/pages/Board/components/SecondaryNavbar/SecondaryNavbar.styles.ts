@@ -6,20 +6,17 @@ import {
   Avatar,
   Badge,
   BadgeProps,
-  Drawer,
-  IconButton,
 } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
 
 export const StyledNavbar = styled(Toolbar)`
   && {
     box-sizing: border-box;
-    background-color: inherit;
+    background-color: rgba(0, 0, 0, 0.24);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 0;
-    margin-top: -6px;
     padding: 0 4px 0 8px;
     transition: margin 0.1s ease-in;
     & .flex-container {
@@ -88,7 +85,7 @@ export const StyledNavBtn = styled(Button)`
     width: 32px;
     height: 32px;
     padding: 0 12px;
-    background-color: ${({ theme }) => theme.colors.transparency[300]};
+    background-color: ${({ theme }) => theme.colors.transparency[200]};
     text-transform: none;
     box-shadow: none;
     border-radius: 3px;
@@ -96,7 +93,7 @@ export const StyledNavBtn = styled(Button)`
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     font-weight: 400;
     &:hover {
-      background-color: ${({ theme }) => theme.colors.transparency[200]};
+      background-color: ${({ theme }) => theme.colors.transparency[300]};
       box-shadow: none;
     }
     svg {
@@ -143,54 +140,6 @@ export const StyledIconOnLeftBtn = styled(StyledNavBtn)`
     & > span {
       & > span:last-child {
         padding-top: 2px;
-      }
-    }
-  }
-`;
-
-export const StyledDrawer = styled(Drawer)`
-  && {
-    & > div {
-      top: 40px;
-      width: 339px;
-    }
-  }
-`;
-
-export const StyledMenuPopupContent = styled.div`
-  box-sizing: border-box;
-  & > div:first-child {
-    position: relative;
-    width: 100%;
-    padding: 0 6px 0 12px;
-    margin-bottom: 8px;
-    color: ${({ theme }) => theme.colors.blue[400]};
-    & > span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 48px;
-      border-bottom: 1px solid rgba(9, 30, 66, 0.13);
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-`;
-
-export const StyledCloseIconButton = styled(IconButton)`
-  && {
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    padding: 0;
-    & svg {
-      font-size: 20px;
-      color: #42526e;
-    }
-    &:hover {
-      background-color: inherit;
-      & svg {
-        color: #091e42;
       }
     }
   }

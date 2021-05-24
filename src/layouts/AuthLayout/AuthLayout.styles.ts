@@ -31,22 +31,27 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const StyledInputField = styled(TextField)<TextFieldProps>`
-  & fieldset {
-    border: none;
-  }
-  & input {
-    background-color: ${({ theme }) => theme.colors.neutral[200]};
-    height: 44px;
-    padding: 0 8px 0;
-    margin: 0 0 1.2em;
-    border: 2px solid ${({ theme }) => theme.colors.neutral[300]};
-    border-radius: 3px;
-    transition: background-color 200ms ease-in-out,
-      border-color 200ms ease-in-out;
-    :focus {
-      background-color: ${({ theme }) => theme.colors.neutral[100]};
-      border: 2px solid ${({ theme }) => theme.colors.blue[100]};
+type IInputField = TextFieldProps & { invisible?: number };
+
+export const StyledInputField = styled(TextField)<IInputField>`
+  && {
+    display: ${({ invisible }) => invisible && 'none'};
+    & fieldset {
+      border: none;
+    }
+    & input {
+      background-color: ${({ theme }) => theme.colors.neutral[200]};
+      height: 44px;
+      padding: 0 8px 0;
+      margin: 0 0 1.2em;
+      border: 2px solid ${({ theme }) => theme.colors.neutral[300]};
+      border-radius: 3px;
+      transition: background-color 200ms ease-in-out,
+        border-color 200ms ease-in-out;
+      :focus {
+        background-color: ${({ theme }) => theme.colors.neutral[100]};
+        border: 2px solid ${({ theme }) => theme.colors.blue[100]};
+      }
     }
   }
 `;
@@ -95,5 +100,20 @@ export const ButtonStyle = styled(Button)`
     &:hover {
       box-shadow: none;
     }
+  }
+`;
+
+export const StyledErrorMessage = styled.div`
+  text-align: left;
+  & > p {
+    background-color: ${({ theme }) => theme.colors.red[100]};
+    color: ${({ theme }) => theme.colors.red[50]};
+    font-size: ${({ theme }) => theme.typeScale.heading};
+    line-height: 1.33;
+    border-radius: 4px;
+    border: ${({ theme }) => `1px solid ${theme.colors.red[100]}`};
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-align: left;
   }
 `;

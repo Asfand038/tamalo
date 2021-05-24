@@ -29,10 +29,14 @@ import {
   StyledPopOverButton,
 } from './Navbar.styles';
 
-const Navbar: React.FC = () => {
+interface IProps {
+  bgColor?: string;
+}
+
+const Navbar: React.FC<IProps> = ({ bgColor }) => {
   const { logout, user } = useAuth();
-  const { username, profileImg, email } = user;
-  const avatarFallbackName = getAvatarFallbackName(username);
+  const { profileImg, email, firstName, lastName } = user;
+  const avatarFallbackName = getAvatarFallbackName(`${firstName} ${lastName}`);
 
   const [searchFocus, setSearchFocus] = useState(false);
   const [avatarAnchorEl, setAvatarAnchorEl] = useState<HTMLElement | null>(
@@ -47,7 +51,7 @@ const Navbar: React.FC = () => {
   const history = useHistory();
 
   return (
-    <StyledNavbar disableGutters>
+    <StyledNavbar disableGutters bgcolor={bgColor}>
       <div className="d-flex">
         <StyledNavBtn size="small">
           <AppsSharpIcon />
@@ -122,7 +126,7 @@ const Navbar: React.FC = () => {
                 {avatarFallbackName}
               </StyledAvatar>
               <div>
-                <div>{username}</div>
+                <div>{`${firstName} ${lastName}`}</div>
                 <div>{email}</div>
               </div>
             </StyledUserInfo>

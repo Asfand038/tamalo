@@ -16,6 +16,7 @@ const DashboardCard: React.FC<CardProps> = ({ details }) => {
     background = { color: defaultTheme.colors.blue[100] },
     title,
   } = details;
+
   const [hoverBoard, setHoverBoard] = useState('');
   const history = useHistory();
 

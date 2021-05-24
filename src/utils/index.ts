@@ -1,6 +1,7 @@
-export * from './getImgFromMockApi';
-export { getAvatarFallbackName } from './getAvatarFallback';
+export * from './getAvatarFallback';
 export * from './types';
 export * from './coverUtils';
 export * from './getDesiredDateFormat';
-export { errorMessages } from './errorMessages';
+export * from './errorMessages';
+export * from './appBrandingUtils';
+export * from './apiUtils';

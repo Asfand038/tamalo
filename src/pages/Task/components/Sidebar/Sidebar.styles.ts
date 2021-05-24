@@ -7,12 +7,12 @@ export const StyledSidebar = styled.div`
   overflow: hidden;
 
   && .small-icon {
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
     margin-left: 2px;
   }
 
   && .large-icon {
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.typeScale.header3};
     margin-bottom: 3px;
   }
 `;
@@ -23,7 +23,7 @@ export const StyledList = styled.div`
 
 export const StyledTitle = styled.div`
   color: ${({ theme }) => theme.colors.neutral[550]};
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.typeScale.subtitle};
   font-weight: 500;
   margin-top: 16px;
   line-height: 20px;
@@ -32,7 +32,7 @@ export const StyledTitle = styled.div`
 
 export const StyledListButton = styled(Button)`
   && {
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
     font-weight: 400;
     width: 100%;
     text-transform: none;
@@ -60,7 +60,7 @@ export const StyledListButton = styled(Button)`
     }
     & svg {
       color: ${({ theme }) => theme.colors.blue[300]};
-      font-size: 16px;
+      font-size: ${({ theme }) => theme.typeScale.header4};
     }
   }
 `;
@@ -81,7 +81,7 @@ export const StyledPopOverContent = styled.div`
   padding: 0 12px 12px;
   & > div:first-child {
     color: ${({ theme }) => theme.colors.neutral[550]};
-    font-size: 12px;
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
     font-weight: 500;
     margin-bottom: 4px;
     letter-spacing: 1px;
@@ -92,14 +92,14 @@ export const StyledPopOverButton = styled(Button)`
   && {
     font-size: ${({ theme }) => theme.typeScale.paragraph};
     font-weight: 400;
-    background-color: rgba(9, 30, 66, 0.04);
+    background-color: ${({ theme }) => theme.colors.darkness[40]};
     color: ${({ theme }) => theme.colors.blue[400]};
     text-transform: none;
     margin: 8px 4px 0 0;
     box-shadow: none;
     &:hover {
       box-shadow: none;
-      background-color: rgba(9, 30, 66, 0.08);
+      background-color: ${({ theme }) => theme.colors.darkness[50]};
     }
   }
 `;

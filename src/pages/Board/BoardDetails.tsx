@@ -2,22 +2,32 @@ import React, { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 import { Route } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { Helmet } from 'react-helmet';
 
 import { TaskPage } from '../Task';
 import { BoardLayout } from '../../layouts';
 import { SecondaryNavbar, AddList, InnerList } from './components';
-import { StyledBoardContainer } from './Board.styles';
+import { StyledBoardContainer, StyledWrapper } from './Board.styles';
 import { IBoard } from './utils';
+import { getAppIcon } from '../../utils';
 
 interface IProps {
   data: IBoard;
   updateBoard: Function;
 }
 
-const boardBgColor = '#0079bf';
-
 const BoardDetails: React.FC<IProps> = ({ data, updateBoard, children }) => {
-  const { listsOrder, lists, tasks, title, id, members, owners } = data;
+  const {
+    listsOrder = [],
+    lists,
+    tasks,
+    title,
+    id,
+    members,
+    owners,
+    bgImage,
+    bgColor,
+  } = data;
 
   const queryClient = useQueryClient();
   const boardData = queryClient.getQueryData<IBoard>(['board', id])!;
@@ -94,34 +104,48 @@ const BoardDetails: React.FC<IProps> = ({ data, updateBoard, children }) => {
 
   return (
     <>
-      <BoardLayout bgColor={boardBgColor}>
+      <Helmet>
+        <title>{title} | Tamalo</title>
+        <link rel="icon" href={getAppIcon(bgColor)} />
+      </Helmet>
+      <BoardLayout bgImage={bgImage} bgColor={bgColor}>
+        <StyledWrapper>
+          <SecondaryNavbar
+            boardTitle={title}
+            members={members}
+            owners={owners}
+          />
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable
+              droppableId="all-lists"
+              direction="horizontal"
+              type="list"
+            >
+              {(provided) => (
+                <StyledBoardContainer
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  id={id}
+                >
+                  {listsOrder.map((listId, index) => {
+                    const list = lists.find((el) => el.id === listId)!;
+                    return (
+                      <InnerList
+                        key={list.id}
+                        list={list}
+                        tasks={tasks}
+                        index={index}
+                      />
+                    );
+                  })}
+                  {provided.placeholder}
+                  <AddList />
+                </StyledBoardContainer>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </StyledWrapper>
         {children}
-        <SecondaryNavbar boardTitle={title} members={members} owners={owners} />
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="all-lists" direction="horizontal" type="list">
-            {(provided) => (
-              <StyledBoardContainer
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                id={id}
-              >
-                {listsOrder.map((listId, index) => {
-                  const list = lists.find((el) => el.id === listId)!;
-                  return (
-                    <InnerList
-                      key={list.id}
-                      list={list}
-                      tasks={tasks}
-                      index={index}
-                    />
-                  );
-                })}
-                {provided.placeholder}
-                <AddList />
-              </StyledBoardContainer>
-            )}
-          </Droppable>
-        </DragDropContext>
       </BoardLayout>
       <Route path="/boards/:boardId/tasks/:taskId" component={TaskPage} />
     </>

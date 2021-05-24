@@ -18,8 +18,8 @@ export const StyledTaskContainer = styled.div<ITaskContainer>`
     min-height: 22px;
     box-shadow: ${({ isDragging, theme }) =>
       isDragging
-        ? `0 0 3px ${theme.colors.boxShadow}`
-        : `0 1px 0 ${theme.colors.boxShadow}`};
+        ? `0 0 3px ${theme.colors.boxShadow[200]}`
+        : `0 1px 0 ${theme.colors.boxShadow[200]}`};
     font-weight: 400;
     line-height: 20px;
     color: ${({ theme }) => theme.colors.blue[400]};
@@ -44,23 +44,18 @@ export const StyledSkeleton = styled(Skeleton)`
 `;
 
 interface ITaskCover {
-  imgSrc: string;
   bgColor: string;
   height: string;
 }
 
-export const StyledTaskCover = styled.div<ITaskCover>`
+export const StyledTaskCover = styled.img<ITaskCover>`
   width: 100%;
   height: ${({ height }) => `${height}px`};
   border-radius: 3px 3px 0 0;
   background-color: ${({ bgColor }) => bgColor};
-  background-image: ${({ imgSrc }) =>
-    `url('https://tamalo.herokuapp.com${imgSrc}')`};
-  background-size: contain;
-  background-origin: content-box;
+  object-fit: contain;
   box-sizing: border-box;
-  background-position: center center;
-  background-repeat: no-repeat;
+  object-position: center center;
   &:hover {
     cursor: pointer;
   }
@@ -104,16 +99,16 @@ export const StyledBadgesContainer = styled.div`
 `;
 
 export const StyledBadge = styled.div`
-  color: #5e6c84;
+  color: ${({ theme }) => theme.colors.neutral[550]};
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.typeScale.subtitle};
   padding-bottom: 8px;
   margin-right: 12px;
   & svg {
-    color: #6b778c;
-    font-size: 14px;
+    color: ${({ theme }) => theme.colors.neutral[500]};
+    font-size: ${({ theme }) => theme.typeScale.paragraph};
   }
   & div {
     margin-left: 4px;

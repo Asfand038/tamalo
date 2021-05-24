@@ -74,6 +74,7 @@ const CoverUploadButton: React.FC = () => {
       </StyledListButton>
       <input
         type="file"
+        accept="image/*"
         ref={fileUploadRef}
         style={{ display: 'none' }}
         onChange={uploadCoverHandler}

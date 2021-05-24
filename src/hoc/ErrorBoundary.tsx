@@ -1,8 +1,6 @@
 import React, { Component, ReactNode } from 'react';
 import { ErrorContainer } from '../components';
-
-const errorMessage = `The requested server is unavailable. 
-  Please contact your support and describe your issue.`;
+import { errorMessages } from '../utils';
 
 interface IProps {
   children: ReactNode;
@@ -26,7 +24,7 @@ class ErrorBoundary extends Component<IProps, IState> {
     const { children } = this.props;
 
     return hasError ? (
-      <ErrorContainer message={errorMessage} />
+      <ErrorContainer message={errorMessages.generalError} />
     ) : (
       <>{children}</>
     );

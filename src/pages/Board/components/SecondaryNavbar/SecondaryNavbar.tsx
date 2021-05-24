@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -9,7 +8,6 @@ import {
   PeopleOutlineSharp as PeopleOutlineSharpIcon,
   RoomService as RoomServiceIcon,
   MoreHoriz as MoreHorizIcon,
-  Close as CloseIcon,
 } from '@material-ui/icons';
 
 import { getAvatarFallbackName } from '../../../../utils';
@@ -17,6 +15,7 @@ import { OwnerIcon } from '../../../../assets';
 import { IUser } from '../../utils';
 import { BoardTitle } from './BoardTitle';
 import { RealTimeSearchField } from './RealTimeSearchField';
+import { BoardMenu } from './BoardMenu';
 import { PopOver } from '../../../../components';
 import {
   StyledNavbar,
@@ -28,9 +27,6 @@ import {
   StyledAvatar,
   StyledBadge,
   StyledDivider,
-  StyledDrawer,
-  StyledMenuPopupContent,
-  StyledCloseIconButton,
 } from './SecondaryNavbar.styles';
 
 interface IParams {
@@ -49,20 +45,26 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { id } = useParams<IParams>();
 
-  const ownerDetails = owners.map(({ profileImg, username }) => {
-    return {
-      img: profileImg,
-      owner: true,
-      avatarFallbackText: getAvatarFallbackName(username),
-    };
-  });
-  const memberDetails = members.map(({ profileImg, username }) => {
-    return {
-      img: profileImg,
-      owner: false,
-      avatarFallbackText: getAvatarFallbackName(username),
-    };
-  });
+  const ownerDetails = owners.map(
+    ({ profileImage, firstName, lastName, username }) => {
+      return {
+        img: profileImage,
+        isOwner: true,
+        username,
+        avatarFallbackText: getAvatarFallbackName(`${firstName} ${lastName}`),
+      };
+    }
+  );
+  const memberDetails = members.map(
+    ({ profileImage, firstName, lastName, username }) => {
+      return {
+        img: profileImage,
+        isOwner: false,
+        username,
+        avatarFallbackText: getAvatarFallbackName(`${firstName} ${lastName}`),
+      };
+    }
+  );
 
   const avatarGroupData = [...ownerDetails, ...memberDetails];
 
@@ -94,20 +96,26 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
         </StyledIconOnLeftBtn>
         <StyledDivider orientation="vertical" flexItem />
         <StyledAvatarGroup spacing={1}>
-          {avatarGroupData.map(({ img, owner, avatarFallbackText }) => {
-            if (owner) {
+          {avatarGroupData.map(
+            ({ img, isOwner, avatarFallbackText, username }) => {
+              if (isOwner) {
+                return (
+                  <StyledBadge
+                    key={username}
+                    badgeContent={<OwnerIcon />}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  >
+                    <StyledAvatar src={img}>{avatarFallbackText}</StyledAvatar>
+                  </StyledBadge>
+                );
+              }
               return (
-                <StyledBadge
-                  key={uuidv4()}
-                  badgeContent={<OwnerIcon />}
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                >
-                  <StyledAvatar src={img}>{avatarFallbackText}</StyledAvatar>
-                </StyledBadge>
+                <StyledAvatar src={img} key={username}>
+                  {avatarFallbackText}
+                </StyledAvatar>
               );
             }
-            return <StyledAvatar src={img} key={uuidv4()} />;
-          })}
+          )}
         </StyledAvatarGroup>
         <StyledNavBtn
           style={{ width: 'auto' }}
@@ -143,29 +151,7 @@ const SecondaryNavbar: React.FC<IProps> = ({ boardTitle, members, owners }) => {
         >
           <span>Show menu</span>
         </StyledIconOnLeftBtn>
-        <StyledDrawer
-          variant="persistent"
-          anchor="right"
-          open={isMenuOpen}
-          transitionDuration={100}
-        >
-          <StyledMenuPopupContent>
-            <div>
-              <span>Menu</span>
-              <StyledCloseIconButton
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  const boardContainer = document.getElementById(
-                    id
-                  )! as HTMLDivElement;
-                  boardContainer.style.marginRight = '0';
-                }}
-              >
-                <CloseIcon />
-              </StyledCloseIconButton>
-            </div>
-          </StyledMenuPopupContent>
-        </StyledDrawer>
+        {isMenuOpen && <BoardMenu open={isMenuOpen} setOpen={setIsMenuOpen} />}
       </div>
     </StyledNavbar>
   );

@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useState } from 'react';
-import { getImgFromMockApi, IUser } from '../../utils';
-import { sendLoginRequest, getUserInformationRequest } from './api';
+import { baseUrl, IUser } from '../../utils';
+import {
+  sendLoginRequest,
+  getUserInformationRequest,
+  sendSignupRequest,
+} from './api';
 
 interface IAuthContext {
   isLoggedIn: boolean;
@@ -10,13 +14,15 @@ interface IAuthContext {
   login: Function;
   logout: Function;
   getUserInformation: Function;
+  signup: Function;
 }
 
 const initialUserData = {
   id: '',
   email: '',
   username: '',
-  profileImg: '',
+  firstName: '',
+  lastName: '',
 };
 
 const initialContext = {
@@ -27,6 +33,7 @@ const initialContext = {
   login: () => {},
   getUserInformation: () => {},
   logout: () => {},
+  signup: () => {},
 };
 
 const AuthContext = createContext<IAuthContext>(initialContext);
@@ -41,16 +48,20 @@ export const AuthProvider: React.FC = (children) => {
     setIsLoading(true);
 
     const data = await sendLoginRequest(identifier, password);
-
     if (data.user) {
-      const image = await getImgFromMockApi();
       const { jwt, user } = data;
+      const { id, email, username, firstName, lastName } = user;
       localStorage.setItem('token', jwt);
       setUser({
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        profileImg: image,
+        id,
+        email,
+        username,
+        firstName,
+        lastName,
+        profileImg: user.profileImage
+          ? `${baseUrl}${user.profileImage.url}`
+          : undefined,
+        bio: user.bio ? user.bio : undefined,
       });
       setIsLoggedIn(true);
       setIsLoading(false);
@@ -73,15 +84,61 @@ export const AuthProvider: React.FC = (children) => {
       return;
     }
 
-    const image = await getImgFromMockApi();
+    const { id, email, username, firstName, lastName } = data;
     setUser({
-      id: data.id,
-      email: data.email,
-      username: data.username,
-      profileImg: image,
+      id,
+      email,
+      username,
+      firstName,
+      lastName,
+      profileImg: data.profileImage
+        ? `${baseUrl}${data.profileImage.url}`
+        : undefined,
+      bio: user.bio ? user.bio : undefined,
     });
     setIsLoggedIn(true);
     setIsLoading(false);
+  };
+
+  const signup = async (
+    email: string,
+    firstName: string,
+    lastName: string,
+    username: string,
+    password: string
+  ) => {
+    setIsLoading(true);
+
+    const data = await sendSignupRequest(
+      email,
+      firstName,
+      lastName,
+      username,
+      password
+    );
+    if (data.user) {
+      const { jwt, user } = data;
+      const { id, email, username, firstName, lastName } = user;
+      localStorage.setItem('token', jwt);
+      setUser({
+        id,
+        email,
+        username,
+        firstName,
+        lastName,
+        profileImg: data.profileImage
+          ? `${baseUrl}${data.profileImage.url}`
+          : undefined,
+        bio: user.bio ? user.bio : undefined,
+      });
+      setIsLoggedIn(true);
+      setIsLoading(false);
+    }
+    if (data.error) {
+      setError(data.message[0].messages[0].message);
+      setIsLoggedIn(false);
+      setIsLoading(false);
+    }
   };
 
   const logout = () => {
@@ -98,6 +155,7 @@ export const AuthProvider: React.FC = (children) => {
     login,
     getUserInformation,
     logout,
+    signup,
   };
 
   return <AuthContext.Provider value={authContextValue} {...children} />;

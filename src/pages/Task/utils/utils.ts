@@ -30,11 +30,14 @@ const getDesiredMembersData = (members: string[], users: IUser[]) => {
   }
   const membersArray: IUser[] = members.map((memberId: string) => {
     const user = users.find((el) => el.id === memberId)!;
+    const { id, email, username, firstName, lastName, profileImg } = user;
     return {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      profileImg: user.profileImg,
+      id,
+      email,
+      username,
+      firstName,
+      lastName,
+      profileImg,
     };
   });
   return membersArray;
@@ -47,11 +50,14 @@ const getCommentsWithDetails = (
   const commentsWithDetails: IComment[] = comments.map(
     ({ authorId, commentText, commentId, createdAt, taskId, updatedAt }) => {
       const user = users.find((el) => el.id === authorId)!;
+      const { id, email, username, firstName, lastName, profileImg } = user;
       const author = {
-        id: authorId,
-        email: user.email,
-        username: user.username,
-        profileImg: user.profileImg,
+        id,
+        email,
+        username,
+        firstName,
+        lastName,
+        profileImg,
       };
       return {
         commentId,
@@ -131,11 +137,13 @@ export const getRequiredTaskData = (data: any): ITaskDetails => {
 };
 
 export const getRequiredCommentData = (data: any) => {
-  const { id, email, username, profileImg } = data.author;
+  const { id, email, username, firstName, lastName, profileImg } = data.author;
   const author = {
     id,
     email,
     username,
+    firstName,
+    lastName,
     profileImg,
   };
 

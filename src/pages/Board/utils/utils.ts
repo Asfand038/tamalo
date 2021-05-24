@@ -1,7 +1,7 @@
 import { QueryClient } from 'react-query';
 import {
+  baseUrl,
   getDesiredDateFormat,
-  getMultipleImgsFromMockApi,
   getRequiredCoverData,
 } from '../../../utils';
 
@@ -29,30 +29,29 @@ export const getRequiredBoardData = async (data: any) => {
     tasksOrder: data.tasksOrder[list.id],
   }));
 
-  const requiredNumOfImgs = [...data.owners, ...data.members].length - 1;
-  const images = await getMultipleImgsFromMockApi(requiredNumOfImgs);
+  const ownersArray: IUser[] = data.owners.map((owner: any) => ({
+    id: owner.id,
+    email: owner.email,
+    username: owner.username,
+    profileImage: owner.profileImage
+      ? `${baseUrl}${owner.profileImage.url}`
+      : undefined,
+    firstName: owner.firstName,
+    lastName: owner.lastName,
+  }));
 
-  const ownersArray: IUser[] = data.owners.map(
-    ({ id, email, username }: IUser) => {
-      if (data.userId === id) {
-        return { id, email, username, profileImg: data.profileImg };
-      }
-      const image = images[0];
-      images.splice(0, 1);
-      return { id, email, username, profileImg: image };
-    }
-  );
+  const membersArray: IUser[] = data.members.map((member: any) => ({
+    id: member.id,
+    email: member.email,
+    username: member.username,
+    profileImage: member.profileImage
+      ? `${baseUrl}${member.profileImage.url}`
+      : undefined,
+    firstName: member.firstName,
+    lastName: member.lastName,
+  }));
 
-  const membersArray: IUser[] = data.members.map(
-    ({ id, email, username }: IUser) => {
-      if (data.userId === id) {
-        return { id, email, username, profileImg: data.profileImg };
-      }
-      const image = images[0];
-      images.splice(0, 1);
-      return { id, email, username, profileImg: image };
-    }
-  );
+  const { bgColor } = data.meta;
 
   const boardData: IBoard = {
     id: data.id,
@@ -62,8 +61,12 @@ export const getRequiredBoardData = async (data: any) => {
     listsOrder: data.listsOrder,
     owners: ownersArray,
     members: membersArray,
+    bgColor,
   };
 
+  if (data.backgroundImage) {
+    boardData.bgImage = data.backgroundImage.url;
+  }
   return boardData;
 };
 

@@ -22,12 +22,12 @@ const App: React.FC = () => {
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
           <Route path="/not-found" component={NotFoundPage} />
-          <Redirect from="/" exact to="/login" />
           <AuthenticatedRoute>
             <Switch>
               <Route path="/boards" exact component={DashboardPage} />
               <Route path="/boards/:id" component={BoardPage} />
               <Route path="/accounts" component={AccountsPage} />
+              <Redirect from="/" exact to="/boards" />
               <Redirect from="*" to="/not-found" />
             </Switch>
           </AuthenticatedRoute>

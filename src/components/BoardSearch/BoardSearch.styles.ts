@@ -15,8 +15,8 @@ export const StyledPopover = styled(Popover)<{ visible: number }>`
     inset: 6px 0 0 0 !important;
     & > div:nth-of-type(3) {
       overflow: hidden;
-      box-shadow: 0 12px 24px -6px rgb(9 30 66 / 25%),
-        0 0 0 1px rgb(9 30 66 / 8%);
+      box-shadow: ${({ theme }) =>
+        `0 12px 24px -6px ${theme.colors.boxShadow[200]}, 0 0 0 1px ${theme.colors.boxShadow[100]}`};
     }
   }
 `;
@@ -165,7 +165,7 @@ export const StyledBoardCard = styled.div`
   background-position: 50%;
   background-image: url('https://images.unsplash.com/photo-1619233651146-7364c945c3ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDF8MzE3MDk5fHx8fHwyfHwxNjE5NDkzMzI3&ixlib=rb-1.2.1&q=80&w=400');
   &::before {
-    background: #fff;
+    background: ${({ theme }) => theme.colors.neutral[100]};
     bottom: 0;
     content: '';
     left: 0;
@@ -226,7 +226,7 @@ export const StyledBoardCard = styled.div`
 
 export const StyledPlaceholderText = styled.div`
   padding: 16px 30px 14px 31px;
-  color: #7a869a;
+  color: ${({ theme }) => theme.colors.neutral[380]};
 `;
 
 export const StyledCreateNewBoardButton = styled(Button)`

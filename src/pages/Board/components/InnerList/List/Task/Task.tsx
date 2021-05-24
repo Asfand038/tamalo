@@ -1,3 +1,5 @@
+// Hard-coded values in this file
+
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
@@ -8,16 +10,13 @@ import {
   AttachmentOutlined as AttachmentOutlinedIcon,
 } from '@material-ui/icons';
 
-import {
-  desiredDateFormat,
-  getTransformValue,
-  ITask,
-} from '../../../../../utils';
+import { desiredDateFormat, getTransformValue, ITask } from '../../../../utils';
 import {
   getRequiredSizeCoverImg,
   getRequiredCoverHeight,
   CoverImageSizes,
-} from '../../../../../../../utils';
+  baseUrl,
+} from '../../../../../../utils';
 import {
   StyledTaskContainer,
   StyledEditBtn,
@@ -64,7 +63,10 @@ const Task: React.FC<IProps> = ({ task, index }) => {
           )}
           {cover && (
             <StyledTaskCover
-              imgSrc={getRequiredSizeCoverImg(cover, CoverImageSizes.medium)}
+              src={`${baseUrl}${getRequiredSizeCoverImg(
+                cover,
+                CoverImageSizes.medium
+              )}`}
               bgColor={cover.coverBg.color}
               height={getRequiredCoverHeight(cover, CoverImageSizes.medium)}
             />

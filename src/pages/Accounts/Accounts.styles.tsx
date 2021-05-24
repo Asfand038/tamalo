@@ -20,14 +20,14 @@ export const StyledUsername = styled.div`
   display: flex;
   align-items: center;
   & > div:first-child {
-    font-size: 24px;
+    font-size: ${({ theme }) => theme.typeScale.header1};
     font-weight: 500;
-    color: #0c3953;
+    color: ${({ theme }) => theme.colors.blue[400]};
     margin-right: 10px;
     letter-spacing: 0.4px;
   }
   & > div:last-child {
-    font-size: 12px;
+    font-size: ${({ theme }) => theme.typeScale.subtitle};
     font-weight: 500;
     color: ${({ theme }) => theme.colors.neutral[550]};
     margin-top: 6px;
@@ -36,7 +36,7 @@ export const StyledUsername = styled.div`
 
 export const StyledToggleBtnContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral[200]};
-  border-bottom: 1px solid #dfe1e6;
+  border-bottom: ${({ theme }) => `1px solid ${theme.colors.neutral[350]}`};
   & > div {
     padding: 0 32px;
     max-width: 530px;
@@ -49,7 +49,7 @@ export const StyledToggleBtn = styled(Button)`
     background-color: ${({ theme }) => theme.colors.neutral[100]};
     text-transform: none;
     box-shadow: none;
-    border: 1px solid #dfe1e6;
+    border: ${({ theme }) => `1px solid ${theme.colors.neutral[350]}`};
     border-bottom: 0;
     border-radius: 3px 3px 0 0;
     font-weight: 700;
@@ -74,7 +74,7 @@ export const StyledBody = styled.div`
   margin: auto;
   & > div:first-child {
     color: ${({ theme }) => theme.colors.blue[400]};
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.typeScale.header3};
     margin: 28px 0 8px;
     font-weight: 500;
     margin-top: 40px;
@@ -106,7 +106,7 @@ export const StyledPublicLabel = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.typeScale.subtitle};
   color: ${({ theme }) => theme.colors.neutral[550]};
   & svg {
     margin-right: 4px;
@@ -165,7 +165,7 @@ export const StyledAvatar = styled(Avatar)`
     width: 48px;
     font-weight: 500;
     background-color: ${({ theme }) => theme.colors.red[200]};
-    font-size: ${({ theme }) => theme.typeScale.paragraph};
+    font-size: ${({ theme }) => theme.typeScale.header1};
     &:hover {
       cursor: pointer;
     }

@@ -16,7 +16,7 @@ export const StyledTextField = styled(TextField)<ITextField>`
       border: none;
     }
     & textarea {
-      font-size: 14px;
+      font-size: ${({ theme }) => theme.typeScale.paragraph};
       background-color: ${({ theme }) => theme.colors.darkness[40]};
       color: ${({ theme }) => theme.colors.blue[400]};
       padding: 10px 12px 8px 12px;

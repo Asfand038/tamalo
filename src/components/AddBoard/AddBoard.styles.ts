@@ -16,7 +16,7 @@ export const StyledBackdrop = styled(Backdrop)`
 interface IModalContent {
   empty: number;
   bgcolor: string | null;
-  bgimage: string | null;
+  bgimage: string | undefined;
 }
 
 export const StyledModalContent = styled(Grid)<IModalContent>`
@@ -32,7 +32,7 @@ export const StyledModalContent = styled(Grid)<IModalContent>`
       background-position: 50%;
       border-radius: 3px;
       box-sizing: border-box;
-      color: #fff;
+      color: ${({ theme }) => theme.colors.neutral[100]};
       height: 96px;
       padding: 10px;
       background-image: ${({ bgimage }) =>
@@ -59,7 +59,7 @@ export const StyledModalContent = styled(Grid)<IModalContent>`
 
 export const StyledCloseIcon = styled(IconButton)`
   && {
-    color: #fff;
+    color: ${({ theme }) => theme.colors.neutral[100]};
     position: absolute;
     right: 8px;
     top: 8px;
@@ -80,7 +80,7 @@ export const StyledTextField = styled(TextField)`
         border-bottom: none;
       }
       & input {
-        font-size: 16px;
+        font-size: ${({ theme }) => theme.typeScale.header4};
         font-weight: 700;
         padding: 6px 8px;
         border-radius: 3px;
@@ -109,21 +109,18 @@ export const StyledBgOptionsGrid = styled(Grid)`
 
 interface IGridItem {
   bgcolor?: string;
-  imgsrc?: string;
 }
 
 export const StyledGridItem = styled(Grid)<IGridItem>`
   &&& {
     padding: 0 0 6px 8px;
     position: relative;
+    max-height: 34px;
     & > div:first-child {
       background-color: ${({ bgcolor }) => bgcolor || 'inherit'};
       width: 28px;
       height: 28px;
       border-radius: 3px;
-      background-position: 50%;
-      background-size: cover;
-      background-image: ${({ imgsrc }) => (imgsrc ? `url(${imgsrc})` : 'none')};
       cursor: pointer;
       &:hover {
         opacity: 0.8;
@@ -132,13 +129,25 @@ export const StyledGridItem = styled(Grid)<IGridItem>`
   }
 `;
 
+export const StyledGridImage = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  object-position: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
 export const StyledSelectedIcon = styled.div`
   position: absolute;
   top: 4px;
   left: 12px;
   & svg {
-    font-size: 20px;
-    color: #fff;
+    font-size: ${({ theme }) => theme.typeScale.header3};
+    color: ${({ theme }) => theme.colors.neutral[100]};
   }
 `;
 
@@ -155,13 +164,32 @@ export const StyledButton = styled(Button)`
     border-radius: 3px;
     margin-left: -8px;
     width: 96.3%;
+    height: 36px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.green[200]};
       box-shadow: none;
     }
     &:disabled {
       background-color: ${({ theme }) => theme.colors.neutral[200]};
-      color: #a5adba;
+      color: ${({ theme }) => theme.colors.darkness[300]};
+    }
+  }
+`;
+
+export const LoaderWrapper = styled.div`
+  && {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    & > div:first-child {
+      font-size: 4px;
+      top: 33%;
+      &::before {
+        left: -6px;
+      }
+      &::after {
+        left: 6px;
+      }
     }
   }
 `;
