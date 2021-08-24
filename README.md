@@ -1,16 +1,14 @@
-# TRELLO CLONE
+# PORTFOLIO APP
 
-**A production grade React App with typescript**
+**A portfolio app highlighting my projects, work experience, and services.**
 
 ## Project includes:
 
-1. **React hooks** including **context API** for managing state.
-2. **Typescript**.
-3. Using **react-query** for fetching, caching, synchronizing and updating server state. The app also makes use of optimistic updates which triggers instant changes on UI resulting in awesome user experience.
-4. Error handling.
-5. **React-beautiful-dnd** for drag and drop.
-6. **Material-UI** and **styled-components** (including **theming**).
+1. **Gatsby**.
+2. **Strapi** as headless CMS.
+3. **SEO**. 
+4. CSS(including **CSS variables**) and **styled-components**.
 
 ## Live Demo:
 
-You can test a live version of the application here: https://tamalo.netlify.app
+You can test a live version of the application here: https://asfandyar-jamali.netlify.app/
